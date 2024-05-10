@@ -27,8 +27,9 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
-                                    <th>NIP</th>
-                                    <th>NIK</th>
+                                    <th>E-mail</th>
+                                    <th>Username</th>
+                                    <th>ID Employee</th>
                                     <th>Deskripsi</th>
                                     <th>Waktu</th>
                                 </tr>
@@ -63,10 +64,13 @@
                             "data": "name"
                         },
                         {
-                            "data": "nip"
+                            "data": "email"
                         },
                         {
-                            "data": "no_dokumen"
+                            "data": "username"
+                        },
+                        {
+                            "data": "employee_id"
                         },
                         {
                             "data": "description"
@@ -112,7 +116,7 @@
         <script src="{{ asset('assets/js/atur-tanggal-indo.js') }}"></script>
 
         <script>
-            document.getElementById('pageTitle').innerHTML = 'Manajemen Aktivitas Pengguna - Admin | Aplikasi SILK';
+            document.getElementById('pageTitle').innerHTML = 'Manajemen Aktivitas Pengguna - Admin | Trello - PT TATI';
         </script>
         
     @endsection

@@ -1,27 +1,30 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
-use App\Models\User;
-use Hash;
 use Brian2694\Toastr\Facades\Toastr;
+use App\Models\User;
+use DB;
+use Hash;
 
 class ResetPasswordController extends Controller
 {
-    /** page reset password */
+    // Untuk Mendapatkan Token Kata Sandi //
     public function getPassword($token)
     {
        $result_name = DB::table('users')->get();
        return view('auth.passwords.reset', ['result_name' => $result_name, 'token' => $token]);
     }
+    // /Untuk Mendapatkan Token Kata Sandi //
 
-    /** update new password */
+    // Untuk Perbaharui Kata Sandi //
     public function updatePassword(Request $request)
     {
         $request->validate([
-            'email'    => 'required|email|exists:users',
-            'password' => 'required|string|min:6|confirmed',
+            'email'                 => 'required|email|exists:users',
+            'password'              => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required',
         ]);
 
@@ -29,15 +32,15 @@ class ResetPasswordController extends Controller
         
         if(!$updatePassword)
         {
-            Toastr::error('Token tidak valid! ✘','Error');
+            Toastr::error('Token tidak valid!','Error');
             return back();
         } else{ 
             
             $user = User::where('email', $request->email)->update(['password' => Hash::make($request->password)]);
             DB::table('password_resets')->where(['email'=> $request->email])->delete();
-            Toastr::success('Kata sandi Anda telah diubah! ✔','Success');
+            Toastr::success('Kata sandi Anda telah diubah!','Success');
             return redirect('/login');
         }
-       
     }
+    // /Untuk Perbaharui Kata Sandi //
 }

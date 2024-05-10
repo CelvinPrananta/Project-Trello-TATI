@@ -12,7 +12,7 @@
                         <h3 class="page-title">Manajemen Pengguna</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">User</li>
+                            <li class="breadcrumb-item active">Pengguna</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
@@ -73,8 +73,8 @@
                                     <th>Nama Pengguna</th>
                                     <th>ID Pengguna</th>
                                     <th>E-mail</th>
-                                    <th>NIP</th>
-                                    <th>NIKB</th>
+                                    <th>Username</th>
+                                    <th>ID Employee</th>
                                     <th>Tanggal Bergabung</th>
                                     <th>Peran</th>
                                     <th>Status</th>
@@ -88,7 +88,7 @@
         </div>
         <!-- /Page Content -->
 
-        <!-- Add User Modal -->
+        <!-- Add Daftar Pengguna Modal -->
         <div id="add_user" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
@@ -99,7 +99,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('user/add/save') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('data/pengguna/tambah-data') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
@@ -110,8 +110,25 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label>Alamat E-mail </label>
-                                    <input class="form-control" type="email" id="" name="email" placeholder="Masukkan E-mail">
+                                    <input class="form-control" type="email" id="" name="email" value="{{ old('email') }}" placeholder="Masukkan E-mail">
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input class="form-control" type="text" id="" name="username" value="{{ old('username') }}" placeholder="Masukkan Username" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>ID Employee</label>
+                                        <input class="form-control" type="text" id="" name="employee_id" value="{{ old('employee_id') }}" placeholder="Masukkan ID Employee">
+                                    </div>
+                                </div>
+                                <input type="hidden" class="form-control" id="image" name="image" value="photo_defaults.jpg">
+                                <input type="hidden" class="form-control" id="" name="tema_aplikasi" value="Terang">
+                                <input type="hidden" class="form-control" id="" name="status_online" value="Offline">
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -136,27 +153,21 @@
                             <br>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>NIP</label>
-                                        <input class="form-control" type="text" id="" name="nip" placeholder="Masukkan NIP">
-                                        <small class="text-danger">*Jika tidak memiliki <strong>NIP</strong> maka dapat mengisikan tanda ( - )</small>
+                                    <div class="info-status">
+                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" class="svg-inline--fa fa-info-circle fa-w-16 float-right h-100" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 1em; margin-top: 4px;">
+                                            <path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path>
+                                        </svg>
+                                        <span class="text-status"><b>Indikator Kata Sandi :</b><br>
+                                            <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Lemah : [a-z]<br>
+                                            <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Sedang : [a-z] + [angka]<br>
+                                            <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Kuat : [a-z] + [angka] + [!,@,#,$,%,^,&,*,?,_,~,(,)]
+                                        </span>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label>NIKB</label>
-                                    <input class="form-control" type="text" id="" name="no_dokumen" placeholder="Masukkan NIKB">
-                                    <small class="text-danger">*Jika tidak memiliki <strong>NIKB</strong> maka dapat mengisikan tanda ( - )</small>
-                                </div>
-                                <input type="hidden" class="form-control" id="image" name="image" value="photo_defaults.jpg">
-                                <input type="hidden" class="form-control" id="" name="tema_aplikasi" value="Terang">
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Kata Sandi</label>
                                         <div class="input-group">
                                             <input type="password" class="form-control" name="password"  id="passwordInput1" placeholder="Masukkan Kata Sandi">
-                                            <div class="input-group-append">
+                                            <div class="input-group-append" style="position: sticky">
                                                 <button type="button" id="tampilkanPassword1" class="btn btn-outline-secondary">
                                                     <i id="icon1" class="fa fa-eye-slash"></i>
                                                 </button>
@@ -173,6 +184,16 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
+                                    <div class="info-status">
+                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" class="svg-inline--fa fa-info-circle fa-w-16 float-right h-100" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 1em; margin-top: 4px;">
+                                            <path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path>
+                                        </svg>
+                                        <span class="text-status"><b>Indikator Kata Sandi :</b><br>
+                                            <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Lemah : [a-z]<br>
+                                            <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Sedang : [a-z] + [angka]<br>
+                                            <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Kuat : [a-z] + [angka] + [!,@,#,$,%,^,&,*,?,_,~,(,)]
+                                        </span>
+                                    </div>
                                     <div class="form-group">
                                         <label>Konfirmasi Kata Sandi</label>
                                         <div class="input-group">
@@ -202,9 +223,9 @@
                 </div>
             </div>
         </div>
-        <!-- /Add User Modal -->
+        <!-- /Add Daftar Pengguna Modal -->
 
-        <!-- Edit User Modal -->
+        <!-- Edit Daftar Pengguna Modal -->
         <div id="edit_user" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
@@ -216,7 +237,7 @@
                     </div>
                     <br>
                     <div class="modal-body">
-                        <form action="{{ route('update') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('data/pengguna/perbaharui') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="user_id" id="e_id" value="">
                             <div class="row">
@@ -230,6 +251,21 @@
                                     <label>Alamat E-mail</label>
                                     <input class="form-control" type="email" name="email" id="e_email" value="" placeholder="Masukkan E-mail" />
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input class="form-control" type="text" id="e_username" name="username" value="" placeholder="Masukkan Username" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>ID Employee</label>
+                                        <input class="form-control" type="text" id="e_employee_id" name="employee_id" value="" placeholder="Masukkan ID Employee" />
+                                    </div>
+                                </div>
+                                <input type="hidden" class="form-control" id="image" name="images" value="photo_defaults.jpg">
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -249,23 +285,6 @@
                                     </select>
                                 </div>
                             </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>NIP</label>
-                                        <input class="form-control" type="text" id="e_nip" name="nip" value="" placeholder="Masukkan NIP" />
-                                        <small class="text-danger">*Jika tidak memiliki <strong>NIP</strong> maka dapat mengisikan tanda ( - )</small>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label>NIKB</label>
-                                    <input class="form-control" type="text" id="e_no_dokumen" name="no_dokumen" value="" placeholder="Masukkan NIKB" />
-                                    <small class="text-danger">*Jika tidak memiliki <strong>NIKB</strong> maka dapat mengisikan tanda ( - )</small>
-                                </div>
-                                <input type="hidden" class="form-control" id="image" name="images" value="photo_defaults.jpg">
-                            </div>
-                            <br>
                             <div class="submit-section">
                                 <button type="submit" class="btn btn-primary submit-btn">Perbaharui</button>
                             </div>
@@ -274,39 +293,7 @@
                 </div>
             </div>
         </div>
-        <!-- /Edit Salary Modal -->
-
-        {{-- <!-- Delete User Modal -->
-        <div class="modal custom-modal fade" id="delete_user" role="dialog">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="form-header">
-                            <h3>Delete User</h3>
-                            <p>Are you sure want to delete?</p>
-                        </div>
-                        <div class="modal-btn delete-action">
-                            <form action="{{ route('user/delete') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="id" class="e_id" value="">
-                                <input type="hidden" name="avatar" id="e_avatar" value="">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <button type="submit"
-                                            class="btn btn-primary continue-btn submit-btn">Hapus</button>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="javascript:void(0);" data-dismiss="modal"
-                                            class="btn btn-primary cancel-btn">Kembali</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Delete User Modal --> --}}
+        <!-- /Edit Daftar Pengguna Modal -->
 
     </div>
     <!-- /Page Wrapper -->
@@ -390,12 +377,12 @@
                             name: 'email'
                         },
                         {
-                            data: 'nip',
-                            name: 'nip'
+                            data: 'username',
+                            name: 'username'
                         },
                         {
-                            data: 'no_dokumen',
-                            name: 'no_dokumen'
+                            data: 'employee_id',
+                            name: 'employee_id'
                         },
                         {
                             data: 'join_date',
@@ -449,7 +436,7 @@
         <script src="{{ asset('assets/js/memuat-ulang.js') }}"></script>
 
         <script>
-            document.getElementById('pageTitle').innerHTML = 'Manajemen Daftar Pengguna - Admin | Aplikasi SILK';
+            document.getElementById('pageTitle').innerHTML = 'Manajemen Daftar Pengguna - Admin | Trello - PT TATI';
         </script>
 
     @endsection

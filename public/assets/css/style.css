@@ -1942,11 +1942,11 @@ table.dataTable thead > tr > td.sorting {
 	margin-bottom: 25px;
 }
 .account-box .account-btn {
-	background: #b3e207;
-	background: -moz-linear-gradient(left, #b3e207 0%, #0b6903 100%);
-	background: -webkit-linear-gradient(left, #b3e207 0%, #0b6903 100%);
-	background: -ms-linear-gradient(left, #b3e207 0%, #0b6903 100%);
-	background: linear-gradient(to right, #b3e207 0%, #0b6903 100%);
+	background: #249ae1;
+	background: -moz-linear-gradient(left, #249ae1 0%, #2978a8 100%);
+	background: -webkit-linear-gradient(left, #249ae1 0%, #2978a8 100%);
+	background: -ms-linear-gradient(left, #249ae1 0%, #2978a8 100%);
+	background: linear-gradient(to right, #249ae1 0%, #2978a8 100%);
 	border: 0;
     border-radius: 4px;
     display: block;
@@ -8709,14 +8709,32 @@ ul.comment-list li ul.children {
 		left: 61% !important;
 	}
 
+	.info-status .text-status {
+		width: 100% !important;
+		margin-left: -203px !important;
+		left: 61% !important;
+	}
+
+	.info-status1 .text-status1 {
+		left: 61% !important;
+	}
+
+	.info-status2 .text-status2 {
+		left: 61% !important;
+	}
+	
+	.info-status3 .text-status3 {
+		left: 61% !important;
+	}
+
 	.fa-backward {
 		margin-left: 25px !important;
 		margin-top: 30px !important;
 	}
 
 	.logo-rsud img{
-		width: 35% !important;
-		margin-left: 73% !important;
+		width: 30% !important;
+		left: 50% !important;
 	}
 }
 @media only screen and (max-width: 391.98px) {
@@ -8734,14 +8752,32 @@ ul.comment-list li ul.children {
 		left: 67% !important;
 	}
 
+	.info-status .text-status {
+		width: 100% !important;
+		margin-left: -200px !important;
+		left: 67% !important;
+	}
+
+	.info-status1 .text-status1 {
+		left: 67% !important;
+	}
+
+	.info-status2 .text-status2 {
+		left: 67% !important;
+	}
+
+	.info-status3 .text-status3 {
+		left: 67% !important;
+	}
+
 	.fa-backward {
 		margin-left: 25px !important;
 		margin-top: 30px !important;
 	}
 
 	.logo-rsud img{
-		width: 35% !important;
-		margin-left: 71% !important;
+		width: 30% !important;
+		left: 50% !important;
 	}
 }
 @media only screen and (max-width: 384.98px) {
@@ -8759,14 +8795,32 @@ ul.comment-list li ul.children {
 		left: 68% !important;
 	}
 
+	.info-status .text-status {
+		width: 100% !important;
+		margin-left: -198px !important;
+		left: 68% !important;
+	}
+
+	.info-status1 .text-status1 {
+		left: 68% !important;
+	}
+
+	.info-status2 .text-status2 {
+		left: 68% !important;
+	}
+
+	.info-status3 .text-status3 {
+		left: 68% !important;
+	}
+
 	.fa-backward {
 		margin-left: 25px !important;
 		margin-top: 30px !important;
 	}
 	
 	.logo-rsud img{
-		width: 35% !important;
-		margin-left: 71% !important;
+		width: 30% !important;
+		left: 50% !important;
 	}
 }
 @media only screen and (max-width: 375.98px) {
@@ -8784,14 +8838,32 @@ ul.comment-list li ul.children {
 		left: 70% !important;
 	}
 
+	.info-status .text-status {
+		width: 100% !important;
+		margin-left: -197px !important;
+		left: 70% !important;
+	}
+
+	.info-status1 .text-status1 {
+		left: 70% !important;
+	}
+
+	.info-status2 .text-status2 {
+		left: 70% !important;
+	}
+
+	.info-status3 .text-status3 {
+		left: 70% !important;
+	}
+
 	.fa-backward {
 		margin-left: 25px !important;
 		margin-top: 30px !important;
 	}
 
 	.logo-rsud img{
-		width: 35% !important;
-		margin-left: 71% !important;
+		width: 30% !important;
+		left: 50% !important;
 	}
 }
 @media only screen and (max-width: 320.98px) {
@@ -8809,14 +8881,32 @@ ul.comment-list li ul.children {
 		left: 83% !important;
 	}
 
+	.info-status .text-status {
+		width: 100% !important;
+		margin-left: -188px !important;
+		left: 83% !important;
+	}
+
+	.info-status1 .text-status1 {
+		left: 83% !important;
+	}
+
+	.info-status2 .text-status2 {
+		left: 83% !important;
+	}
+
+	.info-status3 .text-status3 {
+		left: 83% !important;
+	}
+
 	.fa-backward {
 		margin-left: 15px !important;
 		margin-top: 30px !important;
 	}
 
 	.logo-rsud img{
-		width: 45% !important;
-		margin-left: 63% !important;
+		width: 40% !important;
+		left: 35% !important;
 	}
 }
 /*Project Board*/
@@ -8898,9 +8988,10 @@ ul.comment-list li ul.children {
 }
 
 .logo-rsud img{
-	display: block;
-	width: 25%;
-	margin-left: 79%;
+	position: relative;
+	width: 20%;
+	left: 64%;
+	bottom: 15px;
 }
 
 .cetak-dokumen{
@@ -11607,7 +11698,7 @@ ul.nav-tabs > li > a {
 .fitur-kembali .fitur-text {
 	visibility: hidden;
 	width: 120px;
-	background-color: #fc7474;
+	background-color: #249ae1;
 	color: #fff;
 	text-align: center;
 	border-radius: 6px;
@@ -11631,10 +11722,26 @@ ul.nav-tabs > li > a {
 	position: relative;
 }
 
+.info-status {
+	position: relative;
+}
+
+.info-status1 {
+	position: relative;
+}
+
+.info-status2 {
+	position: relative;
+}
+
+.info-status3 {
+	position: relative;
+}
+
 .fitur-kembali-2 .fitur-text {
 	visibility: hidden;
 	width: 120px;
-	background-color: #fc7474;
+	background-color: #249ae1;
 	color: #fff;
 	text-align: center;
 	border-radius: 6px;
@@ -11649,7 +11756,103 @@ ul.nav-tabs > li > a {
 	transition: opacity 0.3s;
 }
 
+.info-status .text-status {
+	visibility: hidden;
+	position: absolute;
+	width: 68%;
+	font-size: 14px;
+	font-family: 'Poppins';
+	color: #fff;
+	background-color: #249ae1;
+	padding: 5px;
+	bottom: 10%;
+	margin-bottom: 10px;
+	left: 57%;
+	margin-left: -105px;
+	border-radius: 6px;
+	z-index: 1;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.info-status1 .text-status1 {
+	visibility: hidden;
+	position: absolute;
+	width: 68%;
+	font-size: 14px;
+	font-family: 'Poppins';
+	color: #fff;
+	background-color: #249ae1;
+	padding: 5px;
+	bottom: 10%;
+	margin-bottom: 10px;
+	left: 57%;
+	margin-left: -105px;
+	border-radius: 6px;
+	z-index: 1;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.info-status2 .text-status2 {
+	visibility: hidden;
+	position: absolute;
+	width: 68%;
+	font-size: 14px;
+	font-family: 'Poppins';
+	color: #fff;
+	background-color: #249ae1;
+	padding: 5px;
+	bottom: 10%;
+	margin-bottom: 10px;
+	left: 57%;
+	margin-left: -105px;
+	border-radius: 6px;
+	z-index: 1;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.info-status3 .text-status3 {
+	visibility: hidden;
+	position: absolute;
+	width: 68%;
+	font-size: 14px;
+	font-family: 'Poppins';
+	color: #fff;
+	background-color: #249ae1;
+	padding: 5px;
+	bottom: 10%;
+	margin-bottom: 10px;
+	left: 57%;
+	margin-left: -105px;
+	border-radius: 6px;
+	z-index: 1;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
 .fitur-kembali-2:hover .fitur-text {
+	visibility: visible;
+	opacity: 1;
+}
+
+.info-status:hover .text-status {
+	visibility: visible;
+	opacity: 1;
+}
+
+.info-status1:hover .text-status1 {
+	visibility: visible;
+	opacity: 1;
+}
+
+.info-status2:hover .text-status2 {
+	visibility: visible;
+	opacity: 1;
+}
+
+.info-status3:hover .text-status3 {
 	visibility: visible;
 	opacity: 1;
 }
@@ -11846,7 +12049,7 @@ ul.nav-tabs > li > a {
 
 .fa-backward {
 	position: absolute;
-	color: #fc7474;
+	color: #249ae1;
 	font-size: 30px;
 	float: left;
 	margin-left: 40px;
@@ -12585,4 +12788,9 @@ ul.nav-tabs > li > a {
 	display: flex;
     justify-content: center;
     margin-top: .5rem !important;
+}
+
+.logo-perusahaan {
+	position: relative;
+	width: 90px;
 }

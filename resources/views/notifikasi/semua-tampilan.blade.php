@@ -3,8 +3,10 @@
 
     <!-- Page Wrapper -->
     <div class="page-wrapper">
+
         <!-- Page Content -->
         <div class="content container-fluid">
+
             <!-- Page Header -->
             <div class="page-header">
                 <div class="row align-items-center">
@@ -26,10 +28,6 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                         <ul class="nav nav-tabs nav-tabs-bottom nav-justified" style="text-align: center">
                             <li class="nav-item"><a href="#semua_notif" data-toggle="tab" class="nav-link active">Semua</a></li>
-                            <li class="nav-item"><a href="#sip_dokter" data-toggle="tab" class="nav-link">SIP Dokter</a></li>
-                            <li class="nav-item"><a href="#spk_dokter" data-toggle="tab" class="nav-link">SPK Dokter</a></li>
-                            <li class="nav-item"><a href="#spk_perawat" data-toggle="tab" class="nav-link">SPK Perawat</a></li>
-                            <li class="nav-item"><a href="#spk_nakes_lain" data-toggle="tab" class="nav-link">SPK Nakes Lain</a></li>
                             <li class="nav-item"><a href="#ulang_tahun" data-toggle="tab" class="nav-link">Ulang Tahun</a></li>
                         </ul>
                     </div>
@@ -61,13 +59,13 @@
                             @endphp
                             <div class="card" data-notification="{{ json_encode($notifikasiData) }}">
                                 <div class="card-header" onclick="toggleCardBody(this)">
-                                    {{ $notifikasiData->message3 }}
+                                    {{ $notifikasiData->message }}
                                     <span class="arrow-notif"></span><br>
                                     <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
                                     <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
                                 </div>
                                 <div class="card-body" style="display:none">
-                                    <p><b>{{ ucfirst(strtolower($notifikasiData->message5)) }}</b>, memberikan notifikasi {{ strtolower($notifikasiData->message3) }} kepada Anda. Anda dapat melihat dan menghapus notifikasi ini.</p>
+                                    <p><b>{{ $notifikasiData->message3 }}</b>, memberikan notifikasi {{ strtolower($notifikasiData->message) }} kepada Anda. Anda dapat melihat dan menghapus notifikasi ini.</p>
                                     @if ($notifikasi->read_at)
                                         <i class="fa-solid fa-check-double" style="color: #4999de;"></i>
                                         <span class="notification-time">{{ $read_at->diffForHumans() }}</span>
@@ -81,191 +79,11 @@
                     </div>
                 </div>
                 <!-- /Semua Notifikasi -->
-                
-                <!-- Notifikasi SIP Dokter -->
-                <div id="sip_dokter" class="tab-pane fade">
-                    <ul class="notification-list @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message3'] === 'Masa Berlaku SIP Dokter'; })->isEmpty()) empty @endif" style="margin-top: 10%;">
-                        @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message3'] === 'Masa Berlaku SIP Dokter'; })->isEmpty())
-                            <li class="notification-message noti-unread">
-                                <p class="noti-details" style="margin-top: 30px; text-align: center;">
-                                    <i class="fa-solid fa-bell-slash fa-fade fa-2xl" style="font-size: 40px !important"></i>
-                                </p>
-                                <p class="noti-details" style="margin-top: 20px; text-align: center; font-size: 18px;">Tidak ada notifikasi baru</p>
-                            </li>
-                        @endif
-                    </ul>
-                    <div class="row">
-                        <div class="col-md-12">
-                            @foreach ($semua_notifikasi->where('notifiable_id', auth()->id()) as $notifikasi)
-                            @php
-                                $notifikasiData = json_decode($notifikasi->data);
-                                $created_at = \Carbon\Carbon::parse($notifikasi->created_at);
-                                $read_at = \Carbon\Carbon::parse($notifikasi->read_at);
-                            @endphp
-                            @if ($notifikasiData->message3 == 'Masa Berlaku SIP Dokter')
-                                <div class="card" data-notification="{{ json_encode($notifikasiData) }}">
-                                    <div class="card-header" onclick="toggleCardBody(this)">
-                                        {{ $notifikasiData->message3 }}
-                                        <span class="arrow-notif"></span><br>
-                                        <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
-                                        <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
-                                    </div>
-                                    <div class="card-body" style="display:none">
-                                        <p><b>{{ ucfirst(strtolower($notifikasiData->message5)) }}</b>, memberikan notifikasi {{ strtolower($notifikasiData->message3) }} kepada Anda. Anda dapat melihat dan menghapus notifikasi ini.</p>
-                                        @if ($notifikasi->read_at)
-                                            <i class="fa-solid fa-check-double" style="color: #4999de;"></i>
-                                            <span class="notification-time">{{ $read_at->diffForHumans() }}</span>
-                                        @endif
-                                            <a class="simbol-hapus hapus_notifikasi_{{ $notifikasi->id }}" href="#" data-toggle="modal" data-target="#hapus_notifikasi_{{ $notifikasi->id }}"><i class="fa-solid fa-trash fa-lg"></i></a>
-                                            <a class="simbol-lihat lihat_notifikasi_{{ $notifikasi->id }}" href="#" data-toggle="modal" data-target="#lihat_notifikasi_{{ $notifikasi->id }}"><i class="fa-solid fa-eye fa-lg"></i></a>
-                                    </div>
-                                </div>
-                            @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                <!-- /Notifikasi SIP Dokter -->
-
-                <!-- Notifikasi SPK Dokter -->
-                <div id="spk_dokter" class="tab-pane fade">
-                    <ul class="notification-list @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message3'] === 'Masa Berlaku SPK Dokter'; })->isEmpty()) empty @endif" style="margin-top: 10%;">
-                        @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message3'] === 'Masa Berlaku SPK Dokter'; })->isEmpty())
-                            <li class="notification-message noti-unread">
-                                <p class="noti-details" style="margin-top: 30px; text-align: center;">
-                                    <i class="fa-solid fa-bell-slash fa-fade fa-2xl" style="font-size: 40px !important"></i>
-                                </p>
-                                <p class="noti-details" style="margin-top: 20px; text-align: center; font-size: 18px;">Tidak ada notifikasi baru</p>
-                            </li>
-                        @endif
-                    </ul>
-                    <div class="row">
-                        <div class="col-md-12">
-                            @foreach ($semua_notifikasi->where('notifiable_id', auth()->id()) as $notifikasi)
-                            @php
-                                $notifikasiData = json_decode($notifikasi->data);
-                                $created_at = \Carbon\Carbon::parse($notifikasi->created_at);
-                                $read_at = \Carbon\Carbon::parse($notifikasi->read_at);
-                            @endphp
-                            @if ($notifikasiData->message3 == 'Masa Berlaku SPK Dokter')
-                                <div class="card" data-notification="{{ json_encode($notifikasiData) }}">
-                                    <div class="card-header" onclick="toggleCardBody(this)">
-                                        {{ $notifikasiData->message3 }}
-                                        <span class="arrow-notif"></span><br>
-                                        <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
-                                        <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
-                                    </div>
-                                    <div class="card-body" style="display:none">
-                                        <p><b>{{ ucfirst(strtolower($notifikasiData->message5)) }}</b>, memberikan notifikasi {{ strtolower($notifikasiData->message3) }} kepada Anda. Anda dapat melihat dan menghapus notifikasi ini.</p>
-                                        @if ($notifikasi->read_at)
-                                            <i class="fa-solid fa-check-double" style="color: #4999de;"></i>
-                                            <span class="notification-time">{{ $read_at->diffForHumans() }}</span>
-                                        @endif
-                                            <a class="simbol-hapus hapus_notifikasi_{{ $notifikasi->id }}" href="#" data-toggle="modal" data-target="#hapus_notifikasi_{{ $notifikasi->id }}"><i class="fa-solid fa-trash fa-lg"></i></a>
-                                            <a class="simbol-lihat lihat_notifikasi_{{ $notifikasi->id }}" href="#" data-toggle="modal" data-target="#lihat_notifikasi_{{ $notifikasi->id }}"><i class="fa-solid fa-eye fa-lg"></i></a>
-                                    </div>
-                                </div>
-                            @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                <!-- /Notifikasi SPK Dokter -->
-
-                <!-- Notifikasi SPK Perawat -->
-                <div id="spk_perawat" class="tab-pane fade">
-                    <ul class="notification-list @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message3'] === 'Masa Berlaku SPK Perawat'; })->isEmpty()) empty @endif" style="margin-top: 10%;">
-                        @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message3'] === 'Masa Berlaku SPK Perawat'; })->isEmpty())
-                            <li class="notification-message noti-unread">
-                                <p class="noti-details" style="margin-top: 30px; text-align: center;">
-                                    <i class="fa-solid fa-bell-slash fa-fade fa-2xl" style="font-size: 40px !important"></i>
-                                </p>
-                                <p class="noti-details" style="margin-top: 20px; text-align: center; font-size: 18px;">Tidak ada notifikasi baru</p>
-                            </li>
-                        @endif
-                    </ul>
-                    <div class="row">
-                        <div class="col-md-12">
-                            @foreach ($semua_notifikasi->where('notifiable_id', auth()->id()) as $notifikasi)
-                            @php
-                                $notifikasiData = json_decode($notifikasi->data);
-                                $created_at = \Carbon\Carbon::parse($notifikasi->created_at);
-                                $read_at = \Carbon\Carbon::parse($notifikasi->read_at);
-                            @endphp
-                            @if ($notifikasiData->message3 == 'Masa Berlaku SPK Perawat')
-                                <div class="card" data-notification="{{ json_encode($notifikasiData) }}">
-                                    <div class="card-header" onclick="toggleCardBody(this)">
-                                        {{ $notifikasiData->message3 }}
-                                        <span class="arrow-notif"></span><br>
-                                        <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
-                                        <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
-                                    </div>
-                                    <div class="card-body" style="display:none">
-                                        <p><b>{{ ucfirst(strtolower($notifikasiData->message5)) }}</b>, memberikan notifikasi {{ strtolower($notifikasiData->message3) }} kepada Anda. Anda dapat melihat dan menghapus notifikasi ini.</p>
-                                        @if ($notifikasi->read_at)
-                                            <i class="fa-solid fa-check-double" style="color: #4999de;"></i>
-                                            <span class="notification-time">{{ $read_at->diffForHumans() }}</span>
-                                        @endif
-                                            <a class="simbol-hapus hapus_notifikasi_{{ $notifikasi->id }}" href="#" data-toggle="modal" data-target="#hapus_notifikasi_{{ $notifikasi->id }}"><i class="fa-solid fa-trash fa-lg"></i></a>
-                                            <a class="simbol-lihat lihat_notifikasi_{{ $notifikasi->id }}" href="#" data-toggle="modal" data-target="#lihat_notifikasi_{{ $notifikasi->id }}"><i class="fa-solid fa-eye fa-lg"></i></a>
-                                    </div>
-                                </div>
-                            @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                <!-- /Notifikasi SPK Perawat -->
-
-                <!-- Notifikasi SPK Nakes Lain -->
-                <div id="spk_nakes_lain" class="tab-pane fade">
-                    <ul class="notification-list @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message3'] === 'Masa Berlaku SPK Nakes Lain'; })->isEmpty()) empty @endif" style="margin-top: 10%;">
-                        @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message3'] === 'Masa Berlaku SPK Nakes Lain'; })->isEmpty())
-                            <li class="notification-message noti-unread">
-                                <p class="noti-details" style="margin-top: 30px; text-align: center;">
-                                    <i class="fa-solid fa-bell-slash fa-fade fa-2xl" style="font-size: 40px !important"></i>
-                                </p>
-                                <p class="noti-details" style="margin-top: 20px; text-align: center; font-size: 18px;">Tidak ada notifikasi baru</p>
-                            </li>
-                        @endif
-                    </ul>
-                    <div class="row">
-                        <div class="col-md-12">
-                            @foreach ($semua_notifikasi->where('notifiable_id', auth()->id()) as $notifikasi)
-                            @php
-                                $notifikasiData = json_decode($notifikasi->data);
-                                $created_at = \Carbon\Carbon::parse($notifikasi->created_at);
-                                $read_at = \Carbon\Carbon::parse($notifikasi->read_at);
-                            @endphp
-                            @if ($notifikasiData->message3 == 'Masa Berlaku SPK Nakes Lain')
-                                <div class="card" data-notification="{{ json_encode($notifikasiData) }}">
-                                    <div class="card-header" onclick="toggleCardBody(this)">
-                                        {{ $notifikasiData->message3 }}
-                                        <span class="arrow-notif"></span><br>
-                                        <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
-                                        <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
-                                    </div>
-                                    <div class="card-body" style="display:none">
-                                        <p><b>{{ ucfirst(strtolower($notifikasiData->message5)) }}</b>, memberikan notifikasi {{ strtolower($notifikasiData->message3) }} kepada Anda. Anda dapat melihat dan menghapus notifikasi ini.</p>
-                                        @if ($notifikasi->read_at)
-                                            <i class="fa-solid fa-check-double" style="color: #4999de;"></i>
-                                            <span class="notification-time">{{ $read_at->diffForHumans() }}</span>
-                                        @endif
-                                            <a class="simbol-hapus hapus_notifikasi_{{ $notifikasi->id }}" href="#" data-toggle="modal" data-target="#hapus_notifikasi_{{ $notifikasi->id }}"><i class="fa-solid fa-trash fa-lg"></i></a>
-                                            <a class="simbol-lihat lihat_notifikasi_{{ $notifikasi->id }}" href="#" data-toggle="modal" data-target="#lihat_notifikasi_{{ $notifikasi->id }}"><i class="fa-solid fa-eye fa-lg"></i></a>
-                                    </div>
-                                </div>
-                            @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                <!-- /Notifikasi SPK Nakes Lain -->
 
                 <!-- Notifikasi Ulang Tahun -->
                 <div id="ulang_tahun" class="tab-pane fade">
-                    <ul class="notification-list @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message3'] === 'Selamat Ulang Tahun'; })->isEmpty()) empty @endif" style="margin-top: 10%;">
-                        @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message3'] === 'Selamat Ulang Tahun'; })->isEmpty())
+                    <ul class="notification-list @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message'] === 'Selamat Ulang Tahun'; })->isEmpty()) empty @endif" style="margin-top: 10%;">
+                        @if(auth()->user()->unreadNotifications->filter(function ($notification) { return $notification->data['message'] === 'Selamat Ulang Tahun'; })->isEmpty())
                             <li class="notification-message noti-unread">
                                 <p class="noti-details" style="margin-top: 30px; text-align: center;">
                                     <i class="fa-solid fa-bell-slash fa-fade fa-2xl" style="font-size: 40px !important"></i>
@@ -282,16 +100,16 @@
                                 $created_at = \Carbon\Carbon::parse($notifikasi->created_at);
                                 $read_at = \Carbon\Carbon::parse($notifikasi->read_at);
                             @endphp
-                            @if ($notifikasiData->message3 == 'Selamat Ulang Tahun')
+                            @if ($notifikasiData->message == 'Selamat Ulang Tahun')
                                 <div class="card" data-notification="{{ json_encode($notifikasiData) }}">
                                     <div class="card-header" onclick="toggleCardBody(this)">
-                                        {{ $notifikasiData->message3 }}
+                                        {{ $notifikasiData->message }}
                                         <span class="arrow-notif"></span><br>
                                         <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
                                         <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
                                     </div>
                                     <div class="card-body" style="display:none">
-                                        <p><b>{{ ucfirst(strtolower($notifikasiData->message5)) }}</b>, memberikan notifikasi {{ strtolower($notifikasiData->message3) }} kepada Anda. Anda dapat melihat dan menghapus notifikasi ini.</p>
+                                        <p><b>{{ $notifikasiData->message3 }}</b>, memberikan notifikasi {{ strtolower($notifikasiData->message) }} kepada Anda. Anda dapat melihat dan menghapus notifikasi ini.</p>
                                         @if ($notifikasi->read_at)
                                             <i class="fa-solid fa-check-double" style="color: #4999de;"></i>
                                             <span class="notification-time">{{ $read_at->diffForHumans() }}</span>
@@ -324,7 +142,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" style="text-align: center ">Notifikasi <br>{{ $notifikasiData->message3 }}</h5>
+                            <h5 class="modal-title" style="text-align: center ">Notifikasi <br>{{ $notifikasiData->message }}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -335,17 +153,23 @@
                                     <div class="media-body">
                                         <p class="noti-details3">
                                             <a><b>{{ $notifikasiData->name }}</b></a><br>
-                                            <a style="font-size: 15px">{{ $notifikasiData->message }} / {{ \Carbon\Carbon::parse($notifikasiData->message2)->format('d F Y') }}</a><br>
+                                            <a style="font-size: 15px">Surabaya / <span id="tanggal-semua-notifikasi"></span> | <span id="waktu-semua-notifikasi"></span></a><br>
                                             <a style="color: #808080; font-weight: 500; font-size: 12px">ID Notifikasi: {{ substr($notifikasi->id, 0, 8) }}</a>
                                         </p><br>
                                         <p class="noti-details4">
-                                            <i>{{ $notifikasiData->message4 }} <b>{{ $notifikasiData->message5 }}</b> {{ $notifikasiData->message6 }} {{ $notifikasiData->message7 }}<b>{{ $notifikasiData->message8 }}</b> Kepada <b>{{ $notifikasiData->name }}</b> {{ $notifikasiData->message9 }}</i>
+                                            <i>{{ $notifikasiData->message2 }} <b>{{ $notifikasiData->message3 }}</b> {{ $notifikasiData->message4 }} {{ $notifikasiData->message5 }}<b>{{ $notifikasiData->message6 }}</b> Kepada <b>{{ $notifikasiData->name }}</b> {{ $notifikasiData->message7 }}</i>
                                         </p><br>
                                         <p class="logo-rsud">
-                                            <img src="{{ asset('assets/images/Logo_RSUD_Caruban.png') }}" alt="Logo RSUD Caruban">
+                                            @foreach($result_tema as $sql_user => $aplikasi_tema)
+                                                @if ($aplikasi_tema->tema_aplikasi == 'Terang')
+                                                    <img src="{{ asset('assets/images/Logo_Perusahaan_Merah.png') }}" alt="Logo PT TATI" loading="lazy">
+                                                    @elseif ($aplikasi_tema->tema_aplikasi == 'Gelap')
+                                                        <img src="{{ asset('assets/images/Logo_Perusahaan_Putih.png') }}" alt="Logo PT TATI" loading="lazy">
+                                                @endif
+                                            @endforeach
                                         </p>
                                         <p class="noti-time2">
-                                            <b>RSUD Caruban</b><br>
+                                            <b>PT. Tatacipta Teknologi Indonesia</b><br>
                                             <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
                                             <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
                                         </p>
@@ -522,7 +346,7 @@
         </script>
         
         <script>
-            document.getElementById('pageTitle').innerHTML = 'Semua Notifikasi | Aplikasi SILK';
+            document.getElementById('pageTitle').innerHTML = 'Semua Notifikasi | Trello - PT TATI';
         </script>
         
     @endsection

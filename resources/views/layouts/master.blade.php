@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="SoengSouy Admin Template">
+    <meta name="description" content="PT TATI - Aplikasi Trello">
     <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
-    <meta name="author" content="SoengSouy Admin Template">
+    <meta name="author" content="PT TATI">
     <meta name="robots" content="noindex, nofollow">
-    <title id="pageTitle">Beranda | Aplikasi SILK</title>
+    <title id="pageTitle">Beranda | Trello - PT TATI</title>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('assets/img/favicon.png') }}">
     <!-- Bootstrap CSS -->
@@ -361,16 +361,15 @@
             }
 
             .close-notifikasi {
-                bottom: 20px;
-                left: 440px;
-                text-align: center;
                 position: absolute;
+                bottom: 20px;
+                left: 40%;
             }
             
-            .logo-rsud2 img{
-                display: block;
-                width: 15%;
-                margin-left: 87%;
+            .logo-pttati2 img{
+                position: relative;
+                width: 100px;
+                left: 85%;
             }
 
             .noti-time3 {
@@ -418,10 +417,10 @@
                 right: 15px;
             }
 
-            .logo-rsud2 img{
-                display: block;
-                width: 15%;
-                margin-left: 87%;
+            .logo-pttati2 img{
+                position: relative;
+                width: 100px;
+                left: 85%;
             }
 
             .noti-time3 {
@@ -603,7 +602,7 @@
                                                 <div class="media-body">
                                                     <p class="noti-details">
                                                         <span class="noti-title">
-                                                            <b>{{ $notifikasiDataBelumDibaca->message3 }} {{ $notifikasiDataBelumDibaca->name }}</b>
+                                                            <b>{{ $notifikasiDataBelumDibaca->message }} {{ $notifikasiDataBelumDibaca->name }}</b>
                                                         </span><br>
                                                             Ada pesan baru untuk anda   !!
                                                     </p>
@@ -632,7 +631,7 @@
                                                 <div class="media-body">
                                                     <p class="noti-details">
                                                         <span class="noti-title">
-                                                            <b>{{ $notifikasiDataDibaca->message3 }} {{ $notifikasiDataDibaca->name }}</b>
+                                                            <b>{{ $notifikasiDataDibaca->message }} {{ $notifikasiDataDibaca->name }}</b>
                                                         </span><br>
                                                             Ada pesan baru untuk anda   !!
                                                     </p>
@@ -665,19 +664,25 @@
                             <div class="media-body">
                                 <p class="noti-details3"><br>
                                     <a><b>{{ $notifikasiDataBelumDibaca->name }}</b></a><br>
-                                    <a>{{ $notifikasiDataBelumDibaca->message }} / {{ \Carbon\Carbon::parse($notifikasiDataBelumDibaca->message2)->format('d F Y') }}</a><br>
+                                    <a>Surabaya / <span id="tanggal-master"></span> | <span id="waktu-master"></span></a><br>
                                     <a style="color: #808080; font-weight: 500; font-size: 12px">ID Notifikasi: {{ substr($notifikasi_belum_dibaca->id, 0, 8) }}</a>
                                 </p><br>
                                 <p class="noti-details2">
-                                    <i>{{ $notifikasiDataBelumDibaca->message4 }} <b>{{ $notifikasiDataBelumDibaca->message5 }}</b> {{ $notifikasiDataBelumDibaca->message6 }}<br>
-                                    {{ $notifikasiDataBelumDibaca->message7 }}<b>{{ $notifikasiDataBelumDibaca->message8 }}</b><br>
-                                    Kepada <b>{{ $notifikasiDataBelumDibaca->name }}</b> {{ $notifikasiDataBelumDibaca->message9 }}</i>
+                                    <i>{{ $notifikasiDataBelumDibaca->message2 }} <b>{{ $notifikasiDataBelumDibaca->message3 }}</b> {{ $notifikasiDataBelumDibaca->message4 }}<br>
+                                    {{ $notifikasiDataBelumDibaca->message5 }}<b>{{ $notifikasiDataBelumDibaca->message6 }}</b><br>
+                                    Kepada <b>{{ $notifikasiDataBelumDibaca->name }}</b> {{ $notifikasiDataBelumDibaca->message7 }}</i>
                                 <br><br></p>
-                                <p class="logo-rsud2">
-                                    <img src="{{ asset('assets/images/Logo_RSUD_Caruban.png') }}" alt="Logo RSUD Caruban" loading="lazy">
-                                </p>
+                                <p class="logo-pttati2">
+                                    @foreach($result_tema as $sql_user => $aplikasi_tema)
+                                        @if ($aplikasi_tema->tema_aplikasi == 'Terang')
+                                            <img src="{{ asset('assets/images/Logo_Perusahaan_Merah.png') }}" alt="Logo PT TATI" loading="lazy">
+                                            @elseif ($aplikasi_tema->tema_aplikasi == 'Gelap')
+                                                <img src="{{ asset('assets/images/Logo_Perusahaan_Putih.png') }}" alt="Logo PT TATI" loading="lazy">
+                                        @endif
+                                    @endforeach
+                                </p><br>
                                 <p class="noti-time3">
-                                    <b>RSUD Caruban</b><br>
+                                    <b>PT. TATI</b><br>
                                     <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
                                     <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
                                 </p>
@@ -704,19 +709,25 @@
                             <div class="media-body">
                                 <p class="noti-details3"><br>
                                     <a><b>{{ $notifikasiDataDibaca->name }}</b></a><br>
-                                    <a>{{ $notifikasiDataDibaca->message }} / {{ \Carbon\Carbon::parse($notifikasiDataDibaca->message2)->format('d F Y') }}</a><br>
+                                    <a>Surabaya / <span id="tanggal"></span> | <span id="waktu"></span></a><br>
                                     <a style="color: #808080; font-weight: 500; font-size: 12px">ID Notifikasi: {{ substr($notifikasi_dibaca->id, 0, 8) }}</a>
                                 </p><br>
                                 <p class="noti-details2">
-                                    <i>{{ $notifikasiDataDibaca->message4 }} <b>{{ $notifikasiDataDibaca->message5 }}</b> {{ $notifikasiDataDibaca->message6 }}<br>
-                                    {{ $notifikasiDataDibaca->message7 }}<b>{{ $notifikasiDataDibaca->message8 }}</b><br>
-                                    Kepada <b>{{ $notifikasiDataDibaca->name }}</b> {{ $notifikasiDataDibaca->message9 }}</i>
+                                    <i>{{ $notifikasiDataDibaca->message2 }} <b>{{ $notifikasiDataDibaca->message3 }}</b> {{ $notifikasiDataDibaca->message4 }}<br>
+                                    {{ $notifikasiDataDibaca->message5 }}<b>{{ $notifikasiDataDibaca->message6 }}</b><br>
+                                    Kepada <b>{{ $notifikasiDataDibaca->name }}</b> {{ $notifikasiDataDibaca->message7 }}</i>
                                 <br><br></p>
-                                <p class="logo-rsud2">
-                                    <img src="{{ asset('assets/images/Logo_RSUD_Caruban.png') }}" alt="Logo RSUD Caruban" loading="lazy">
-                                </p>
+                                <p class="logo-pttati2">
+                                    @foreach($result_tema as $sql_user => $aplikasi_tema)
+                                        @if ($aplikasi_tema->tema_aplikasi == 'Terang')
+                                            <img src="{{ asset('assets/images/Logo_Perusahaan_Merah.png') }}" alt="Logo PT TATI" loading="lazy">
+                                            @elseif ($aplikasi_tema->tema_aplikasi == 'Gelap')
+                                                <img src="{{ asset('assets/images/Logo_Perusahaan_Putih.png') }}" alt="Logo PT TATI" loading="lazy">
+                                        @endif
+                                    @endforeach
+                                </p><br>
                                 <p class="noti-time3">
-                                    <b>RSUD Caruban</b><br>
+                                    <b>PT. TATI</b><br>
                                     <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
                                     <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
                                 </p>
@@ -743,16 +754,10 @@
                         @if (Auth::user()->role_name == 'Admin')
                             <a class="dropdown-item" href="{{ route('admin-profile') }}">Profil Saya</a>
                         @endif
-                        @if (Auth::user()->role_name == 'Super Admin')
-                            <a class="dropdown-item" href="{{ route('super-admin-profile') }}">Profil Saya</a>
-                        @endif
-                        @if (Auth::user()->role_name == 'Kepala Ruang')
-                            <a class="dropdown-item" href="{{ route('kepala-ruangan-profile') }}">Profil Saya</a>
-                        @endif
                         @if (Auth::user()->role_name == 'User')
                             <a class="dropdown-item" href="{{ route('user-profile') }}">Profil Saya</a>
                         @endif                        
-                        @if (Auth::user()->role_name == 'Admin' || Auth::user()->role_name == 'Super Admin')
+                        @if (Auth::user()->role_name == 'Admin')
                             <a class="dropdown-item" href="{{ route('pengaturan-perusahaan') }}">Pengaturan</a>
                         @endif
                         <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
@@ -770,16 +775,10 @@
                     @if (Auth::user()->role_name == 'Admin')
                         <a class="dropdown-item" href="{{ route('admin-profile') }}">Profil Saya</a>
                     @endif
-                    @if (Auth::user()->role_name == 'Super Admin')
-                        <a class="dropdown-item" href="{{ route('super-admin-profile') }}">Profil Saya</a>
-                    @endif
-                    @if (Auth::user()->role_name == 'Kepala Ruang')
-                        <a class="dropdown-item" href="{{ route('kepala-ruangan-profile') }}">Profil Saya</a>
-                    @endif
                     @if (Auth::user()->role_name == 'User')
                         <a class="dropdown-item" href="{{ route('user-profile') }}">Profil Saya</a>
                     @endif                        
-                    @if (Auth::user()->role_name == 'Admin' || Auth::user()->role_name == 'Super Admin')
+                    @if (Auth::user()->role_name == 'Admin')
                         <a class="dropdown-item" href="{{ route('pengaturan-perusahaan') }}">Pengaturan</a>
                     @endif
                     <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
@@ -857,6 +856,8 @@
             });
         @endforeach
     </script>
+
+    <script src="{{ asset('assets/js/atur-tanggal-waktu-indo-realtime.js') }}"></script>
 
     <script>
         var toggleBtn = document.getElementById("toggle_btn");

@@ -18,15 +18,13 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('user_id');
             $table->string('email')->unique();
-            $table->string('nip')->nullable();
-            $table->string('no_dokumen')->nullable();
+            $table->string('username')->nullable();
+            $table->string('employee_id')->nullable();
             $table->string('join_date');
             $table->string('status')->nullable();
             $table->string('role_name')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('ruangan')->nullable();
-            $table->string('jenis_jabatan')->nullable();
-            $table->string('eselon')->nullable();
+            $table->string('tgl_lahir')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -39,51 +37,12 @@ class CreateUsersTable extends Migration
             ['name'                         => 'Kelvin',
              'user_id'                      => 'ID_00001',
              'email'                        => 'kelvin.p2504@gmail.com',
-             'nip'                          => '1905102006',
-             'no_dokumen'                   => NULL,
+             'username'                     => 'Kelvin',
+             'employee_id'                  => '2024050107010',
              'join_date'                    => now()->toDayDateTimeString(),
              'status'                       => 'Active',
              'role_name'                    => 'Admin',
              'avatar'                       => 'photo_defaults.jpg',
-             'ruangan'                      => NULL,
-             'jenis_jabatan'                => 'Developer',
-             'eselon'                       => NULL,
-             'password'                     => Hash::make('Kelvin.P980425'),
-             'tema_aplikasi'                => 'Terang',
-             'status_online'                => 'Offline',
-             'created_at' => now(),
-             'updated_at' => now()
-            ],
-            ['name'                         => 'Frizsa Dias',
-             'user_id'                      => 'ID_00002',
-             'email'                        => 'frizsadias20@gmail.com',
-             'nip'                          => '1905101051',
-             'no_dokumen'                   => NULL,
-             'join_date'                    => now()->toDayDateTimeString(),
-             'status'                       => 'Active',
-             'role_name'                    => 'Admin',
-             'avatar'                       => 'photo_defaults.jpg',
-             'ruangan'                      => NULL,
-             'jenis_jabatan'                => 'Developer',
-             'eselon'                       => NULL,
-             'password'                     => Hash::make('123456789'),
-             'tema_aplikasi'                => 'Terang',
-             'status_online'                => 'Offline',
-             'created_at' => now(),
-             'updated_at' => now()
-            ],
-            ['name'                         => 'Bayu Saputra',
-             'user_id'                      => 'ID_00003',
-             'email'                        => 'bayusputra131@gmail.com',
-             'nip'                          => '2105102003',
-             'no_dokumen'                   => NULL,
-             'join_date'                    => now()->toDayDateTimeString(),
-             'status'                       => 'Active',
-             'role_name'                    => 'Admin',
-             'avatar'                       => 'photo_defaults.jpg',
-             'ruangan'                      => NULL,
-             'jenis_jabatan'                => 'Developer',
-             'eselon'                       => NULL,
              'password'                     => Hash::make('123456789'),
              'tema_aplikasi'                => 'Terang',
              'status_online'                => 'Offline',

@@ -6,37 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Auth;
-use DB;
+use Brian2694\Toastr\Facades\Toastr;
 use App\Models\User;
 use Carbon\Carbon;
+use Auth;
+use DB;
 use Session;
-use Brian2694\Toastr\Facades\Toastr;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
+     * Tempat mengarahkan pengguna setelah login.
      *
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
-     * Create a new controller instance.
+     * Buat instance pengontrol baru.
      *
      * @return void
      */
@@ -49,46 +38,49 @@ class LoginController extends Controller
         ]);
     }
 
-    /** index login page */
+    // Tampilan Masuk Aplikasi //
     public function login(Request $request)
     {
         return view('auth.login');
     }
+    // /Tampilan Masuk Aplikasi //
 
-    /** login page to check database table users */
+    // Untuk Cek Authentifikasi //
     public function authenticate(Request $request)
     {
         $request->validate([
-            'nip_or_no_dokumen' => 'required|string',
-            'password'          => 'required|string'
+            'username_employee_id_atau_email'   => 'required|string',
+            'password'                          => 'required|string'
         ]);
 
-        if ($request->nip_or_no_dokumen === '-') {
-            Toastr::error('Gagal, NIP/NIKB tidak valid. Silahkan masukkan kembali NIP/NIKB valid ✘', 'Error');
+        if ($request->username_employee_id_atau_email === '-') {
+            Toastr::error('Gagal, Username / ID Employee / Email tidak valid. Silahkan masukkan kembali Username / ID Employee / Email valid.', 'Error');
             return redirect('login');
         }
         
         try {
-            $username = $request->nip_or_no_dokumen;
-            $password = $request->password;
+            $username   = $request->username_employee_id_atau_email;
+            $password   = $request->password;
             $dt         = Carbon::now();
             $todayDate  = $dt->toDayDateTimeString();
         
-            $authNip = Auth::attempt(['nip' => $username, 'password' => $password, 'status' => 'Active']);
-            $authDokumen = Auth::attempt(['no_dokumen' => $username, 'password' => $password, 'status' => 'Active']);
+            $authUsername   = Auth::attempt(['username'     => $username, 'password' => $password, 'status' => 'Active']);
+            $authEmployee   = Auth::attempt(['employee_id'  => $username, 'password' => $password, 'status' => 'Active']);
+            $authEmail      = Auth::attempt(['email'        => $username, 'password' => $password, 'status' => 'Active']);
 
-            if ($authNip || $authDokumen) {
+            if ($authUsername || $authEmployee || $authEmail) {
                 $user = Auth::user();
                 Session::put('name', $user->name);
                 Session::put('email', $user->email);
-                Session::put('nip', $user->nip);
-                Session::put('no_dokumen', $user->no_dokumen);
+                Session::put('username', $user->username);
+                Session::put('employee_id', $user->employee_id);
                 Session::put('user_id', $user->user_id);
                 Session::put('join_date', $user->join_date);
                 Session::put('status', $user->status);
                 Session::put('role_name', $user->role_name);
                 Session::put('avatar', $user->avatar);
-                $activityLog = ['name' => Session::get('name'), 'nip' => $user->nip, 'no_dokumen' => $user->no_dokumen, 'description' => 'Berhasil Masuk Aplikasi SILK', 'date_time' => $todayDate];
+                
+                $activityLog = ['name' => Session::get('name'), 'username' => $user->username, 'employee_id' => $user->employee_id, 'email' => $user->email, 'description' => 'Berhasil Masuk Aplikasi Trello', 'date_time' => $todayDate];
                 DB::table('activity_logs')->insert($activityLog);
 
                 $result_user_id = Session::get('user_id');
@@ -97,26 +89,27 @@ class LoginController extends Controller
                 ];
                 DB::table('users')->where('user_id', $result_user_id)->update($updateStatus);
 
-                Toastr::success('Anda berhasil memasuki aplikasi SILK ✔', 'Success');
+                Toastr::success('Anda berhasil memasuki aplikasi Trello', 'Success');
                 return redirect()->intended('home');
 
-            } elseif (User::where('nip', $username)->orWhere('no_dokumen', $username)->exists()) {
-                Toastr::error('Gagal, kata sandi anda tidak sama. Silahkan masukkan kembali kata sandi valid ✘', 'Error');
+            } elseif (User::where('employee_id', $username)->orWhere('email', $username)->exists()) {
+                Toastr::error('Gagal, kata sandi anda tidak sama. Silahkan masukkan kembali kata sandi valid', 'Error');
                 return redirect('login');
                 
-            }else {
-                Toastr::error('Gagal, NIP/NIKB anda tidak terdaftar pada aplikasi ini ✘', 'Error');
+            } else {
+                Toastr::error('Gagal, Username / ID Employee / Email anda tidak terdaftar pada aplikasi ini', 'Error');
                 return redirect('login');
             }
         } catch (\Exception $e) {
             \Log::error($e);
             DB::rollback();
-            Toastr::error('Gagal, NIP/NIKB anda tidak terdaftar pada aplikasi ini ✘', 'Error');
+            Toastr::error('Gagal, Username / ID Employee / Email anda tidak terdaftar pada aplikasi ini', 'Error');
             return redirect()->back();
         }
     }
+    // /Untuk Cek Authentifikasi //
 
-    /** logout and forget session */
+    // Untuk Keluar Aplikasi //
     public function logout(Request $request)
     {
         $dt         = Carbon::now();
@@ -128,20 +121,23 @@ class LoginController extends Controller
         ];
         DB::table('users')->where('user_id', $result_user_id)->update($updateStatus);
 
-        $activityLog = ['name' => Session::get('name'), 'nip'=> Session::get('nip'), 'no_dokumen'=> Session::get('no_dokumen'), 'description' => 'Berhasil Keluar Aplikasi SILK', 'date_time' => $todayDate];
+        $activityLog = ['name' => Session::get('name'), 'username'=> Session::get('username'), 'employee_id'=> Session::get('employee_id'), 'email'=> Session::get('email'), 'description' => 'Berhasil Keluar Aplikasi Trello', 'date_time' => $todayDate];
         DB::table('activity_logs')->insert($activityLog);
+        
         $request->session()->forget('name');
         $request->session()->forget('email');
-        $request->session()->forget('nip');
-        $request->session()->forget('no_dokumen');
+        $request->session()->forget('username');
+        $request->session()->forget('employee_id');
         $request->session()->forget('user_id');
         $request->session()->forget('join_date');
         $request->session()->forget('status');
         $request->session()->forget('role_name');
         $request->session()->forget('avatar');
         $request->session()->flush();
+        
         Auth::logout();
-        Toastr::success('Anda berhasil keluar aplikasi SILK ✔','Success');
+        Toastr::success('Anda berhasil keluar aplikasi Trello','Success');
         return redirect('login');
     }
+    // Untuk Keluar Aplikasi //
 }

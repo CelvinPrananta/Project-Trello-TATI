@@ -39,27 +39,23 @@ class UlangTahunNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        $result_pribadi = DB::table('profil_pegawai')->find($notifiable->id);
+        $result_pribadi = DB::table('daftar_pegawai')->find($notifiable->id);
         $result_user = User::find($notifiable->id);
 
-        $result_tanggal_lahir = new \DateTime($result_pribadi->tanggal_lahir);
+        $result_tanggal_lahir = new \DateTime($result_pribadi->tgl_lahir);
         $hari_ini = new \DateTime();
         $result_usia = $result_tanggal_lahir->diff($hari_ini)->y;
 
         return [
-            'name' => $result_user->name,
-            'avatar' => $result_user->avatar,
-            'tanggal_lahir' => $result_pribadi->tanggal_lahir,
-            'tempat_lahir' => $result_pribadi->tempat_lahir,
-            'message' => $result_pribadi->tempat_lahir,
-            'message2' => $result_pribadi->tanggal_lahir,
-            'message3' => 'Selamat Ulang Tahun',
-            'message4' => 'Pegawai pada',
-            'message5' => 'RUMAH SAKIT UMUM DAERAH CARUBAN',
-            'message6' => 'Kabupaten Madiun.',
-            'message7' => 'Atas Nama Pemerintah Kabupaten Madiun Mengucapkan Selamat Ulang Tahun Yang ke-',
-            'message8' => ''.$result_usia.'',
-            'message9' => 'Semoga Senantiasa Selalu Diberikan Kesehatan dan Kelancaran.'
+            'name'      => $result_user->name,
+            'avatar'    => $result_user->avatar,
+            'message'  => 'Selamat Ulang Tahun',
+            'message2'  => 'Pegawai pada',
+            'message3'  => 'PT. Tatacipta Teknologi Indonesia',
+            'message4'  => 'Kota Surabaya.',
+            'message5'  => 'Atas Nama PT. TATI Kota Surabaya Mengucapkan Selamat Ulang Tahun Yang ke-',
+            'message6'  => ''.$result_usia.'',
+            'message7'  => 'Semoga Senantiasa Selalu Diberikan Kesehatan dan Kelancaran.'
         ];
     }
 }

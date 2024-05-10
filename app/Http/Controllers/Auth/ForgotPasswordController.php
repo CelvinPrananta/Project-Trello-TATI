@@ -4,22 +4,23 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use DB;
-use Carbon\Carbon;
-use Mail;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use DB;
+use Mail;
 
 class ForgotPasswordController extends Controller
 {
-    /** get email*/
+    // Untuk Mendapatkan Email Pengguna //
     public function getEmail()
     {
        $result_name = DB::table('users')->get();
        return view('auth.passwords.email', compact('result_name'));
     }
+    // /Untuk Mendapatkan Email Pengguna //
 
-    /** post email */
+    // Kirim Email Pengguna //
     public function postEmail(Request $request)
     {
         $request->validate([
@@ -27,8 +28,8 @@ class ForgotPasswordController extends Controller
         ]);
 
         $token = Str::random(60);
-
         $user = DB::table('users')->where('email', $request->email)->first();
+
         if (!$user) {
             return back()->withErrors(['email' => 'Nama Pengguna Tidak Ditemukan']);
         }
@@ -45,12 +46,13 @@ class ForgotPasswordController extends Controller
         $resultEmail = $request->input('email');
 
         Mail::send('auth.verify', ['token' => $token], function ($message) use ($request, $resultEmail) {
-            $message->from($request->email, 'Admin Developer - Aplikasi SILK');
+            $message->from($request->email, 'Administrator | Trello - PT TATI');
             $message->to($resultEmail);
-            $message->subject('Bantuan Sandi - Aplikasi SILK');
+            $message->subject('Ubah Kata Sandi | Trello - PT TATI');
         });
 
-        Toastr::success('Kami telah mengirimkan tautan pengaturan ulang kata sandi Anda melalui email! ✔', 'Success');
+        Toastr::success('Kami telah mengirimkan tautan pengaturan ulang kata sandi Anda melalui email!', 'Success');
         return redirect('login');
     }
+    // /Kirim Email Pengguna //
 }

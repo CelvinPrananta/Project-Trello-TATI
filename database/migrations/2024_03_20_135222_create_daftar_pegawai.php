@@ -17,40 +17,21 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('user_id');
-            $table->string('nip')->nullable();
+            $table->string('email')->unique();
+            $table->string('username')->nullable();
+            $table->string('employee_id')->nullable();
             $table->string('role_name')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('pendidikan_terakhir')->nullable();
-            $table->string('no_hp')->nullable();
-            $table->string('ruangan')->nullable();
-            $table->string('kedudukan_pns')->nullable();
-            $table->string('jenis_pegawai')->nullable();
-            $table->string('jabatan')->nullable();
-            $table->string('gol_ruang_awal')->nullable();
-            $table->string('gol_ruang_akhir')->nullable();
-            $table->string('tempat_lahir')->nullable();
-            $table->string('tanggal_lahir')->nullable();
-            $table->string('tingkat_pendidikan')->nullable();
-            $table->string('jenis_kelamin')->nullable();
+            $table->string('tgl_lahir')->nullable();
             $table->timestamps();
         });
 
         DB::table('daftar_pegawai')->insert([
             ['name'                         => 'Kelvin',
              'user_id'                      => 'ID_00001',
-             'nip'                          => '1905102006',
-             'role_name'                    => 'Admin',
-             'avatar'                       => 'photo_defaults.jpg'
-            ],
-            ['name'                         => 'Frizsa Dias',
-             'user_id'                      => 'ID_00002',
-             'nip'                          => '1905101051',
-             'role_name'                    => 'Admin',
-             'avatar'                       => 'photo_defaults.jpg'
-            ],
-            ['name'                         => 'Bayu Saputra',
-             'user_id'                      => 'ID_00003',
-             'nip'                          => '2105102003',
+             'email'                        => 'kelvin.p2504@gmail.com',
+             'username'                     => 'Kelvin',
+             'employee_id'                  => '2024050107010',
              'role_name'                    => 'Admin',
              'avatar'                       => 'photo_defaults.jpg'
             ]

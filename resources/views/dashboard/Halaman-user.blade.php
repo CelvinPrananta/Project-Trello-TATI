@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+
     <?php
     $hour = date('G');
     $minute = date('i');
@@ -15,8 +16,8 @@
     } elseif ($hour >= 18 && $hour <= 23 && $minute <= 59 && $second <= 59) {
         $greet = 'Selamat Malam,';
     }
-    
     ?>
+
     <script src="https://kit.fontawesome.com/abea6a9d41.js" crossorigin="anonymous"></script>
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -27,12 +28,13 @@
                     <div class="col-sm-12">
                         <h3 class="page-title">{{ $greet }} {{ Session::get('name') }} &#128522;</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item active">Dashboard <b>{{ Session::get('role_name') }}</b></li>
+                            <li class="breadcrumb-item active">Dashboard <b>User</b></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <!-- /Page Header -->
+
             <div class="container">
                 <div class="row">
                     <div class="col-md-24 col-sm-24 col-lg-24 col-xl-12">
@@ -43,7 +45,7 @@
                                     @if (!empty($tampilanPerusahaan->company_name))
                                         <h3 class="namaperusahaan">{{ $tampilanPerusahaan->company_name }}</h3>
                                     @else
-                                        <h3>Nama Instansi</h3>
+                                        <h3>Nama Perusahaan</h3>
                                     @endif
 
                                     @if (!empty($tampilanPerusahaan->address))
@@ -52,7 +54,7 @@
                                                 <a href="https://www.google.com/maps?q={{ $tampilanPerusahaan->address }}" target="_blank" style="color:black;">{{ $tampilanPerusahaan->address }}</a>
                                         </p>
                                     @else
-                                        <p>Alamat : Alamat Instansi</p>
+                                        <p>Alamat : Alamat Perusahaan</p>
                                     @endif
 
                                     @if (!empty($tampilanPerusahaan->mobile_number))
@@ -61,7 +63,7 @@
                                                 <a href="https://api.whatsapp.com/send?phone=62{{ $tampilanPerusahaan->mobile_number }}" target="_blank" style="color:black;">0{{ $tampilanPerusahaan->mobile_number }}</a>
                                         </p>
                                     @else
-                                        <p>No. Telepon : Nomor Telepon Instansi</p>
+                                        <p>No. Telepon : Nomor Telepon Perusahaan</p>
                                     @endif
                                 </div>
                             </div>

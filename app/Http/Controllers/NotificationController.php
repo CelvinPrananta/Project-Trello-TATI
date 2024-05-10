@@ -6,13 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Notification;
 use Brian2694\Toastr\Facades\Toastr;
 use DB;
-use Session;
 
 class NotificationController extends Controller
 {
+    // Tampilan Notifikasi //
     public function tampilanNotifikasi(Request $request)
     {
-
         $result_tema = DB::table('mode_aplikasi')
             ->select(
                 'mode_aplikasi.id',
@@ -73,21 +72,28 @@ class NotificationController extends Controller
             )
             ->whereNotNull('read_at')
             ->get();
-        return view('notifikasi.semua-tampilan', compact('semua_notifikasi', 'belum_dibaca', 'dibaca', 'unreadNotifications', 'readNotifications', 'result_tema'));
-    }
 
+        return view('notifikasi.semua-tampilan', compact('result_tema', 'unreadNotifications', 'readNotifications',
+            'semua_notifikasi', 'belum_dibaca', 'dibaca'));
+    }
+    // /Tampilan Notifikasi //
+
+    // Hapus Notifikasi Per ID //
     public function hapusNotifikasi($id)
     {
         try {
+
             if($id) {
                 Notification::where('id', $id)->delete();
             }
-            Toastr::success('Notifikasi Berhasil Dihapus ✔', 'Success');
+
+            Toastr::success('Notifikasi Berhasil Dihapus', 'Success');
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Notifikasi Gagal Dihapus ✘', 'Error');
+            Toastr::error('Notifikasi Gagal Dihapus', 'Error');
             return redirect()->back();
         }
     }
+    // /Hapus Notifikasi Per ID //
 }

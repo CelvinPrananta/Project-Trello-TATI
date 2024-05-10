@@ -36,13 +36,23 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="info-status">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" class="svg-inline--fa fa-info-circle fa-w-16 float-right h-100" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 1em; margin-top: 4px;">
+                                    <path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path>
+                                </svg>
+                                <span class="text-status"><b>Indikator Kata Sandi :</b><br>
+                                    <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Lemah : [a-z]<br>
+                                    <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Sedang : [a-z] + [angka]<br>
+                                    <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Kuat : [a-z] + [angka] + [!,@,#,$,%,^,&,*,?,_,~,(,)]
+                                </span>
+                            </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col">
                                         <label>Kata Sandi</label>
                                     </div>
                                 </div>
-                                <div class="input-group">
+                                <div class="input-group" style="position: sticky;">
                                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput1" name="password" placeholder="Masukkan Kata Sandi Baru">
                                     <div class="input-group-append">
                                         <button type="button" id="tampilkanPassword1" class="btn btn-outline-secondary">
@@ -63,6 +73,16 @@
                                     <div class="kata-sandi-sedang-before-1"></div>
                                 </div>
                                 <div id="indicator-kata-sandi-tulisan-1"></div>
+                            </div>
+                            <div class="info-status">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" class="svg-inline--fa fa-info-circle fa-w-16 float-right h-100" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 1em; margin-top: 4px;">
+                                    <path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path>
+                                </svg>
+                                <span class="text-status"><b>Indikator Kata Sandi :</b><br>
+                                    <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Lemah : [a-z]<br>
+                                    <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Sedang : [a-z] + [angka]<br>
+                                    <i class="fa-solid fa-circle" style="font-size: 5px"></i> Sandi Kuat : [a-z] + [angka] + [!,@,#,$,%,^,&,*,?,_,~,(,)]
+                                </span>
                             </div>
                             <div class="form-group">
                                 <div class="row">
@@ -96,7 +116,7 @@
                                 <button class="btn btn-primary account-btn" style="border-radius: 20px" type="submit">Perbaharui</button>
                             </div>
                             <div class="account-footer">
-                                <a style="color: #8e8e8e;"><strong>Copyright &copy;2023 - <script>document.write(new Date().getFullYear())</script> RSUD CARUBAN.</strong></a><br>
+                                <a style="color: #8e8e8e;"><strong>Copyright &copy;2023 - <script>document.write(new Date().getFullYear())</script> PT. Tatacipta Teknologi Indonesia</strong></a><br>
                                 <p style="color: #8e8e8e;">All rights reserved.</p>
                             </div>
                         </form>
@@ -115,7 +135,11 @@
         <script src="{{ asset('assets/js/indicatorkatasandi.js') }}"></script>
 
         <script>
-            document.getElementById('pageTitle').innerHTML = 'Ubah Kata Sandi | Aplikasi SILK';
+            document.getElementById('pageTitle').innerHTML = 'Ubah Kata Sandi | Trello - PT TATI';
+        </script>
+
+        <script>
+            history.pushState({}, "", '/ubah-kata-sandi');
         </script>
     
     @endsection

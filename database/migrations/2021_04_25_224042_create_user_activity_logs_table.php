@@ -17,6 +17,8 @@ class CreateUserActivityLogsTable extends Migration
             $table->id();
             $table->string('user_name')->nullable();
             $table->string('email')->nullable();
+            $table->string('username')->nullable();
+            $table->string('employee_id')->nullable();
             $table->string('status')->nullable();
             $table->string('role_name')->nullable();
             $table->string('modify_user')->nullable();
