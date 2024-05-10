@@ -10,7 +10,7 @@
                         <h3 class="account-title">Daftar</h3>
                         
                         <!-- Account Form -->
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('daftar') }}">
                             @csrf
                             <div class="form-group">
                                 <label>Username</label>
@@ -103,10 +103,12 @@
                                 <div id="indicator-kata-sandi-tulisan-2"></div>
                             </div>
                             <div class="form-group text-center">
-                                <button class="btn btn-primary account-btn" type="submit">Daftar</button>
+                                <button class="btn btn-primary account-btn" type="submit" style="border-radius: 20px">Daftar</button>
                             </div>
                             <div class="account-footer">
-                                <p>Sudah memiliki akun? <a href="{{ route('login') }}">Masuk</a></p>
+                                <p>Sudah memiliki akun? <a href="{{ route('login') }}">Masuk</a></p><br>
+                                <a style="color: #8e8e8e;"><strong>Copyright &copy;2023 - <script>document.write(new Date().getFullYear())</script> PT. Tatacipta Teknologi Indonesia</strong></a><br>
+                                <p style="color: #8e8e8e;">All rights reserved.</p>
                             </div>
                         </form>
                         <!-- /Account Form -->

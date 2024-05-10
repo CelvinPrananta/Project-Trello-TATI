@@ -27,8 +27,11 @@ class User extends Authenticatable
         'status',
         'role_name',
         'avatar',
+        'tgl_lahir',
         'email_verified_at',
         'password',
+        'tema_aplikasi',
+        'status_online'
     ];
 
     /**

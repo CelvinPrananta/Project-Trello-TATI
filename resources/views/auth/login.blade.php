@@ -64,6 +64,7 @@
                                 <button class="btn btn-primary account-btn" style="border-radius: 20px" type="submit">Masuk</button>
                             </div>
                             <div class="account-footer">
+                                <p>Belum memiliki akun? <a href="{{ route('daftar') }}">Daftar</a></p><br>
                                 <a style="color: #8e8e8e;"><strong>Copyright &copy;2023 - <script>document.write(new Date().getFullYear())</script> PT. Tatacipta Teknologi Indonesia</strong></a><br>
                                 <p style="color: #8e8e8e;">All rights reserved.</p>
                             </div>

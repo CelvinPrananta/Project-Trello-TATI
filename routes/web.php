@@ -66,8 +66,8 @@ Route::controller(LockScreen::class)->group(function () {
 
 // ----------------------------- Daftar Akun ----------------------------- //
 Route::controller(RegisterController::class)->group(function () {
-    Route::get('/daftar', 'tampilanDaftar')->name('register');
-    Route::post('/daftar', 'daftarAplikasi')->name('register');
+    Route::get('/daftar', 'tampilanDaftar')->name('daftar');
+    Route::post('/daftar', 'daftarAplikasi')->name('daftar');
 });
 
 // ----------------------------- Lupa Kata Sandi ----------------------------- //

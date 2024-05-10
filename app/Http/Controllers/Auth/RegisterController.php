@@ -41,16 +41,17 @@ class RegisterController extends Controller
                 'join_date'         => $todayDate,
                 'role_name'         => 'User',
                 'status'            => 'Active',
-                'password'          => Hash::make($request->password),
+                'tema_aplikasi'     => 'Terang',
+                'status_online'     => 'Offline',
+                'password'          => Hash::make($request->password)
             ]);
             
             DB::commit();
-            Toastr::success('Pendaftaran akun baru telah berhasil','Success');
+            Toastr::success('Pendaftaran akun baru telah berhasil, silahkan login menggunakan akun anda!','Success');
             return redirect('login');
         } catch(\Exception $e) {
-            dd($e);
             DB::rollback();
-            Toastr::error('Pendaftaran akun baru telah gagal','Error');
+            Toastr::error('Pendaftaran akun baru telah gagal, silahkan mendaftar ulang kembali!','Error');
             return redirect()->back();
         }
     }
