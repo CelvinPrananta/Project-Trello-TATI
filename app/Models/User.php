@@ -51,5 +51,17 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, "user_team", "user_id", "team_id")
+            ->withPivot("status");
+    }
+
+    public function teamRelations()
+    {
+        return $this->hasMany(UserTeam::class);
+    }
 }

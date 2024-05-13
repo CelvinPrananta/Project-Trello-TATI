@@ -6,7 +6,7 @@
                 <li class="sidebar-left">
                     <a href="{{ route('home') }}">
                         <div class="image">
-                            <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" loading="lazy">
+                            <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="avatar-sidebar" loading="lazy">
                             <span class="status online"></span>
                         </div>
                         <span class="text">{{ Session::get('name') }}</span>
@@ -38,7 +38,21 @@
                             </li>
                         </ul>
                     </li>
-
+                    <li class="menu-title"> <span>Manajemen Tugas</span> </li>
+                    <li class="{{ set_active(['admin/tim']) }}">
+                        <a href="{{ route('showTeams') }}" class="{{ set_active(['admin/tim']) ? 'noti-dot' : '' }}">
+                            <i class="fa-solid fa-cube"></i>
+                            <span>Tim</span>
+                        </a>
+                    </li>
+                    @if (Route::is('showTeams'))
+                    <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                        <a href="#" data-toggle="modal" data-target="#createTeam">
+                            <i class="fa-solid fa-cubes" style="font-size: 20px"></i>
+                            <span>Buat Tim</span>
+                        </a>
+                    </li>
+                    @endif
                     <li class="menu-title"> <span>Pengaturan</span> </li>
                     <li class="{{ set_active(['admin/profile']) }}">
                         <a href="{{ route('admin-profile') }}" class="{{ set_active(['admin/profile']) ? 'noti-dot' : '' }}">
@@ -55,6 +69,13 @@
                 @endif
 
                 @if (Auth::user()->role_name == 'User')
+                    <li class="menu-title"> <span>Manajemen Tugas</span> </li>
+                    <li class="{{ set_active(['user/tim']) }}">
+                        <a href="{{ route('showTeams2') }}" class="{{ set_active(['user/tim']) ? 'noti-dot' : '' }}">
+                            <i class="fa-solid fa-cube"></i>
+                            <span>Tim</span>
+                        </a>
+                    </li>
                     <li class="menu-title"> <span>Pengaturan</span> </li>
                     <li class="{{ set_active(['user/profile']) }}">
                         <a href="{{ route('user-profile') }}" class="{{ set_active(['user/profile']) ? 'noti-dot' : '' }}">

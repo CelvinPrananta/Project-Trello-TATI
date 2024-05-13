@@ -12794,3 +12794,675 @@ ul.nav-tabs > li > a {
 	position: relative;
 	width: 90px;
 }
+
+/** Pattern Latang Belakang Tim **/
+.bg-pattern-zig-zag {
+    background-color: #ffffff;
+    opacity: 1;
+    background: linear-gradient(135deg, #79797955 25%, transparent 25%) -21px 0/
+            42px 42px,
+        linear-gradient(225deg, #797979 25%, transparent 25%) -21px 0/ 42px 42px,
+        linear-gradient(315deg, #79797955 25%, transparent 25%) 0px 0/ 42px 42px,
+        linear-gradient(45deg, #797979 25%, #ffffff 25%) 0px 0/ 42px 42px;
+}
+
+.bg-pattern-isometric {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: linear-gradient(
+            30deg,
+            #797979 12%,
+            transparent 12.5%,
+            transparent 87%,
+            #797979 87.5%,
+            #797979
+        ),
+        linear-gradient(
+            150deg,
+            #797979 12%,
+            transparent 12.5%,
+            transparent 87%,
+            #797979 87.5%,
+            #797979
+        ),
+        linear-gradient(
+            30deg,
+            #797979 12%,
+            transparent 12.5%,
+            transparent 87%,
+            #797979 87.5%,
+            #797979
+        ),
+        linear-gradient(
+            150deg,
+            #797979 12%,
+            transparent 12.5%,
+            transparent 87%,
+            #797979 87.5%,
+            #797979
+        ),
+        linear-gradient(
+            60deg,
+            #79797977 25%,
+            transparent 25.5%,
+            transparent 75%,
+            #79797977 75%,
+            #79797977
+        ),
+        linear-gradient(
+            60deg,
+            #79797977 25%,
+            transparent 25.5%,
+            transparent 75%,
+            #79797977 75%,
+            #79797977
+        );
+    background-size: 42px 74px;
+    background-position: 0 0, 0 0, 21px 37px, 21px 37px, 0 0, 21px 37px;
+}
+
+.bg-pattern-wavy {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: repeating-radial-gradient(
+            circle at 0 0,
+            transparent 0,
+            #ffffff 21px
+        ),
+        repeating-linear-gradient(#79797955, #797979);
+}
+
+.bg-pattern-triangle {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: linear-gradient(45deg, #797979 50%, #ffffff 50%);
+    background-size: 21px 21px;
+}
+
+.bg-pattern-paper {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: linear-gradient(#797979 4.2px, transparent 4.2px),
+        linear-gradient(90deg, #797979 4.2px, transparent 4.2px),
+        linear-gradient(#797979 2.1px, transparent 2.1px),
+        linear-gradient(90deg, #797979 2.1px, #ffffff 2.1px);
+    background-size: 105px 105px, 105px 105px, 21px 21px, 21px 21px;
+    background-position: -4.2px -4.2px, -4.2px -4.2px, -2.1px -2.1px,
+        -2.1px -2.1px;
+}
+.bg-pattern-moon {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: radial-gradient(
+        ellipse farthest-corner at 21px 21px,
+        #797979,
+        #797979 50%,
+        #ffffff 50%
+    );
+    background-size: 21px 21px;
+}
+.bg-pattern-rect {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: repeating-linear-gradient(
+            45deg,
+            #797979 25%,
+            transparent 25%,
+            transparent 75%,
+            #797979 75%,
+            #797979
+        ),
+        repeating-linear-gradient(
+            45deg,
+            #797979 25%,
+            #ffffff 25%,
+            #ffffff 75%,
+            #797979 75%,
+            #797979
+        );
+    background-position: 0 0, 21px 21px;
+    background-size: 42px 42px;
+}
+.bg-pattern-triangle-2 {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: linear-gradient(
+        -45deg,
+        #ffffff,
+        #ffffff 50%,
+        #797979 50%,
+        #797979
+    );
+    background-size: 21px 21px;
+}
+.bg-pattern-polka {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: radial-gradient(#797979 3px, #ffffff 3px);
+    background-size: 21px 21px;
+}
+.bg-pattern-polka-2 {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: radial-gradient(#797979 3px, transparent 3px),
+        radial-gradient(#797979 3px, #ffffff 3px);
+    background-size: 40px 40px;
+    background-position: 0 0, 21px 21px;
+}
+.bg-pattern-line-bold-horizontal {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: linear-gradient(0deg, #ffffff 50%, #797979 50%);
+    background-size: 21px 21px;
+}
+.bg-pattern-line-bold-vertical {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: linear-gradient(
+        to right,
+        #797979,
+        #797979 10.5px,
+        #ffffff 10.5px,
+        #ffffff
+    );
+    background-size: 21px 100%;
+}
+.bg-pattern-line-thin-diagonal {
+    background-color: #ffffff;
+    opacity: 1;
+    background-size: 21px 21px;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #797979 0,
+        #797979 2.1px,
+        #ffffff 0,
+        #ffffff 50%
+    );
+}
+.bg-pattern-box {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: linear-gradient(#797979 2.1px, transparent 2.1px),
+        linear-gradient(to right, #797979 2.1px, #ffffff 2.1px);
+    background-size: 42px 42px;
+}
+.bg-pattern-zig-zag-flat {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: linear-gradient(135deg, #797979 25%, transparent 25%),
+        linear-gradient(225deg, #797979 25%, transparent 25%),
+        linear-gradient(45deg, #797979 25%, transparent 25%),
+        linear-gradient(315deg, #797979 25%, #ffffff 25%);
+    background-position: 21px 0, 21px 0, 0 0, 0 0;
+    background-size: 42px 42px;
+    background-repeat: repeat;
+}
+.bg-pattern-circle {
+    background-color: #ffffff;
+    opacity: 1;
+    background-image: radial-gradient(circle at center center, #cdcdcd, #ffffff),
+        repeating-radial-gradient(
+            circle at center center,
+            #cdcdcd,
+            #cdcdcd,
+            14px,
+            transparent 28px,
+            transparent 14px
+        );
+    background-blend-mode: multiply;
+}
+
+.bg-grad-sunkist {
+    background: #f2994a; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #f2c94c,
+        #f2994a
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #f2c94c,
+        #f2994a
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-mini {
+    background: #30e8bf; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #ff8235,
+        #30e8bf
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #ff8235,
+        #30e8bf
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-sha-la-la {
+    background: #d66d75; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #e29587,
+        #d66d75
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #e29587,
+        #d66d75
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-celestial {
+    background: #c33764; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #1d2671,
+        #c33764
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #1d2671,
+        #c33764
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-dream {
+    background: #34e89e; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #0f3443,
+        #34e89e
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #0f3443,
+        #34e89e
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-blue {
+    background: #0575e6; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #021b79,
+        #0575e6
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #021b79,
+        #0575e6
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-purple {
+    background: #4568dc; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #b06ab3,
+        #4568dc
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #b06ab3,
+        #4568dc
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-ellegant {
+    background: #e8cbc0; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #636fa4,
+        #e8cbc0
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #636fa4,
+        #e8cbc0
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-jaipur {
+    background: #dbe6f6; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #c5796d,
+        #dbe6f6
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #c5796d,
+        #dbe6f6
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-mild {
+    background: #67b26f; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #4ca2cd,
+        #67b26f
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #4ca2cd,
+        #67b26f
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-sunset {
+    background: #ee0979; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #ff6a00,
+        #ee0979
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #ff6a00,
+        #ee0979
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-cosmic {
+    background: #ff00cc; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #333399,
+        #ff00cc
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #333399,
+        #ff00cc
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-jupiter {
+    background: #ff00cc; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #333399,
+        #ff00cc
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #333399,
+        #ff00cc
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-police {
+    background: #2196f3; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #f44336,
+        #2196f3
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #f44336,
+        #2196f3
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grad-morning {
+    background: #ff5f6d; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #ffc371,
+        #ff5f6d
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #ffc371,
+        #ff5f6d
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+/** /Pattern Latang Belakang Tim **/
+
+/** Untuk Atur Style Latar Belakang Tim **/
+.border-4 {
+	border-width: 4px !important;
+}
+.rounded-full {
+    border-radius: 9999px !important;
+}
+.rounded-lg {
+	border-radius: 0.5rem !important;
+}
+.w-36 {
+	width: 9rem !important;
+}
+.w-20 {
+    width: 4rem !important;
+}
+.aspect-square {
+    aspect-ratio: 1 / 1 !important;
+}
+.flex-shrink-0 {
+	flex-shrink: 0 !important;
+}
+.h-36 {
+	height: 9rem !important;
+}
+.h-24 {
+    height: 6rem !important;
+}
+.bg-gray-200 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(229 231 235 / var(--tw-bg-opacity)) !important;
+}
+.rounded-tr-xl {
+    border-top-right-radius: 0.75rem !important;
+}
+.rounded-tl-xl {
+    border-top-left-radius: 0.75rem !important;
+}
+.h-4p {
+    height: 1rem !important;
+}
+.h-28 {
+    height: 7rem !important;
+}
+.font-semibold {
+    font-weight: 600 !important;
+}
+.max-w-2xl {
+	max-width: 42rem !important;
+}
+.justify-start {
+	justify-content: flex-start !important;
+}
+.overflow-hidden {
+	overflow: hidden !important;
+}
+.overflow-x-scroll {
+	overflow-x: scroll !important;
+}
+.border-2 {
+	border-width: 2px !important;
+}
+.h-20 {
+    height: 5rem !important;
+}
+.shadow-xl {
+    --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+.flex-grow {
+    flex-grow: 1;
+}
+.h-12 {
+    height: 3rem;
+}
+.border-gray-200 {
+	--tw-border-opacity: 1;
+	border-color: rgb(229 231 235 / var(--tw-border-opacity)) !important;
+}
+.border-t-gray-200 {
+    --tw-border-opacity: 1;
+    border-top-color: rgb(229 231 235 / var(--tw-border-opacity)) !important;
+}
+.border-t {
+    border-top-width: 1px !important;
+}
+.bg-white {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
+}
+.px-4 {
+	padding-left: 1rem !important;
+	padding-right: 1rem !important;
+}
+.py-2 {
+	padding-top: 0.5rem !important;
+	padding-bottom: 0.5rem !important;
+}
+.w-full {
+	width: 100% !important;
+}
+.h-full {
+	height: 100% !important;
+}
+.flex {
+	display: flex !important;
+}
+.flex-wrap {
+	flex-wrap: wrap !important;
+}
+.gap-x-8 {
+	-moz-column-gap: 2rem !important;
+	column-gap: 2rem !important;
+}
+.gap-y-6 {
+	row-gap: 1.5rem !important;
+}
+.h-52 {
+	height: 13rem !important;
+}
+.w-72 {
+	width: 18rem !important;
+}
+.cursor-pointer {
+	cursor: pointer !important;
+}
+.select-none {
+	-webkit-user-select: none !important;
+	-moz-user-select: none !important;
+	user-select: none !important;
+}
+.flex-col {
+	flex-direction: column !important;
+}
+.items-center {
+	align-items: center !important;
+}
+.justify-center {
+	justify-content: center !important;
+}
+.gap-2 {
+	gap: 0.5rem !important;
+}
+.gap-1 {
+    gap: 0.25rem !important;
+}
+.border {
+    border-width: 1px;
+}
+.rounded-xl {
+	border-radius: 0.75rem !important;
+}
+.bg-gray-100 {
+	--tw-bg-opacity: 1;
+	background-color: rgb(243 244 246 / var(--tw-bg-opacity)) !important;
+}
+.text-gray-400 {
+	--tw-text-opacity: 1;
+	color: rgb(156 163 175 / var(--tw-text-opacity)) !important;
+}
+.shadow-md {
+	--tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+	--tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+	box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+.transition {
+	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter !important;
+	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter !important;
+	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter !important;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+	transition-duration: 150ms !important;
+}
+.duration-300 {
+	transition-duration: 300ms !important;
+}
+.hover\:shadow-2xl:hover {
+	--tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+	--tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+	box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+.font-bold {
+    font-weight: 700;
+}
+.text-3xl {
+    font-size: 1.775rem;
+    line-height: 2.25rem;
+}
+.ml-6 {
+    margin-left: 1.5rem;
+}
+.shadow-sm {
+    --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+/** Untuk Atur Style Latar Belakang Tim **/
+
+.avatar-sidebar {
+    background-color: #aaa;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    font-weight: 500;
+    height: 50px !important;
+    line-height: 38px;
+    margin: 0 10px 0 0;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: middle;
+    width: 50px !important;
+    position: relative;
+    white-space: nowrap;
+}
+
+.avatar-tim {
+    background-color: #aaa;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    font-weight: 500;
+    height: 45px !important;
+    line-height: 45px;
+    margin: 0 10px 0 0;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: middle;
+    width: 45px !important;
+    position: relative;
+    white-space: nowrap;
+}
+
+.avatar-undangan {
+    background-color: #aaa;
+    border-radius: 50%;
+    height: 45px !important;
+    margin: 0 10px 0 0;
+    width: 45px !important;
+    position: relative;
+    bottom: 10px;
+}

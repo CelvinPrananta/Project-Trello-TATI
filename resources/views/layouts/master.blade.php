@@ -206,6 +206,7 @@
             .arrow-kanan2{color: {{ $mode_tema->warna_sistem_tulisan }} !important}
             .arrow-kiri{color: {{ $mode_tema->warna_sistem_tulisan }} !important}
             .arrow-kiri2{color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+            .text-gray-400{color: {{ $mode_tema->warna_sistem_tulisan }} !important}
 
             .apexcharts-xaxistooltip, .apexcharts-yaxistooltip{background: {{ $mode_tema->warna_mode }} !important; color : {{ $mode_tema->warna_sistem_tulisan }} !important;}
             .form-control{background-color: {{ $mode_tema->warna_mode }} !important; color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
@@ -258,6 +259,9 @@
             .dropzone-box-42{background-color: {{ $mode_tema->warna_mode }} !important;}
             .dropzone-box-43{background-color: {{ $mode_tema->warna_mode }} !important;}
             .dropzone-box-44{background-color: {{ $mode_tema->warna_mode }} !important;}
+            .fa-circle-check{color: {{ $mode_tema->warna_mode }} !important;}
+            .bg-white{background-color: {{ $mode_tema->warna_mode }} !important;}
+            .bg-gray-100{background-color: {{ $mode_tema->warna_mode }} !important;}
             .boc-edit-form-instruments{background-color: {{ $mode_tema->warna_mode }} !important;}
             .boc-edit-form-fields{background-color: {{ $mode_tema->warna_mode }} !important;}
             .status-persetujuan-user{background-color: {{ $mode_tema->warna_mode }} !important; color: {{ $mode_tema->warna_sistem_tulisan }} !important}
@@ -317,6 +321,7 @@
                     .notification-message.noti-read .noti-title{color: #989c9e !important}
                     .boc-edit-form-header{background-color: {{ $mode_tema->warna_dropdown_menu }} !important; border-radius: 0px !important;}
                     .boc-dark .boc-input>label.focused,.boc-light .boc-input>label.focused{color:#039be5 !important}
+                    hr{border-top: 1px solid {{ $mode_tema->warna_sistem_tulisan }} !important}
 
                     @foreach ($belum_dibaca as $notifikasi_belum_dibaca)
                         #popup-notifikasi_{{ $notifikasi_belum_dibaca->id }} {background: {{ $mode_tema->warna_mode }} !important}

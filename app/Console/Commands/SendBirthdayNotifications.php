@@ -4,10 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\User;
-use App\Models\Notification;
 use App\Notifications\UlangTahunNotification;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class SendBirthdayNotifications extends Command
 {
@@ -21,7 +19,7 @@ class SendBirthdayNotifications extends Command
 
     public function handle()
     {
-        $users = DB::table('profil_pegawai')->whereRaw("DATE_FORMAT(tanggal_lahir, '%m-%d') = DATE_FORMAT(NOW(), '%m-%d')")->get();
+        $users = DB::table('daftar_pegawai')->whereRaw("DATE_FORMAT(tgl_lahir, '%m-%d') = DATE_FORMAT(NOW(), '%m-%d')")->get();
         foreach ($users as $user) {
             $userModel = User::find($user->user_id);
             if ($userModel) {
