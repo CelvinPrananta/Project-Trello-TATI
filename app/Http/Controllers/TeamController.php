@@ -587,6 +587,7 @@ class TeamController extends Controller
         $team_owner = $this->teamLogic->getTeamOwner($selected_team->id);
         $team_members = $this->teamLogic->getTeamMember($selected_team->id);
         $team_boards = $this->teamLogic->getBoards($selected_team->id, $request->board_name);
+        $UserTeams = DB::table('users')->select('name', 'email')->get();
 
         $result_tema = DB::table('mode_aplikasi')
             ->select(
@@ -649,7 +650,7 @@ class TeamController extends Controller
             ->whereNotNull('read_at')
             ->get();
 
-        return view("admin.team", compact('result_tema','unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
+        return view("admin.team", compact('UserTeams','result_tema','unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
             ->with("team", $selected_team)
             ->with("owner", $team_owner)
             ->with("members", $team_members)

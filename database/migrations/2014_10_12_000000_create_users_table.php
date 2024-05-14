@@ -446,7 +446,7 @@ class CreateUsersTable extends Migration
              'employee_id'                  => '2024050107010',
              'join_date'                    => now()->toDayDateTimeString(),
              'status'                       => 'Active',
-             'role_name'                    => 'User',
+             'role_name'                    => 'Admin',
              'avatar'                       => 'photo_defaults.jpg',
              'password'                     => '$2y$10$ksxP0gbZAkxP6sx9iG8QaOlH3ijJ9IZLhLUIzzF8VkNzkHKUlgjte',
              'tema_aplikasi'                => 'Terang',

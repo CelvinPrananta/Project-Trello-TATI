@@ -26,7 +26,7 @@
                 <!-- /Pencaharian Nama Tim -->
 
                 <!-- Fitur Undangan Pengguna -->
-                {{-- @if (!$invites->isEmpty())
+                @if (!$invites->isEmpty())
                     <div class="flex flex-col gap-6"><br>
                         <div>
                             <h2 class="ml-6 text-3xl font-bold">Undangan Tertunda</h2><hr>
@@ -47,7 +47,7 @@
                             @endforeach
                         </div>
                     </div>
-                @endif --}}
+                @endif
                 <!-- /Fitur Undangan Pengguna -->
                 
                 <!-- Tampilan Tim Pengguna -->
@@ -154,7 +154,7 @@
         </div>
         <!-- /Buat Tim Modal -->
 
-        {{-- <!-- Terima Undangan Modal -->
+        <!-- Terima Undangan Modal -->
         @if (isset($UserTeams))
             @foreach ($UserTeams as $result_team)
             <div id="acceptInvite_{{ $result_team->team->id }}" class="modal custom-modal fade" role="dialog">
@@ -202,7 +202,7 @@
             </div>
             @endforeach
         @endif
-        <!-- /Terima Undangan Modal --> --}}
+        <!-- /Terima Undangan Modal -->
 
     </div>
     <!-- /Page Wrapper -->
