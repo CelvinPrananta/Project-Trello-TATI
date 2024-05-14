@@ -22,14 +22,24 @@ class BoardAccsessMiddleWare
         if(!$this->teamLogic->userHasAccsess($user_id, $team_id)){
 
             Toastr::error('Tim tidak ditemukan atau Anda dikeluarkan, silakan hubungi pemiliknya.', 'Error');
-            return redirect()->route("showTeams");
+            if (Auth::user()->role_name == 'Admin') {
+                return redirect()->route("showTeams");
+            }
+            if (Auth::user()->role_name == 'User') {
+                return redirect()->route("showTeams2");
+            }
         }
 
         $board = Board::find($board_id);
         if ($board == null) {
 
             Toastr::error('Papan tidak ditemukan atau dihapus, harap hubungi pemilik.', 'Error');
-            return redirect()->route("viewTeam", ["team_id" => $team_id]);
+            if (Auth::user()->role_name == 'Admin') {
+                return redirect()->route("viewTeam", ["team_id" => $team_id]);
+            }
+            if (Auth::user()->role_name == 'User') {
+                return redirect()->route("viewTeam2", ["team_id" => $team_id]);
+            }
         }
         return $next($request);
     }

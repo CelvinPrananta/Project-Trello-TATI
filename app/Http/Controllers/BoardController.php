@@ -23,7 +23,7 @@ class BoardController extends Controller
     ) {
     }
 
-    // Membuat Papan //
+    // Membuat Papan Khusus Admin //
     public function createBoard(Request $request, $team_id)
     {
         $request->validate([
@@ -47,9 +47,9 @@ class BoardController extends Controller
         Toastr::success('Papan berhasil dibuat!', 'Success');
         return redirect()->back();
     }
-    // /Membuat Papan //
+    // /Membuat Papan Khusus Admin //
 
-    // Membuat Kolom //
+    // Membuat Kolom Admin & User //
     public function addColumn(Request $request, $team_id, $board_id,)
     {
         $request->validate([
@@ -68,9 +68,9 @@ class BoardController extends Controller
 
         return response()->json($createdColumn);
     }
-    // /Membuat Kolom //
+    // /Membuat Kolom Admin & User //
 
-    // Tampilan Papan //
+    // Tampilan Papan Admin //
     public function showBoard($team_id, $board_id)
     {
         $board_id = intval($board_id);
@@ -78,15 +78,31 @@ class BoardController extends Controller
         $team = Team::find($board->team_id);
         $teamOwner = $this->teamLogic->getTeamOwner($board->team_id);
 
-        return view("board")
+        return view("admin.board")
             ->with("team", $team)
             ->with("owner", $teamOwner)
             ->with("board", $board)
             ->with("patterns", BoardLogic::PATTERN);
     }
-    // /Tampilan Papan //
+    // /Tampilan Papan Admin //
 
-    // Perbaharui Papan //
+    // Tampilan Papan User //
+    public function showBoard2($team_id, $board_id)
+    {
+        $board_id = intval($board_id);
+        $board = $this->boardLogic->getData($board_id);
+        $team = Team::find($board->team_id);
+        $teamOwner = $this->teamLogic->getTeamOwner($board->team_id);
+
+        return view("user.board")
+            ->with("team", $team)
+            ->with("owner", $teamOwner)
+            ->with("board", $board)
+            ->with("patterns", BoardLogic::PATTERN);
+    }
+    // /Tampilan Papan User //
+
+    // Perbaharui Papan Khusus Admin //
     public function updateBoard(Request $request)
     {
         $request->validate([
@@ -103,9 +119,9 @@ class BoardController extends Controller
         Toastr::success('Papan berhasil diperbarui!', 'Success');
         return redirect()->back();
     }
-    // /Perbaharui Papan //
+    // /Perbaharui Papan Khusus Admin //
 
-    // Membuat Kartu //
+    // Membuat Kartu Admin & User //
     public function addCard(Request $request, $team_id, $board_id, $column_id)
     {
         $board_id = intval($board_id);
@@ -113,20 +129,20 @@ class BoardController extends Controller
         $card_name = $request->name;
 
         $newCard = $this->boardLogic->addCard($column_id, $card_name);
-        $this->cardLogic->cardAddEvent($newCard->id, Auth::user()->id, "Created card");
+        $this->cardLogic->cardAddEvent($newCard->id, Auth::user()->id, "Membuat Kartu");
         return response()->json($newCard);
     }
-    // /Membuat Kartu //
+    // /Membuat Kartu Admin & User //
 
-    // Mendapatkan Data //
+    // Mendapatkan Data Admin & User //
     public function getData($team_id, $board_id)
     {
         $boardData = $this->boardLogic->getData(intval($board_id));
         return response()->json($boardData);
     }
-    // /Mendapatkan Data //
+    // /Mendapatkan Data Admin & User //
 
-    // Memindahkan Kartu //
+    // Memindahkan Kartu Admin & User //
     public function reorderCard(Request $request, $team_id, $board_id)
     {
         $board_id = intval($board_id);
@@ -139,9 +155,9 @@ class BoardController extends Controller
 
         return response()->json($updatedCard);
     }
-    // /Memindahkan Kartu //
+    // /Memindahkan Kartu Admin & User //
 
-    // Memindahkan Kolom //
+    // Memindahkan Kolom Admin //
     public function reorderCol(Request $request, $team_id, $board_id)
     {
         $user_id = Auth::user()->id;
@@ -155,12 +171,29 @@ class BoardController extends Controller
         }
 
         $updatedCol = $this->boardLogic->moveCol($middle_id, $right_id, $left_id);
-
         return response()->json($updatedCol);
     }
-    // /Memindahkan Kolom //
+    // /Memindahkan Kolom Admin //
 
-    // Hapus Papan //
+    // Memindahkan Kolom User //
+    public function reorderCol2(Request $request, $team_id, $board_id)
+    {
+        $user_id = Auth::user()->id;
+        $board_id = intval($board_id);
+        $middle_id = intval($request->middle_id);
+        $right_id = intval($request->right_id);
+        $left_id = intval($request->left_id);
+
+        if (!$this->boardLogic->hasAccess($user_id, $board_id)) {
+            return response()->json(["url" => route("showTeams2")], HttpResponse::HTTP_BAD_REQUEST);
+        }
+
+        $updatedCol = $this->boardLogic->moveCol($middle_id, $right_id, $left_id);
+        return response()->json($updatedCol);
+    }
+    // /Memindahkan Kolom User //
+
+    // Hapus Papan Admin //
     public function deleteBoard($team_id, $board_id)
     {
         Board::where("id", intval($board_id))->delete();
@@ -168,9 +201,19 @@ class BoardController extends Controller
         Toastr::success('Papan berhasil dihapus!', 'Success');
         return redirect()->route("viewTeam", ["team_id" => intval($team_id)]);
     }
-    // /Hapus Papan //
+    // /Hapus Papan Admin //
 
-    // Perbaharui Kolom //
+    // Hapus Papan User //
+    public function deleteBoard2($team_id, $board_id)
+    {
+        Board::where("id", intval($board_id))->delete();
+
+        Toastr::success('Papan berhasil dihapus!', 'Success');
+        return redirect()->route("viewTeam2", ["team_id" => intval($team_id)]);
+    }
+    // /Hapus Papan User //
+
+    // Perbaharui Kolom Admin & User //
     public function updateCol(Request $request, $team_id, $board_id)
     {
         $request->validate([
@@ -182,7 +225,6 @@ class BoardController extends Controller
         $column = Column::find($col_id);
 
         if (!$column) {
-
             Toastr::error('Kolom tidak ditemukan atau terhapus harap menghubungi pemiliknya', 'Error');
             return redirect()->back();
         }
@@ -193,9 +235,9 @@ class BoardController extends Controller
         Toastr::success('Kolom berhasil diperbaharui!', 'Success');
         return redirect()->back();
     }
-    // /Perbaharui Kolom //
+    // /Perbaharui Kolom Admin & User //
 
-    // Menghapus Kolom //
+    // Menghapus Kolom Admin & User //
     public function deleteCol(Request $request, $team_id, $board_id)
     {
         $request->validate(["column_id" => "required"]);
@@ -205,5 +247,5 @@ class BoardController extends Controller
         Toastr::success('Kolom berhasil dihapus!', 'Success');
         return redirect()->back();
     }
-    // /Menghapus Kolom //
+    // /Menghapus Kolom Admin & User //
 }

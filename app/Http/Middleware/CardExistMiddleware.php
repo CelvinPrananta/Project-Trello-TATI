@@ -7,6 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 
 class CardExistMiddleware
 {
@@ -26,8 +27,12 @@ class CardExistMiddleware
         if (!$card)
 
             Toastr::error('Kartu tidak ditemukan atau terhapus harap menghubungi pemiliknya', 'Error');
-            return redirect()->route("board", ["team_id" => $team_id, "board_id" => $board_id]);
-
+            if (Auth::user()->role_name == 'Admin') {
+                return redirect()->route("board", ["team_id" => $team_id, "board_id" => $board_id]);
+            }
+            if (Auth::user()->role_name == 'User') {
+                return redirect()->route("board2", ["team_id" => $team_id, "board_id" => $board_id]);
+            }
         return $next($request);
     }
 }

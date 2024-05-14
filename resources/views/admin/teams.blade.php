@@ -80,7 +80,10 @@
                 @foreach ($teams as $team)
                     <a href="{{ route('viewTeam', ['team_id' => $team->id]) }}" class="flex cursor-pointer select-none flex-col transition duration-300 border border-gray-200 shadow-xl rounded-xl h-52 w-72 hover:shadow-2xl bg-pattern-{{ $team->pattern }} overflow-hidden">
                         <div class="flex-grow w-full p-4">
-                            <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" name="{{ $team->name }}" loading="lazy" class="avatar-tim">
+                            @php $user = $team->users->first(); @endphp
+                            @if($user)
+                                <img src="{{ asset('assets/images/' . $user->avatar) }}" alt="{{ $user->name }}" name="{{ $user->name }}" loading="lazy" class="avatar-tim">
+                            @endif
                         </div>
                         <article class="flex flex-col w-full h-20 gap-1 px-4 py-2 bg-white border-t border-t-gray-200">
                             <h4 class="overflow-hidden font-semibold truncate text-bold">{{ $team->name }}</h4>
@@ -130,7 +133,7 @@
                                 {{-- <input type="hidden" id="pattern-field" name="team_pattern" value="{{ $patterns[0] }}"> --}}
                                 <input type="hidden" id="pattern-field" name="team_pattern" value="{{ isset($patterns[0]) ? $patterns[0] : 'default_value' }}">
                                 <div class="flex items-center justify-start w-full max-w-2xl gap-2 px-4 py-2 overflow-hidden overflow-x-scroll border-2 border-gray-200 h-36 rounded-xl">
-                                    @if(isset($patterns) && is_array($patterns) && count($patterns) > 0)
+                                    @isset($patterns)
                                         @foreach ($patterns as $pattern)
                                             <div onclick="selectPattern('{{ $pattern }}')" class="{{ $pattern == $patterns[0] ? 'order-first' : '' }} h-full flex-shrink-0 border-4 rounded-lg w-36 bg-pattern-{{ $pattern }} hover:border-black" id="pattern-{{ $pattern }}">
                                                 <div id="check-{{ $pattern }}" class="flex items-center justify-center w-full h-full {{ $pattern == $patterns[0] ? 'opacity-100' : 'opacity-0' }}">
@@ -142,7 +145,7 @@
                                 </div>
                             </div>
                             <div class="submit-section">
-                                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                <button type="submit" class="btn btn-primary submit-btn">Simpan</button>
                             </div>
                         </form>
                     </div>

@@ -53,6 +53,78 @@
                         </a>
                     </li>
                     @endif
+                    @if (Route::is('searchTeam'))
+                    <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                        <a href="#" data-toggle="modal" data-target="#createTeam">
+                            <i class="fa-solid fa-cubes" style="font-size: 20px"></i>
+                            <span>Buat Tim</span>
+                        </a>
+                    </li>
+                    @endif
+                    @if (Route::is('viewTeam'))
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                            <a href="#" data-toggle="modal" data-target="#updateTeam">
+                                <i class="fa-solid fa-pencil" style="font-size: 20px"></i>
+                                <span>Perbaharui Tim</span>
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 5px">
+                            <a href="#" data-toggle="modal" data-target="#manageMember">
+                                <i class="fa-solid fa-user-gear" style="font-size: 20px"></i>
+                                <span>Anggota Tim</span>
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 10px">
+                            <a href="#" data-toggle="modal" data-target="#inviteMember">
+                                <i class="fa-solid fa-user-plus" style="font-size: 20px"></i>
+                                <span>Undang Anggota</span>
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 15px">
+                            <a href="#" data-toggle="modal" data-target="#createBoard">
+                                <i class="fa-solid fa-table-columns" style="font-size: 20px"></i>
+                                <span>Buat Papan</span>
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 20px">
+                            <a href="#" data-toggle="modal" data-target="#deleteTeam">
+                                <i class="fa-solid fa-trash" style="font-size: 20px"></i>
+                                <span>Hapus Papan</span>
+                            </a>
+                        </li><br><br>
+                    @endif
+                    @if (Route::is('searchBoard'))
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                            <a href="#" data-toggle="modal" data-target="#updateTeam">
+                                <i class="fa-solid fa-pencil" style="font-size: 20px"></i>
+                                <span>Perbaharui Tim</span>
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 5px">
+                            <a href="#" data-toggle="modal" data-target="#manageMember">
+                                <i class="fa-solid fa-user-gear" style="font-size: 20px"></i>
+                                <span>Anggota Tim</span>
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 10px">
+                            <a href="#" data-toggle="modal" data-target="#inviteMember">
+                                <i class="fa-solid fa-user-plus" style="font-size: 20px"></i>
+                                <span>Undang Anggota</span>
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 15px">
+                            <a href="#" data-toggle="modal" data-target="#createBoard">
+                                <i class="fa-solid fa-table-columns" style="font-size: 20px"></i>
+                                <span>Buat Papan</span>
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 20px">
+                            <a href="#" data-toggle="modal" data-target="#deleteTeam">
+                                <i class="fa-solid fa-trash" style="font-size: 20px"></i>
+                                <span>Hapus Papan</span>
+                            </a>
+                        </li><br><br>
+                    @endif
                     <li class="menu-title"> <span>Pengaturan</span> </li>
                     <li class="{{ set_active(['admin/profile']) }}">
                         <a href="{{ route('admin-profile') }}" class="{{ set_active(['admin/profile']) ? 'noti-dot' : '' }}">
@@ -76,6 +148,22 @@
                             <span>Tim</span>
                         </a>
                     </li>
+                    @if (Route::is('viewTeam2'))
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                            <a href="#" data-toggle="modal" data-target="#leaveTeam">
+                                <i class="fa-solid fa-right-from-bracket" style="font-size: 20px"></i>
+                                <span>Keluar dari Tim</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if (Route::is('searchBoard2'))
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                            <a href="#" data-toggle="modal" data-target="#leaveTeam">
+                                <i class="fa-solid fa-right-from-bracket" style="font-size: 20px"></i>
+                                <span>Keluar dari Tim</span>
+                            </a>
+                        </li>
+                    @endif
                     <li class="menu-title"> <span>Pengaturan</span> </li>
                     <li class="{{ set_active(['user/profile']) }}">
                         <a href="{{ route('user-profile') }}" class="{{ set_active(['user/profile']) ? 'noti-dot' : '' }}">
