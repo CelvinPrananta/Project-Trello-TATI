@@ -13529,3 +13529,9 @@ ul.nav-tabs > li > a {
     border-radius: 50%;
 	background-color: #aaa;
 }
+
+.tampilan-papan {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}

@@ -62,17 +62,18 @@
                     <!-- /Tampilan Papan dan Pencaharian Nama Papan -->
                     
                     <!-- Tampilan Papan -->
-                    @isset($boards)
-                        @foreach ($boards as $board)
-                            <a href="{{ route('board', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}" class="flex cursor-pointer select-none flex-col transition duration-300 border border-gray-200 shadow-xl rounded-xl w-72 hover:shadow-2xl bg-grad-{{ $board->pattern }}">
-                                <div class="flex-grow w-full p-4" style="padding: 3rem !important;">
-                                </div>
-                                <article class="flex flex-col w-full gap-1 px-4 py-2 bg-white border-t rounded-b-lg border-t-gray-200">
-                                    <h4 class="overflow-hidden font-semibold truncate text-bold" style="font-size: 15px">{{ $board->name }}</h4>
-                                </article>
-                            </a>
-                        @endforeach
-                    @endif
+                    <div class="tampilan-papan">
+                        @isset($boards)
+                            @foreach ($boards as $board)
+                                <a href="{{ route('board', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}" class="flex cursor-pointer select-none flex-col transition duration-300 border border-gray-200 shadow-xl rounded-xl w-72 hover:shadow-2xl bg-grad-{{ $board->pattern }}" style="margin-bottom: 15px;">
+                                    <div class="flex-grow w-full p-4" style="padding: 3rem !important;"></div>
+                                    <article class="flex flex-col w-full gap-1 px-4 py-2 bg-white border-t rounded-b-lg border-t-gray-200">
+                                        <h4 class="overflow-hidden font-semibold truncate text-bold" style="font-size: 15px">{{ $board->name }}</h4>
+                                    </article>
+                                </a>
+                            @endforeach
+                        @endif
+                    </div>
                     <!-- /Tampilan Papan -->
 
                     <div class="flex flex-wrap gap-x-8 gap-y-6">
@@ -299,12 +300,12 @@
                             </div>
                             <div class="flex flex-col w-full gap-2">
                                 <label>Warna Papan</label>
-                                <input type="hidden" id="pattern-field" name="board_pattern" value="{{ isset($backgrounds[0]) ? $backgrounds[0] : 'default_value' }}">
+                                <input type="hidden" id="background-field" name="board_pattern" value="{{ isset($backgrounds[0]) ? $backgrounds[0] : 'default_value' }}">
                                 <div class="flex items-center justify-start w-full max-w-2xl gap-2 px-4 py-2 overflow-hidden overflow-x-scroll border-2 border-gray-200 h-36 rounded-xl">
                                     @isset($backgrounds)
-                                        @foreach ($backgrounds as $pattern)
-                                            <div onclick="selectPattern('{{ $pattern }}')" class="{{ $pattern == $backgrounds[0] ? 'order-first' : '' }} h-full flex-shrink-0 border-4 rounded-lg w-36 bg-grad-{{ $pattern }} hover:border-black" id="pattern-{{ $pattern }}">
-                                                <div id="check-{{ $pattern }}" class="flex items-center justify-center w-full h-full {{ $pattern == $backgrounds[0] ? 'opacity-100' : 'opacity-0' }}">
+                                        @foreach ($backgrounds as $background)
+                                            <div onclick="selectPattern('{{ $background }}')" class="{{ $background == $backgrounds[0] ? 'order-first' : '' }} h-full flex-shrink-0 border-4 rounded-lg w-36 bg-grad-{{ $background }} hover:border-black" id="background-{{ $background }}">
+                                                <div id="check-{{ $background }}" class="flex items-center justify-center w-full h-full {{ $background == $backgrounds[0] ? 'opacity-100' : 'opacity-0' }}">
                                                     <i class="fa-solid fa-circle-check"></i>
                                                 </div>
                                             </div>
@@ -395,6 +396,27 @@
                 });
         
                 var selectedCheck = document.getElementById('check-' + pattern);
+                selectedCheck.style.opacity = '100';
+            }
+
+            function selectPattern(background) {
+                var selectedPattern = document.querySelector('#background-field');
+                selectedPattern.value = background;
+        
+                var allPatterns = document.querySelectorAll('.h-full');
+                allPatterns.forEach(function(item) {
+                    item.classList.remove('border-black');
+                });
+        
+                var selectedPatternElement = document.getElementById('background-' + background);
+                selectedPatternElement.classList.add('border-black');
+        
+                var allChecks = document.querySelectorAll('.fa-circle-check');
+                allChecks.forEach(function(item) {
+                    item.parentElement.style.opacity = '0';
+                });
+        
+                var selectedCheck = document.getElementById('check-' + background);
                 selectedCheck.style.opacity = '100';
             }
         </script>
