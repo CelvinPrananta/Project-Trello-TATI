@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Logic\BoardLogic;
-use App\Logic\CardLogic;
 use App\Logic\TeamLogic;
+use App\Logic\CardLogic;
 use App\Models\Board;
 use App\Models\Card;
 use App\Models\Column;
 use App\Models\Team;
-use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response as HttpResponse;
 use Brian2694\Toastr\Facades\Toastr;
+use App\Models\Notification;
+use DB;
 
 class BoardController extends Controller
 {
@@ -49,27 +51,6 @@ class BoardController extends Controller
     }
     // /Membuat Papan Khusus Admin //
 
-    // Membuat Kolom Admin & User //
-    public function addColumn(Request $request, $team_id, $board_id,)
-    {
-        $request->validate([
-            "board_id"      => "required",
-            "column_name"   => "required",
-        ]);
-        $team_id = intval($team_id);
-        $board_id = intval($request->board_id);
-
-        $createdColumn = $this->boardLogic->addColumn($board_id, $request->column_name);
-
-        if ($createdColumn == null)
-
-            Toastr::error('Gagal membuat kolom, silahkan coba lagi!', 'Error');
-            return redirect()->back();
-
-        return response()->json($createdColumn);
-    }
-    // /Membuat Kolom Admin & User //
-
     // Tampilan Papan Admin //
     public function showBoard($team_id, $board_id)
     {
@@ -78,7 +59,68 @@ class BoardController extends Controller
         $team = Team::find($board->team_id);
         $teamOwner = $this->teamLogic->getTeamOwner($board->team_id);
 
-        return view("admin.board")
+        $result_tema = DB::table('mode_aplikasi')
+            ->select(
+                'mode_aplikasi.id',
+                'mode_aplikasi.tema_aplikasi',
+                'mode_aplikasi.warna_sistem',
+                'mode_aplikasi.warna_sistem_tulisan',
+                'mode_aplikasi.warna_mode',
+                'mode_aplikasi.tabel_warna',
+                'mode_aplikasi.tabel_tulisan_tersembunyi',
+                'mode_aplikasi.warna_dropdown_menu',
+                'mode_aplikasi.ikon_plugin',
+                'mode_aplikasi.bayangan_kotak_header',
+                'mode_aplikasi.warna_mode_2',
+                )
+            ->where('user_id', auth()->user()->user_id)
+            ->get();
+
+        $user = auth()->user();
+        $role = $user->role_name;
+        $unreadNotifications = Notification::where('notifiable_id', $user->id)
+            ->where('notifiable_type', get_class($user))
+            ->whereNull('read_at')
+            ->get();
+
+        $readNotifications = Notification::where('notifiable_id', $user->id)
+            ->where('notifiable_type', get_class($user))
+            ->whereNotNull('read_at')
+            ->get();
+
+        $semua_notifikasi = DB::table('notifications')
+            ->leftjoin('users', 'notifications.notifiable_id', 'users.id')
+            ->select(
+                'notifications.*',
+                'notifications.id',
+                'users.name',
+                'users.avatar'
+            )
+            ->get();
+
+        $belum_dibaca = DB::table('notifications')
+            ->leftjoin('users', 'notifications.notifiable_id', 'users.id')
+            ->select(
+                'notifications.*',
+                'notifications.id',
+                'users.name',
+                'users.avatar'
+            )
+            ->whereNull('read_at')
+            ->get();
+
+        $dibaca = DB::table('notifications')
+            ->leftjoin('users', 'notifications.notifiable_id', 'users.id')
+            ->select(
+                'notifications.*',
+                'notifications.id',
+                'users.name',
+                'users.avatar'
+            )
+            ->whereNotNull('read_at')
+            ->get();
+
+        return view("admin.board", compact('result_tema','unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
             ->with("team", $team)
             ->with("owner", $teamOwner)
             ->with("board", $board)
@@ -94,7 +136,68 @@ class BoardController extends Controller
         $team = Team::find($board->team_id);
         $teamOwner = $this->teamLogic->getTeamOwner($board->team_id);
 
-        return view("user.board")
+        $result_tema = DB::table('mode_aplikasi')
+            ->select(
+                'mode_aplikasi.id',
+                'mode_aplikasi.tema_aplikasi',
+                'mode_aplikasi.warna_sistem',
+                'mode_aplikasi.warna_sistem_tulisan',
+                'mode_aplikasi.warna_mode',
+                'mode_aplikasi.tabel_warna',
+                'mode_aplikasi.tabel_tulisan_tersembunyi',
+                'mode_aplikasi.warna_dropdown_menu',
+                'mode_aplikasi.ikon_plugin',
+                'mode_aplikasi.bayangan_kotak_header',
+                'mode_aplikasi.warna_mode_2',
+                )
+            ->where('user_id', auth()->user()->user_id)
+            ->get();
+
+        $user = auth()->user();
+        $role = $user->role_name;
+        $unreadNotifications = Notification::where('notifiable_id', $user->id)
+            ->where('notifiable_type', get_class($user))
+            ->whereNull('read_at')
+            ->get();
+
+        $readNotifications = Notification::where('notifiable_id', $user->id)
+            ->where('notifiable_type', get_class($user))
+            ->whereNotNull('read_at')
+            ->get();
+
+        $semua_notifikasi = DB::table('notifications')
+            ->leftjoin('users', 'notifications.notifiable_id', 'users.id')
+            ->select(
+                'notifications.*',
+                'notifications.id',
+                'users.name',
+                'users.avatar'
+            )
+            ->get();
+
+        $belum_dibaca = DB::table('notifications')
+            ->leftjoin('users', 'notifications.notifiable_id', 'users.id')
+            ->select(
+                'notifications.*',
+                'notifications.id',
+                'users.name',
+                'users.avatar'
+            )
+            ->whereNull('read_at')
+            ->get();
+
+        $dibaca = DB::table('notifications')
+            ->leftjoin('users', 'notifications.notifiable_id', 'users.id')
+            ->select(
+                'notifications.*',
+                'notifications.id',
+                'users.name',
+                'users.avatar'
+            )
+            ->whereNotNull('read_at')
+            ->get();
+
+        return view("user.board", compact('result_tema','unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
             ->with("team", $team)
             ->with("owner", $teamOwner)
             ->with("board", $board)
@@ -116,10 +219,63 @@ class BoardController extends Controller
         $board->pattern = $request->board_pattern;
         $board->save();
 
-        Toastr::success('Papan berhasil diperbarui!', 'Success');
+        Toastr::success('Papan berhasil diperbaharui!', 'Success');
         return redirect()->back();
     }
     // /Perbaharui Papan Khusus Admin //
+
+    // Hapus Papan Khusus Admin //
+    public function deleteBoard($team_id, $board_id)
+    {
+        Board::where("id", intval($board_id))->delete();
+
+        Toastr::success('Papan berhasil dihapus!', 'Success');
+        return redirect()->route("viewTeam", ["team_id" => intval($team_id)]);
+    }
+    // /Hapus Papan Khusus Admin //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    // Membuat Kolom Admin & User //
+    public function addColumn(Request $request, $team_id, $board_id,)
+    {
+        $request->validate([
+            "board_id"      => "required",
+            "column_name"   => "required",
+        ]);
+        $team_id = intval($team_id);
+        $board_id = intval($request->board_id);
+
+        $createdColumn = $this->boardLogic->addColumn($board_id, $request->column_name);
+
+        if ($createdColumn == null)
+
+            Toastr::error('Gagal membuat kolom, silahkan coba lagi!', 'Error');
+            return redirect()->back();
+
+        return response()->json($createdColumn);
+    }
+    // /Membuat Kolom Admin & User //
 
     // Membuat Kartu Admin & User //
     public function addCard(Request $request, $team_id, $board_id, $column_id)
@@ -192,26 +348,6 @@ class BoardController extends Controller
         return response()->json($updatedCol);
     }
     // /Memindahkan Kolom User //
-
-    // Hapus Papan Admin //
-    public function deleteBoard($team_id, $board_id)
-    {
-        Board::where("id", intval($board_id))->delete();
-
-        Toastr::success('Papan berhasil dihapus!', 'Success');
-        return redirect()->route("viewTeam", ["team_id" => intval($team_id)]);
-    }
-    // /Hapus Papan Admin //
-
-    // Hapus Papan User //
-    public function deleteBoard2($team_id, $board_id)
-    {
-        Board::where("id", intval($board_id))->delete();
-
-        Toastr::success('Papan berhasil dihapus!', 'Success');
-        return redirect()->route("viewTeam2", ["team_id" => intval($team_id)]);
-    }
-    // /Hapus Papan User //
 
     // Perbaharui Kolom Admin & User //
     public function updateCol(Request $request, $team_id, $board_id)

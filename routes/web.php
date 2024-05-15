@@ -118,46 +118,6 @@ Route::controller(NotificationController::class)->group(function () {
     Route::get('/tampilan/semua/notifikasi/hapus/data/{id}', 'hapusNotifikasi')->name('tampilan-semua-notifikasi-hapus-data');
 });
 
-// ----------------------------- Board ----------------------------- //
-Route::controller(BoardController::class)->group(function () {
-    Route::post("admin/tim/papan/{team_id}", "createBoard")->middleware("auth", "auth.session", "userInTeam")->name("createBoard");
-    Route::get("admin/tim/papan/{team_id}/{board_id}", "showBoard")->middleware("auth", "auth.session", "boardAccess")->name("board");
-    Route::post("admin/tim/papan/kolom/{team_id}/{board_id}", "addColumn")->middleware("auth", "auth.session", "boardAccess")->name("addCol");
-    
-    
-
-
-    
-
-    Route::post("team/{team_id}/board/{board_id}/delete", "deleteBoard")->middleware("auth", "auth.session", "boardAccess")->name("deleteBoard");
-    Route::post("team/{team_id}/board/{board_id}/delete", "deleteBoard2")->middleware("auth", "auth.session", "boardAccess")->name("deleteBoard2");
-    Route::post("team/{team_id}/board/{board_id}", "updateBoard")->middleware("auth", "auth.session", "boardAccess")->name("updateBoard");
-    Route::get("team/{team_id}/board/{board_id}/data", "getData")->middleware("auth", "auth.session", "boardAccess")->name("boardJson");
-    Route::post("team/{team_id}/board/{board_id}/column", "addColumn")->middleware("auth", "auth.session", "boardAccess")->name("addCol");
-    Route::post("team/{team_id}/board/{board_id}/column/{column_id}/card", "addCard")->middleware("auth", "auth.session", "boardAccess")->name("addCard");
-    Route::post("team/{team_id}/board/{board_id}/column/reorder", "reorderCol")->middleware("auth", "auth.session", "boardAccess")->name("reorderCol");
-    Route::post("team/{team_id}/board/{board_id}/column/reorder", "reorderCol2")->middleware("auth", "auth.session", "boardAccess")->name("reorderCol2");
-    Route::post("team/{team_id}/board/{board_id}/column/update", "updateCol")->middleware("auth", "auth.session", "boardAccess")->name("updateCol");
-    Route::post("team/{team_id}/board/{board_id}/column/delete", "deleteCol")->middleware("auth", "auth.session", "boardAccess")->name("deleteCol");
-    Route::post("team/{team_id}/board/{board_id}/card/reorder", "reorderCard")->middleware("auth", "auth.session", "boardAccess")->name("reorderCard");
-
-
-    
-    Route::get("user/tim/papan/{team_id}/{board_id}", "showBoard2")->middleware("auth", "auth.session", "boardAccess")->name("board2");
-    Route::post("user/tim/papan/kolom/{team_id}/{board_id}", "addColumn2")->middleware("auth", "auth.session", "boardAccess")->name("addCol2");
-});
-
-// ----------------------------- Card ----------------------------- //
-Route::controller(CardController::class)->group(function () {
-    Route::get("team/{team_id}/board/{board_id}/card/{card_id}/view", "showCard")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("viewCard");
-    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/assign", "assignCard")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("assignCard");
-    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/assignself", "assignSelf")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("assignSelf");
-    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/leave", "leaveCard")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("leaveCard");
-    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/delete", "deleteCard")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("deleteCard");
-    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/update", "updateCard")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("updateCard");
-    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/comment", "addComment")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("commentCard");
-});
-
 // ----------------------------- Team ----------------------------- //
 Route::controller(TeamController::class)->group(function () {
     // ----------------------------- Admin ----------------------------- //
@@ -170,8 +130,6 @@ Route::controller(TeamController::class)->group(function () {
     Route::post("admin/tim/hapus/tim/{team_id}", "deleteTeam")->middleware(["auth", "auth.session", "userInTeam"])->name("doDeleteTeam");
     Route::post("admin/tim/hapus/pengguna/{team_id}", "deleteMembers")->middleware(["auth", "auth.session", "userInTeam"])->name("deleteTeamMember");
     Route::post("admin/tim/undangan/{team_id}", "inviteMembers")->middleware(["auth", "auth.session", "userInTeam"])->name("doInviteMembers");
-
-    
     Route::post("admin/tim/perbaharui/foto/{team_id}", "updateImage")->middleware(["auth", "auth.session", "userInTeam"])->name("doChangeTeamImage");
     Route::get("admin/tim/undangan/{team_id}/{user_id}", "getInvite")->middleware(["auth", "auth.session", ])->name("getInvite");
 
@@ -183,4 +141,44 @@ Route::controller(TeamController::class)->group(function () {
     Route::get("user/tim/undangan/ditolak/{team_id}/{user_id}", "rejectInvite")->middleware(["auth", "auth.session", ])->name("rejectTeamInvite");
     Route::get("user/tim/lihat-papan/cari/papan/{team_id}", "searchBoard2")->middleware(["auth", "auth.session", "userInTeam"])->name("searchBoard2");
     Route::post("user/tim/tinggalkan/{team_id}", "leaveTeam")->middleware(["auth", "auth.session", "userInTeam"])->name("doLeaveTeam");
+});
+
+// ----------------------------- Board ----------------------------- //
+Route::controller(BoardController::class)->group(function () {
+    // ----------------------------- Admin ----------------------------- //
+    Route::post("admin/tim/papan/{team_id}", "createBoard")->middleware("auth", "auth.session", "userInTeam")->name("createBoard");
+    Route::get("admin/tim/papan/{team_id}/{board_id}", "showBoard")->middleware("auth", "auth.session", "boardAccess")->name("board");
+    Route::post("admin/tim/papan/{team_id}/{board_id}", "updateBoard")->middleware("auth", "auth.session", "boardAccess")->name("updateBoard");
+    Route::post("admin/tim/papan/hapus/{team_id}/{board_id}", "deleteBoard")->middleware("auth", "auth.session", "boardAccess")->name("deleteBoard");
+
+    
+
+
+    
+
+
+    Route::post("admin/tim/papan/kolom/{team_id}/{board_id}", "addColumn")->middleware("auth", "auth.session", "boardAccess")->name("addCol");
+    Route::get("team/{team_id}/board/{board_id}/data", "getData")->middleware("auth", "auth.session", "boardAccess")->name("boardJson");
+    Route::post("team/{team_id}/board/{board_id}/column", "addColumn")->middleware("auth", "auth.session", "boardAccess")->name("addCol");
+    Route::post("team/{team_id}/board/{board_id}/column/{column_id}/card", "addCard")->middleware("auth", "auth.session", "boardAccess")->name("addCard");
+    Route::post("team/{team_id}/board/{board_id}/column/reorder", "reorderCol")->middleware("auth", "auth.session", "boardAccess")->name("reorderCol");
+    Route::post("team/{team_id}/board/{board_id}/column/reorder", "reorderCol2")->middleware("auth", "auth.session", "boardAccess")->name("reorderCol2");
+    Route::post("team/{team_id}/board/{board_id}/column/update", "updateCol")->middleware("auth", "auth.session", "boardAccess")->name("updateCol");
+    Route::post("team/{team_id}/board/{board_id}/column/delete", "deleteCol")->middleware("auth", "auth.session", "boardAccess")->name("deleteCol");
+    Route::post("team/{team_id}/board/{board_id}/card/reorder", "reorderCard")->middleware("auth", "auth.session", "boardAccess")->name("reorderCard");
+
+
+    // ----------------------------- User ----------------------------- //
+    Route::get("user/tim/papan/{team_id}/{board_id}", "showBoard2")->middleware("auth", "auth.session", "boardAccess")->name("board2");
+});
+
+// ----------------------------- Card ----------------------------- //
+Route::controller(CardController::class)->group(function () {
+    Route::get("team/{team_id}/board/{board_id}/card/{card_id}/view", "showCard")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("viewCard");
+    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/assign", "assignCard")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("assignCard");
+    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/assignself", "assignSelf")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("assignSelf");
+    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/leave", "leaveCard")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("leaveCard");
+    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/delete", "deleteCard")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("deleteCard");
+    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/update", "updateCard")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("updateCard");
+    Route::post("team/{team_id}/board/{board_id}/card/{card_id}/comment", "addComment")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("commentCard");
 });

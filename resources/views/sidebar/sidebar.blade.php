@@ -125,6 +125,26 @@
                             </a>
                         </li><br><br>
                     @endif
+                    @if (Route::is('board'))
+                        <a href="{{ route('viewTeam', ['team_id' => $team->id]) }}">
+                            <div class="btn btn-outline-warning" style="border-radius: 30px; width: 70%; margin-left: 48px;">
+                                <span><h4>Papan:</h4></span>
+                                <span><h5>{{ $board->name }}</h5></span>
+                            </div>
+                        </a>
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 10px">
+                            <a href="#" data-toggle="modal" data-target="#updateBoard">
+                                <i class="fa-solid fa-pencil" style="font-size: 20px"></i>
+                                <span>Perbaharui Kartu</span>
+                            </a>
+                        </li>
+                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 20px">
+                            <a href="#" data-toggle="modal" data-target="#deleteBoard">
+                                <i class="fa-solid fa-trash" style="font-size: 20px"></i>
+                                <span>Hapus Kartu</span>
+                            </a>
+                        </li><br><br>
+                    @endif
                     <li class="menu-title"> <span>Pengaturan</span> </li>
                     <li class="{{ set_active(['admin/profile']) }}">
                         <a href="{{ route('admin-profile') }}" class="{{ set_active(['admin/profile']) ? 'noti-dot' : '' }}">
@@ -163,6 +183,14 @@
                                 <span>Keluar dari Tim</span>
                             </a>
                         </li>
+                    @endif
+                    @if (Route::is('board2'))
+                        <a href="{{ route('viewTeam2', ['team_id' => $team->id]) }}">
+                            <div class="btn btn-outline-warning" style="border-radius: 30px; width: 70%; margin-left: 48px;">
+                                <span><h4>Papan:</h4></span>
+                                <span><h5>{{ $board->name }}</h5></span>
+                            </div>
+                        </a>
                     @endif
                     <li class="menu-title"> <span>Pengaturan</span> </li>
                     <li class="{{ set_active(['user/profile']) }}">

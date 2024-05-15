@@ -12,7 +12,7 @@
 
                 <!-- Tampilan Foto & Nama Tim -->
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('viewTeam2', ['team_id' => $team->id]) }}"><i class="fa-solid fa-house fa-fade fa-2xl" style="position: relative; bottom: 10px;"></i></a>&nbsp;
+                    <a href="{{ route('showTeams2') }}"><i class="fa-solid fa-house fa-fade fa-2xl" style="position: relative; bottom: 10px;"></i></a>&nbsp;
                     <p class="text-xl font-bold">Tim:</p>
                     <p class="text-xl">{{ $team->name }}</p>
                     <p class="text-xl font-bold">Keterangan:</p>
@@ -62,17 +62,18 @@
                     <!-- /Tampilan Papan dan Pencaharian Nama Papan -->
                     
                     <!-- Tampilan Papan -->
-                    @isset($boards)
-                        @foreach ($boards as $board)
-                            <a href="{{ route('board2', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}" class="flex cursor-pointer select-none flex-col transition duration-300 border border-gray-200 shadow-xl rounded-xl w-72 hover:shadow-2xl bg-grad-{{ $board->pattern }}">
-                                <div class="flex-grow w-full p-4" style="padding: 3rem !important;">
-                                </div>
-                                <article class="flex flex-col w-full gap-1 px-4 py-2 bg-white border-t rounded-b-lg border-t-gray-200">
-                                    <h4 class="overflow-hidden font-semibold truncate text-bold" style="font-size: 15px">{{ $board->name }}</h4>
-                                </article>
-                            </a>
-                        @endforeach
-                    @endif
+                    <div class="tampilan-papan">
+                        @isset($boards)
+                            @foreach ($boards as $board)
+                                <a href="{{ route('board2', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}" class="flex cursor-pointer select-none flex-col transition duration-300 border border-gray-200 shadow-xl rounded-xl w-72 hover:shadow-2xl bg-grad-{{ $board->pattern }}" style="margin-bottom: 15px;">
+                                    <div class="flex-grow w-full p-4" style="padding: 3rem !important;"></div>
+                                    <article class="flex flex-col w-full gap-1 px-4 py-2 bg-white border-t rounded-b-lg border-t-gray-200">
+                                        <h4 class="overflow-hidden font-semibold truncate text-bold" style="font-size: 15px">{{ $board->name }}</h4>
+                                    </article>
+                                </a>
+                            @endforeach
+                        @endif
+                    </div>
                     <!-- /Tampilan Papan -->
 
                     {{-- <div class="flex flex-wrap gap-x-8 gap-y-6">
@@ -100,13 +101,17 @@
                     <h2 class="ml-4 text-2xl font-bold">Anggota</h2>
                     <div class="flex flex-col flex-grow w-full gap-2 p-4 overflow-x-hidden overflow-y-auto border-2 border-gray-200 rounded-xl">
                         <div class="flex items-center gap-4">
-                            <img src="{{ asset('assets/images/' . $owner->avatar) }}" loading="lazy" class="!flex-shrink-0 !flex-grow-0 w-12 avatar-undangan">
+                            <a href="{{ URL::to('/assets/images/' . $owner->avatar) }}" data-fancybox="foto-profil">
+                                <img src="{{ URL::to('/assets/images/' . $owner->avatar) }}" loading="lazy" class="!flex-shrink-0 !flex-grow-0 w-12 avatar-undangan">
+                            </a>
                             <p class="flex-grow truncate">{{ $owner->name }}</p>
                             <i class="fa-solid fa-crown fa-lg w-6 h-6 text-yellow-400 !flex-shrink-0 !flex-grow-0"></i>
                         </div>
                         @foreach ($members as $member)
                             <div class="flex items-center gap-4">
-                                <img src="{{ asset('assets/images/' . $member->avatar) }}" loading="lazy" class="!flex-shrink-0 !flex-grow-0 w-12 avatar-undangan">
+                                <a href="{{ URL::to('/assets/images/' . $member->avatar) }}" data-fancybox="foto-profil">
+                                    <img src="{{ URL::to('/assets/images/' . $member->avatar) }}" loading="lazy" class="!flex-shrink-0 !flex-grow-0 w-12 avatar-undangan">
+                                </a>
                                 <p class="w-40 truncate">{{ $member->name }}</p>
                             </div>
                         @endforeach
@@ -172,28 +177,16 @@
     </style>
 
     @section('script')
+        <!-- FancyBox Foto Profil -->
         <script>
-            function selectPattern(pattern) {
-                var selectedPattern = document.querySelector('#pattern-field');
-                selectedPattern.value = pattern;
-        
-                var allPatterns = document.querySelectorAll('.h-full');
-                allPatterns.forEach(function(item) {
-                    item.classList.remove('border-black');
+            $(document).ready(function() {
+                $('[data-fancybox="foto-profil"]').fancybox({
                 });
-        
-                var selectedPatternElement = document.getElementById('pattern-' + pattern);
-                selectedPatternElement.classList.add('border-black');
-        
-                var allChecks = document.querySelectorAll('.fa-circle-check');
-                allChecks.forEach(function(item) {
-                    item.parentElement.style.opacity = '0';
-                });
-        
-                var selectedCheck = document.getElementById('check-' + pattern);
-                selectedCheck.style.opacity = '100';
-            }
+            });
         </script>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+        <!-- /FancyBox Foto Profil -->
 
         <script src="{{ asset('assets/js/memuat-ulang.js') }}"></script>
 

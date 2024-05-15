@@ -12,7 +12,7 @@
 
                 <!-- Tampilan Foto & Nama Tim -->
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('viewTeam', ['team_id' => $team->id]) }}"><i class="fa-solid fa-house fa-fade fa-2xl" style="position: relative; bottom: 10px;"></i></a>&nbsp;
+                    <a href="{{ route('showTeams') }}"><i class="fa-solid fa-house fa-fade fa-2xl" style="position: relative; bottom: 10px;"></i></a>&nbsp;
                     <p class="text-xl font-bold">Tim:</p>
                     <p class="text-xl">{{ $team->name }}</p>
                     <p class="text-xl font-bold">Keterangan:</p>
@@ -101,13 +101,17 @@
                     <h2 class="ml-4 text-2xl font-bold">Anggota</h2>
                     <div class="flex flex-col flex-grow w-full gap-2 p-4 overflow-x-hidden overflow-y-auto border-2 border-gray-200 rounded-xl">
                         <div class="flex items-center gap-4">
-                            <img src="{{ asset('assets/images/' . $owner->avatar) }}" loading="lazy" class="!flex-shrink-0 !flex-grow-0 w-12 avatar-undangan">
+                            <a href="{{ URL::to('/assets/images/' . $owner->avatar) }}" data-fancybox="foto-profil">
+                                <img src="{{ URL::to('/assets/images/' . $owner->avatar) }}" loading="lazy" class="!flex-shrink-0 !flex-grow-0 w-12 avatar-undangan">
+                            </a>
                             <p class="flex-grow truncate">{{ $owner->name }}</p>
                             <i class="fa-solid fa-crown fa-lg w-6 h-6 text-yellow-400 !flex-shrink-0 !flex-grow-0"></i>
                         </div>
                         @foreach ($members as $member)
                             <div class="flex items-center gap-4">
-                                <img src="{{ asset('assets/images/' . $member->avatar) }}" loading="lazy" class="!flex-shrink-0 !flex-grow-0 w-12 avatar-undangan">
+                                <a href="{{ URL::to('/assets/images/' . $member->avatar) }}" data-fancybox="foto-profil">
+                                    <img src="{{ URL::to('/assets/images/' . $member->avatar) }}" loading="lazy" class="!flex-shrink-0 !flex-grow-0 w-12 avatar-undangan">
+                                </a>
                                 <p class="w-40 truncate">{{ $member->name }}</p>
                             </div>
                         @endforeach
@@ -304,7 +308,7 @@
                                 <div class="flex items-center justify-start w-full max-w-2xl gap-2 px-4 py-2 overflow-hidden overflow-x-scroll border-2 border-gray-200 h-36 rounded-xl">
                                     @isset($backgrounds)
                                         @foreach ($backgrounds as $background)
-                                            <div onclick="selectPattern('{{ $background }}')" class="{{ $background == $backgrounds[0] ? 'order-first' : '' }} h-full flex-shrink-0 border-4 rounded-lg w-36 bg-grad-{{ $background }} hover:border-black" id="background-{{ $background }}">
+                                            <div onclick="selectPattern2('{{ $background }}')" class="{{ $background == $backgrounds[0] ? 'order-first' : '' }} h-full flex-shrink-0 border-4 rounded-lg w-36 bg-grad-{{ $background }} hover:border-black" id="background-{{ $background }}">
                                                 <div id="check-{{ $background }}" class="flex items-center justify-center w-full h-full {{ $background == $backgrounds[0] ? 'opacity-100' : 'opacity-0' }}">
                                                     <i class="fa-solid fa-circle-check"></i>
                                                 </div>
@@ -329,7 +333,7 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="form-header">
-                            <h3>Hapus Tim</h3>
+                            <h3>Hapus Tim "{{ $team->name }}"?</h3>
                             <p>Apakah Anda yakin ingin menghapus tim ini?</p>
                         </div>
                         <div class="modal-btn delete-action">
@@ -399,7 +403,7 @@
                 selectedCheck.style.opacity = '100';
             }
 
-            function selectPattern(background) {
+            function selectPattern2(background) {
                 var selectedPattern = document.querySelector('#background-field');
                 selectedPattern.value = background;
         
@@ -545,6 +549,17 @@
                 textarea.value = teamDescription;
             });
         </script>
+
+        <!-- FancyBox Foto Profil -->
+        <script>
+            $(document).ready(function() {
+                $('[data-fancybox="foto-profil"]').fancybox({
+                });
+            });
+        </script>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+        <!-- /FancyBox Foto Profil -->
 
         <script>
             $(".theSelect").select2();

@@ -170,20 +170,20 @@
                             <form action="{{ route('acceptTeamInvite', ['user_id' => Auth::user()->id, 'team_id' => $result_team->team_id]) }}" method="GET">
                                 @csrf
                                 <div class="flex flex-col gap-4">
-                                    <div class="w-full p-4 h-28 bg-pattern-{{ $result_team->pattern }}" id="header-overlay">
+                                    <div class="w-full p-4 h-28 bg-pattern-{{ $result_team->team->pattern }}" id="header-overlay">
                                         <div class="relative flex items-center justify-center w-20 overflow-hidden bg-black border-4 border-white rounded-full aspect-square">
                                             <img class="absolute top-0 left-0 z-40 object-fill w-full h-full" src="{{ URL::to('/assets/images/' . $result_team->user->avatar) }}" loading="lazy">
                                         </div><hr><hr>
                                     </div><br>
                                     <div class="flex flex-col">
-                                        <p>Anda diundang untuk bergabung dengan tim <span class="font-bold">{{ $result_team->team->name }}</span></p>
-                                        <p><span class="font-bold">Deskripsi: </span><span>{{ $result_team->team->description }}</span></p>
+                                        <p>Anda diundang untuk bergabung dengan Tim <span class="font-bold">{{ $result_team->team->name }}</span></p>
+                                        <p><span class="font-bold">Keterangan: </span><span>{{ $result_team->team->description }}</span></p>
                                     </div>
                                     <div class="flex items-center gap-2 mt-2">
                                         <p>Hormat Kami, <span class="font-bold">{{ $result_team->user->name }}</span></p>
                                         <img class="avatar-undangan" src="{{ URL::to('/assets/images/' . $result_team->user->avatar) }}" loading="lazy">
                                     </div>
-                                </div>
+                                </div><br>
                                 <div class="row">
                                     <div class="col-6">
                                         <button type="submit" class="btn btn-primary continue-btn submit-btn">Terima</button>
