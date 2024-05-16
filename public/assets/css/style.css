@@ -13272,6 +13272,10 @@ ul.nav-tabs > li > a {
 .font-semibold {
     font-weight: 600 !important;
 }
+.my-4{
+	margin-top: 1rem !important;
+	margin-bottom: 1rem !important;
+}
 .max-w-2xl {
 	max-width: 42rem !important;
 }
@@ -13326,6 +13330,9 @@ ul.nav-tabs > li > a {
 }
 .w-full {
 	width: 100% !important;
+}
+.max-w-sm {
+	max-width: 24rem !important;
 }
 .h-full {
 	height: 100% !important;
@@ -13451,6 +13458,9 @@ ul.nav-tabs > li > a {
 }
 .min-h-full {
     min-height: 100% !important;
+}
+.max-w-72 {
+	max-width: 18rem;
 }
 .min-w-full {
     min-width: 100% !important;

@@ -150,17 +150,12 @@ Route::controller(BoardController::class)->group(function () {
     Route::get("admin/tim/papan/{team_id}/{board_id}", "showBoard")->middleware("auth", "auth.session", "boardAccess")->name("board");
     Route::post("admin/tim/papan/{team_id}/{board_id}", "updateBoard")->middleware("auth", "auth.session", "boardAccess")->name("updateBoard");
     Route::post("admin/tim/papan/hapus/{team_id}/{board_id}", "deleteBoard")->middleware("auth", "auth.session", "boardAccess")->name("deleteBoard");
-
+    Route::post("admin/tim/{team_id}/papan/{board_id}/kolom", "addColumn")->middleware("auth", "auth.session", "boardAccess")->name("addCol");
+    Route::post("admin/tim/{team_id}/papan/{board_id}/kolom/{column_id}/kartu", "addCard")->middleware("auth", "auth.session", "boardAccess")->name("addCard");
     
 
 
-    
-
-
-    Route::post("admin/tim/papan/kolom/{team_id}/{board_id}", "addColumn")->middleware("auth", "auth.session", "boardAccess")->name("addCol");
     Route::get("team/{team_id}/board/{board_id}/data", "getData")->middleware("auth", "auth.session", "boardAccess")->name("boardJson");
-    Route::post("team/{team_id}/board/{board_id}/column", "addColumn")->middleware("auth", "auth.session", "boardAccess")->name("addCol");
-    Route::post("team/{team_id}/board/{board_id}/column/{column_id}/card", "addCard")->middleware("auth", "auth.session", "boardAccess")->name("addCard");
     Route::post("team/{team_id}/board/{board_id}/column/reorder", "reorderCol")->middleware("auth", "auth.session", "boardAccess")->name("reorderCol");
     Route::post("team/{team_id}/board/{board_id}/column/reorder", "reorderCol2")->middleware("auth", "auth.session", "boardAccess")->name("reorderCol2");
     Route::post("team/{team_id}/board/{board_id}/column/update", "updateCol")->middleware("auth", "auth.session", "boardAccess")->name("updateCol");
@@ -170,6 +165,8 @@ Route::controller(BoardController::class)->group(function () {
 
     // ----------------------------- User ----------------------------- //
     Route::get("user/tim/papan/{team_id}/{board_id}", "showBoard2")->middleware("auth", "auth.session", "boardAccess")->name("board2");
+    Route::post("user/tim/{team_id}/papan/{board_id}/kolom", "addColumn2")->middleware("auth", "auth.session", "boardAccess")->name("addCol2");
+    Route::post("admin/tim/{team_id}/papan/{board_id}/kolom/{column_id}/kartu", "addCard2")->middleware("auth", "auth.session", "boardAccess")->name("addCard2");
 });
 
 // ----------------------------- Card ----------------------------- //

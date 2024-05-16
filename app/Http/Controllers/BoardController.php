@@ -58,6 +58,7 @@ class BoardController extends Controller
         $board = $this->boardLogic->getData($board_id);
         $team = Team::find($board->team_id);
         $teamOwner = $this->teamLogic->getTeamOwner($board->team_id);
+        $dataColumnCard = Column::with('cards')->get();
 
         $result_tema = DB::table('mode_aplikasi')
             ->select(
@@ -120,7 +121,7 @@ class BoardController extends Controller
             ->whereNotNull('read_at')
             ->get();
 
-        return view("admin.board", compact('result_tema','unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
+        return view("admin.board", compact('dataColumnCard', 'result_tema', 'unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
             ->with("team", $team)
             ->with("owner", $teamOwner)
             ->with("board", $board)
@@ -135,6 +136,7 @@ class BoardController extends Controller
         $board = $this->boardLogic->getData($board_id);
         $team = Team::find($board->team_id);
         $teamOwner = $this->teamLogic->getTeamOwner($board->team_id);
+        $dataColumnCard = Column::with('cards')->get();
 
         $result_tema = DB::table('mode_aplikasi')
             ->select(
@@ -197,7 +199,7 @@ class BoardController extends Controller
             ->whereNotNull('read_at')
             ->get();
 
-        return view("user.board", compact('result_tema','unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
+        return view("user.board", compact('dataColumnCard', 'result_tema', 'unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
             ->with("team", $team)
             ->with("owner", $teamOwner)
             ->with("board", $board)
@@ -234,6 +236,46 @@ class BoardController extends Controller
     }
     // /Hapus Papan Khusus Admin //
 
+    // Membuat Kolom Admin //
+    public function addColumn(Request $request, $team_id, $board_id,)
+    {
+        $request->validate([
+            "board_id"      => "required",
+            "column_name"   => "required",
+        ]);
+        $team_id = intval($team_id);
+        $board_id = intval($request->board_id);
+
+        $createdColumn = $this->boardLogic->addColumn($board_id, $request->column_name);
+
+        if ($createdColumn == null)
+
+            return redirect()->back();
+
+        return response()->json($createdColumn);
+    }
+    // /Membuat Kolom Admin //
+
+    // Membuat Kolom Admin //
+    public function addColumn2(Request $request, $team_id, $board_id,)
+    {
+        $request->validate([
+            "board_id"      => "required",
+            "column_name"   => "required",
+        ]);
+        $team_id = intval($team_id);
+        $board_id = intval($request->board_id);
+
+        $createdColumn = $this->boardLogic->addColumn2($board_id, $request->column_name);
+
+        if ($createdColumn == null)
+
+            return redirect()->back();
+
+        return response()->json($createdColumn);
+    }
+    // /Membuat Kolom Admin //
+
 
 
 
@@ -256,26 +298,7 @@ class BoardController extends Controller
 
     
 
-    // Membuat Kolom Admin & User //
-    public function addColumn(Request $request, $team_id, $board_id,)
-    {
-        $request->validate([
-            "board_id"      => "required",
-            "column_name"   => "required",
-        ]);
-        $team_id = intval($team_id);
-        $board_id = intval($request->board_id);
-
-        $createdColumn = $this->boardLogic->addColumn($board_id, $request->column_name);
-
-        if ($createdColumn == null)
-
-            Toastr::error('Gagal membuat kolom, silahkan coba lagi!', 'Error');
-            return redirect()->back();
-
-        return response()->json($createdColumn);
-    }
-    // /Membuat Kolom Admin & User //
+    
 
     // Membuat Kartu Admin & User //
     public function addCard(Request $request, $team_id, $board_id, $column_id)
@@ -285,6 +308,21 @@ class BoardController extends Controller
         $card_name = $request->name;
 
         $newCard = $this->boardLogic->addCard($column_id, $card_name);
+        Toastr::success('Berhasil membuat kartu!', 'Success');
+        $this->cardLogic->cardAddEvent($newCard->id, Auth::user()->id, "Membuat Kartu");
+        return response()->json($newCard);
+    }
+    // /Membuat Kartu Admin & User //
+
+    // Membuat Kartu Admin & User //
+    public function addCard2(Request $request, $team_id, $board_id, $column_id)
+    {
+        $board_id = intval($board_id);
+        $column_id = intval($column_id);
+        $card_name = $request->name;
+
+        $newCard = $this->boardLogic->addCard2($column_id, $card_name);
+        Toastr::success('Berhasil membuat kartu!', 'Success');
         $this->cardLogic->cardAddEvent($newCard->id, Auth::user()->id, "Membuat Kartu");
         return response()->json($newCard);
     }

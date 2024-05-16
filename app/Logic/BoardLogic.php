@@ -88,8 +88,55 @@ class BoardLogic
     }
     // /Menambahkan Kolom //
 
+    // Menambahkan Kolom //
+    public function addColumn2(int $board_id, string $column_name)
+    {
+        $board = Board::find($board_id);
+
+        if ($board == null) return null;
+
+        $lastColumn = Column::where("board_id", $board->id)
+            ->whereNull("next_id")
+            ->first();
+
+        $column = Column::create([
+            "name"          => $column_name,
+            "board_id"      => $board->id,
+            "previous_id"   => $lastColumn ? $lastColumn->id : null,
+        ]);
+
+        if ($lastColumn) {
+            $lastColumn->next_id = $column->id;
+            $lastColumn->save();
+        }
+        return $column;
+    }
+    // /Menambahkan Kolom //
+
     // Menambahkan Kartu //
     public function addCard(int $column_id, string $card_name)
+    {
+        $lastCard = Card::where("column_id", $column_id)
+            ->whereNull("next_id")
+            ->first();
+
+        $newCard = Card::create([
+            "name"          => $card_name,
+            "column_id"     => $column_id,
+            "previous_id"   => $lastCard ? $lastCard->id : null
+        ]);
+
+        if($lastCard){
+            $lastCard->next_id = $newCard->id;
+            $lastCard->save();
+        }
+
+        return $newCard;
+    }
+    // /Menambahkan Kartu //
+
+    // Menambahkan Kartu //
+    public function addCard2(int $column_id, string $card_name)
     {
         $lastCard = Card::where("column_id", $column_id)
             ->whereNull("next_id")
