@@ -74,6 +74,7 @@
             .bootstrap-datetimepicker-widget table td.hour:hover,
             .bootstrap-datetimepicker-widget table td.minute:hover,
             .bootstrap-datetimepicker-widget table td.second:hover{color: {{ $mode_tema->warna_sistem }} !important}
+            .bg-whites{background-color: {{ $mode_tema->warna_sistem }} !important;}
 
             .card-title{color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
             .table{color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
@@ -259,6 +260,8 @@
             .dropzone-box-42{background-color: {{ $mode_tema->warna_mode }} !important;}
             .dropzone-box-43{background-color: {{ $mode_tema->warna_mode }} !important;}
             .dropzone-box-44{background-color: {{ $mode_tema->warna_mode }} !important;}
+            .kartu-trello {background-color: {{ $mode_tema->warna_mode }} !important;}
+            .card-trello {background-color: {{ $mode_tema->warna_mode }} !important;}
             .fa-circle-check{color: {{ $mode_tema->warna_mode }} !important;}
             .bg-white{background-color: {{ $mode_tema->warna_mode }} !important;}
             .bg-gray-100{background-color: {{ $mode_tema->warna_mode }} !important;}
@@ -322,6 +325,8 @@
                     .boc-edit-form-header{background-color: {{ $mode_tema->warna_dropdown_menu }} !important; border-radius: 0px !important;}
                     .boc-dark .boc-input>label.focused,.boc-light .boc-input>label.focused{color:#039be5 !important}
                     hr{border-top: 1px solid {{ $mode_tema->warna_sistem_tulisan }} !important}
+                    .text-black {color: white !important}
+                    .bg-slate-100{background-color: {{ $mode_tema->warna_sistem }} !important;}
 
                     @foreach ($belum_dibaca as $notifikasi_belum_dibaca)
                         #popup-notifikasi_{{ $notifikasi_belum_dibaca->id }} {background: {{ $mode_tema->warna_mode }} !important}

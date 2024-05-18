@@ -13456,6 +13456,180 @@ ul.nav-tabs > li > a {
 .gap-4 {
     gap: 1rem !important;
 }
+.aksi-card {
+	position: relative;
+	display: none;
+	float: right;
+    right: 10px;
+	top: 22px;
+	cursor: pointer;
+    /* left: 190px; */
+}
+.custom-modal .tag-list {
+	font-size: 14px;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+	font-weight: 500
+}
+.tag-list {
+	margin-bottom: 0;
+	line-height: 1.5;
+}
+.tag-name {
+	text-decoration: underline;
+}
+.custom-modal .nama-kartu {
+	font-size: 20px;
+	font-weight: 700;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+}
+.nama-kartu {
+	margin-bottom: 0;
+	line-height: 1.5;
+}
+.aksi-kolom2 {
+	position: relative;
+	top: -3px;
+	display: none;
+	left: 245px;
+	cursor: pointer;
+}
+.aksi-kolom {
+	position: relative;
+	top: -3px;
+	display: none;
+	left: 220px;
+	cursor: pointer;
+}
+.hidden {
+	display: none;
+}
+.tampilan-kolom {
+	display: flex;
+	min-width: 760%;
+}
+.kolom-nama {
+	border-bottom: 3px solid #f5fffa;
+}
+.ms-3 {
+	margin-inline-start: 1.5rem;
+	margin-right: 1rem;
+}
+.card-trello {
+	background-color: #f5fffa;
+	list-style-type: none;
+	border-radius: 30px;
+	margin-bottom: 10px;
+}
+.kartu-trello {
+	background-color: #f5fffa;
+	list-style-type: none;
+	border-radius: 30px;
+	margin-bottom: 10px;
+}
+.text-base {
+	font-size: 1rem !important;
+	line-height: 1.5rem !important;
+}
+.p-4 {
+	padding: 1rem !important;
+}
+.p-3 {
+	padding: 0.75rem !important;
+}
+.space-y-3 {
+	margin-top: 0.75rem !important;
+}
+.text-lgs {
+	font-size: 1.125rem !important;
+	line-height: 1.75rem !important;
+}
+.bg-whites {
+	--tw-bg-opacity: 1;
+	background-color: rgb(241 245 249 / var(--tw-bg-opacity)) !important;
+}
+.fa-pencil:hover {
+	color: #5edd97;
+}
+.fa-trash:hover {
+	color: #f43b48;
+	cursor: pointer;
+}
+.fa-eye:hover {
+	color: #5edd97;
+}
+.icon-card {
+	position: relative;
+	bottom: 4px;
+	right: 8px;
+	margin: 10px;
+}
+.icon-align {
+	position: relative;
+	bottom: 4px;
+	right: 8px;
+	margin: 10px;
+}
+.icon-checklist {
+	position: relative;
+	bottom: 4px;
+	right: 8px;
+	margin: 10px;
+}
+.icon-activity {
+	position: relative;
+	bottom: 4px;
+	right: 8px;
+	margin: 10px;
+}
+.icon-hapus {
+	position: absolute;
+	left: 80%;
+	bottom: 39px;   
+}
+.icon-lihat {
+	position: absolute;
+	left: 80%;
+	bottom: 39px;   
+}
+.icon-item {
+	border-radius: 30px;
+	height: 35px;
+}
+.keterangan-tag {
+	position: relative;
+	left: 41px;
+	bottom: 39px;
+}
+.checklist-tag {
+	position: relative;
+	left: 41px;
+	bottom: 39px;
+}
+.activity-tag {
+	position: relative;
+	left: 41px;
+	bottom: 39px;
+}
+.deskripsi-keterangan {
+	font-size: 16px;
+	font-weight: 600
+}
+.checklist-keterangan {
+	font-size: 16px;
+	font-weight: 600
+}
+.activity-keterangan {
+	font-size: 16px;
+	font-weight: 600
+}
+.w-40l {
+	width: 85%;
+}
+.hapus-kartu {
+	position: absolute;
+	left: 34px;
+	top: 62px;
+}
 .min-h-full {
     min-height: 100% !important;
 }

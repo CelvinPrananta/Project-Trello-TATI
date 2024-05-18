@@ -98,4 +98,25 @@ class CardLogic
         $target_card->delete();
     }
     // /Menghapus Kartu //
+
+    // Menghapus Kartu //
+    function deleteCard2(int $target_card_id){
+        $target_card = Card::find($target_card_id);
+        $top_card = null;
+        $bottom_card = null;
+        if(!$target_card) return;
+        if($target_card->previous_id) $top_card = Card::find($target_card->previous_id);
+        if($target_card->next_id) $bottom_card = Card::find($target_card->next_id);
+
+        if($top_card){
+            $top_card->next_id = $bottom_card ? $bottom_card->id : null;
+            $top_card->save();
+        }
+        if($bottom_card){
+            $bottom_card->previous_id = $top_card ? $top_card->id : null;
+            $bottom_card->save();
+        }
+        $target_card->delete();
+    }
+    // /Menghapus Kartu //
 }

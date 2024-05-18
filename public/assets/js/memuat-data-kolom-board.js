@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                 </ul>
                                             </div>`)
                 console.log(`Respon dari server: ${data.id} ${data.name}`);
-                $('#column_name').val('');
+                $('#buat-kolom').val('');
             })
             .then((e) => {
                 toastr.success('Anda berhasil membuat kolom!');
@@ -50,5 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch((error) => {
                 console.error('Error:', error);
             });
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
     });
 });

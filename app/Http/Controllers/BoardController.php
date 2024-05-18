@@ -29,8 +29,8 @@ class BoardController extends Controller
     public function createBoard(Request $request, $team_id)
     {
         $request->validate([
-            "team_id"       => "required",
-            "board_name"    => "required",
+            "team_id" => "required",
+            "board_name" => "required",
             "board_pattern" => "required"
         ]);
         $team_id = intval($request->team_id);
@@ -42,7 +42,6 @@ class BoardController extends Controller
         );
 
         if ($createdBoard == null)
-
             Toastr::error('Gagal membuat papan, silahkan coba lagi!', 'Error');
             return redirect()->back();
 
@@ -230,7 +229,6 @@ class BoardController extends Controller
     public function deleteBoard($team_id, $board_id)
     {
         Board::where("id", intval($board_id))->delete();
-
         Toastr::success('Papan berhasil dihapus!', 'Success');
         return redirect()->route("viewTeam", ["team_id" => intval($team_id)]);
     }
@@ -240,17 +238,18 @@ class BoardController extends Controller
     public function addColumn(Request $request, $team_id, $board_id,)
     {
         $request->validate([
-            "board_id"      => "required",
-            "column_name"   => "required",
+            "board_id" => "required",
+            "column_name" => "required",
         ]);
         $team_id = intval($team_id);
         $board_id = intval($request->board_id);
 
         $createdColumn = $this->boardLogic->addColumn($board_id, $request->column_name);
 
-        if ($createdColumn == null)
-
+        if ($createdColumn == null) {
+            Toastr::error('Gagal membuat kolom, silahkan coba lagi!', 'Error');
             return redirect()->back();
+        }
 
         return response()->json($createdColumn);
     }
@@ -260,47 +259,88 @@ class BoardController extends Controller
     public function addColumn2(Request $request, $team_id, $board_id,)
     {
         $request->validate([
-            "board_id"      => "required",
-            "column_name"   => "required",
+            "board_id" => "required",
+            "column_name" => "required",
         ]);
         $team_id = intval($team_id);
         $board_id = intval($request->board_id);
 
         $createdColumn = $this->boardLogic->addColumn2($board_id, $request->column_name);
 
-        if ($createdColumn == null)
-
+        if ($createdColumn == null) {
+            Toastr::error('Gagal membuat kolom, silahkan coba lagi!', 'Error');
             return redirect()->back();
+        }
 
         return response()->json($createdColumn);
     }
     // /Membuat Kolom Admin //
 
+    // Perbaharui Kolom Admin //
+    public function updateCol(Request $request, $team_id, $board_id)
+    {
+        $request->validate([
+            "column_name" => "required|max:200",
+            "column_id" => "required",
+        ]);
 
+        $col_id = intval($request->column_id);
+        $column = Column::find($col_id);
+        if (!$column) {
+            Toastr::error('Kolom tidak ditemukan atau terhapus harap menghubungi pemiliknya', 'Error');
+            return redirect()->back();
+        }
+        $column->name = $request->column_name;
+        $column->save();
+        Toastr::success('Anda berhasil memperbaharui kolom!', 'Success');
+        return redirect()->back();
+    }
+    // /Perbaharui Kolom Admin //
 
+    // Perbaharui Kolom User //
+    public function updateCol2(Request $request, $team_id, $board_id)
+    {
+        $request->validate([
+            "column_name" => "required|max:200",
+            "column_id" => "required",
+        ]);
 
+        $col_id = intval($request->column_id);
+        $column = Column::find($col_id);
+        if (!$column) {
+            Toastr::error('Kolom tidak ditemukan atau terhapus harap menghubungi pemiliknya', 'Error');
+            return redirect()->back();
+        }
+        $column->name = $request->column_name;
+        $column->save();
+        Toastr::success('Anda berhasil memperbaharui kolom!', 'Success');
+        return redirect()->back();
+    }
+    // /Perbaharui Kolom User //
 
+    // Menghapus Kolom Admin //
+    public function deleteCol(Request $request, $team_id, $board_id)
+    {
+        $request->validate(["column_id" => "required"]);
+        $col_id = intval($request->column_id);
+        $this->boardLogic->deleteCol($col_id);
+        Toastr::success('Anda berhasil menghapus kolom!', 'Success');
+        return redirect()->back();
+    }
+    // /Menghapus Kolom Admin //
 
+    // Menghapus Kolom User //
+    public function deleteCol2(Request $request, $team_id, $board_id)
+    {
+        $request->validate(["column_id" => "required"]);
+        $col_id = intval($request->column_id);
+        $this->boardLogic->deleteCol2($col_id);
+        Toastr::success('Anda berhasil menghapus kolom!', 'Success');
+        return redirect()->back();
+    }
+    // /Menghapus Kolom User //
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    
-
-    // Membuat Kartu Admin & User //
+    // Membuat Kartu Admin //
     public function addCard(Request $request, $team_id, $board_id, $column_id)
     {
         $board_id = intval($board_id);
@@ -308,13 +348,15 @@ class BoardController extends Controller
         $card_name = $request->name;
 
         $newCard = $this->boardLogic->addCard($column_id, $card_name);
-        Toastr::success('Berhasil membuat kartu!', 'Success');
         $this->cardLogic->cardAddEvent($newCard->id, Auth::user()->id, "Membuat Kartu");
-        return response()->json($newCard);
-    }
-    // /Membuat Kartu Admin & User //
 
-    // Membuat Kartu Admin & User //
+        Toastr::success('Anda berhasil membuat kartu!', 'Success');
+        return redirect()->back();
+        // return response()->json($newCard);
+    }
+    // /Membuat Kartu Admin //
+
+    // Membuat Kartu User //
     public function addCard2(Request $request, $team_id, $board_id, $column_id)
     {
         $board_id = intval($board_id);
@@ -322,11 +364,127 @@ class BoardController extends Controller
         $card_name = $request->name;
 
         $newCard = $this->boardLogic->addCard2($column_id, $card_name);
-        Toastr::success('Berhasil membuat kartu!', 'Success');
         $this->cardLogic->cardAddEvent($newCard->id, Auth::user()->id, "Membuat Kartu");
-        return response()->json($newCard);
+
+        Toastr::success('Anda berhasil membuat kartu!', 'Success');
+        return redirect()->back();
+        // return response()->json($newCard);
     }
-    // /Membuat Kartu Admin & User //
+    // /Membuat Kartu User //
+
+    // Perbaharui Kartu Admin //
+    public function perbaharuiKartu(Request $request, $card_id)
+    {
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                "name" => "required|max:200"
+            ]);
+
+            $user_id = AUth::user()->id;
+            $card_id = intval($card_id);
+            $card = Card::find($card_id);
+
+            $updateKartu = [
+                'id'            => $request->id,
+                'name'          => $request->name,
+                'description'   => $request->description,
+            ];
+
+            $card->save();
+            Card::where('id', $request->id)->update($updateKartu);
+            $this->cardLogic->cardAddEvent($card_id, $user_id, "Informasi kartu telah diperbarui");
+
+            DB::commit();
+            Toastr::success('Anda berhasil memperbaharui kartu!', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Anda gagal memperbaharui kartu!', 'Error');
+            return redirect()->back();
+        }
+    }
+    // Perbaharui Kartu Admin //
+
+    // Perbaharui Kartu User //
+    public function perbaharuiKartu2(Request $request, $card_id)
+    {
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                "name" => "required|max:200"
+            ]);
+
+            $user_id = AUth::user()->id;
+            $card_id = intval($card_id);
+            $card = Card::find($card_id);
+
+            $updateKartu = [
+                'id'            => $request->id,
+                'name'          => $request->name,
+                'description'   => $request->description,
+            ];
+
+            $card->save();
+            Card::where('id', $request->id)->update($updateKartu);
+            $this->cardLogic->cardAddEvent($card_id, $user_id, "Informasi kartu telah diperbarui");
+
+            DB::commit();
+            Toastr::success('Anda berhasil memperbaharui kartu!', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Anda gagal memperbaharui kartu!', 'Error');
+            return redirect()->back();
+        }
+    }
+    // Perbaharui Kartu User //
+
+    // Perbaharui Kartu Admin //
+    public function hapusKartu(Request $request, $card_id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->cardLogic->deleteCard(intval($card_id));
+
+            DB::commit();
+            Toastr::success('Anda berhasil menghapus kartu!', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Anda gagal menghapus kartu!', 'Error');
+            return redirect()->back();
+        }
+    }
+    // Perbaharui Kartu Admin //
+
+    // Perbaharui Kartu Admin //
+    public function hapusKartu2(Request $request, $card_id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->cardLogic->deleteCard2(intval($card_id));
+
+            DB::commit();
+            Toastr::success('Anda berhasil menghapus kartu!', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Anda gagal menghapus kartu!', 'Error');
+            return redirect()->back();
+        }
+    }
+    // Perbaharui Kartu Admin //
+
+
+
+
+
+
+    
+
+
+
 
     // Mendapatkan Data Admin & User //
     public function getData($team_id, $board_id)
@@ -386,40 +544,4 @@ class BoardController extends Controller
         return response()->json($updatedCol);
     }
     // /Memindahkan Kolom User //
-
-    // Perbaharui Kolom Admin & User //
-    public function updateCol(Request $request, $team_id, $board_id)
-    {
-        $request->validate([
-            "column_name"   => "required|max:20",
-            "column_id"     => "required",
-        ]);
-
-        $col_id = intval($request->column_id);
-        $column = Column::find($col_id);
-
-        if (!$column) {
-            Toastr::error('Kolom tidak ditemukan atau terhapus harap menghubungi pemiliknya', 'Error');
-            return redirect()->back();
-        }
-
-        $column->name = $request->column_name;
-        $column->save();
-
-        Toastr::success('Kolom berhasil diperbaharui!', 'Success');
-        return redirect()->back();
-    }
-    // /Perbaharui Kolom Admin & User //
-
-    // Menghapus Kolom Admin & User //
-    public function deleteCol(Request $request, $team_id, $board_id)
-    {
-        $request->validate(["column_id" => "required"]);
-        $col_id = intval($request->column_id);
-        $this->boardLogic->deleteCol($col_id);
-
-        Toastr::success('Kolom berhasil dihapus!', 'Success');
-        return redirect()->back();
-    }
-    // /Menghapus Kolom Admin & User //
 }

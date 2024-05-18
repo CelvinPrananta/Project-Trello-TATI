@@ -49,6 +49,11 @@ class Card extends Model
         return $this->belongsTo(Card::class, 'next_id');
     }
 
+    public function history()
+    {
+        return $this->hasMany(CardHistory::class);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, "card_user", "card_id", "user_id");
