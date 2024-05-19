@@ -13503,6 +13503,9 @@ ul.nav-tabs > li > a {
 .hidden {
 	display: none;
 }
+.hiddens {
+	display: none !important;
+}
 .tampilan-kolom {
 	display: flex;
 	min-width: 760%;
@@ -13557,6 +13560,9 @@ ul.nav-tabs > li > a {
 .fa-eye:hover {
 	color: #5edd97;
 }
+.fa-eye-slash:hover {
+	color: #5edd97;
+}
 .icon-card {
 	position: relative;
 	bottom: 4px;
@@ -13575,18 +13581,12 @@ ul.nav-tabs > li > a {
 	right: 8px;
 	margin: 10px;
 }
-.icon-activity {
+.header-activity {
 	position: relative;
-	bottom: 4px;
-	right: 8px;
-	margin: 10px;
+    display: flex;
+    align-items: baseline;
 }
 .icon-hapus {
-	position: absolute;
-	left: 80%;
-	bottom: 39px;   
-}
-.icon-lihat {
 	position: absolute;
 	left: 80%;
 	bottom: 39px;   
@@ -13594,6 +13594,11 @@ ul.nav-tabs > li > a {
 .icon-item {
 	border-radius: 30px;
 	height: 35px;
+}
+.icon-lihat {
+	display: flex;
+	flex: auto;
+	justify-content: flex-end;
 }
 .keterangan-tag {
 	position: relative;
@@ -13607,8 +13612,16 @@ ul.nav-tabs > li > a {
 }
 .activity-tag {
 	position: relative;
-	left: 41px;
-	bottom: 39px;
+}
+.waktu-history {
+	position: relative;
+	float: right;
+	font-size: 12px;
+    right: 25px;
+    bottom: 20px;
+}
+.title-activity {
+	font-size: 14px;
 }
 .deskripsi-keterangan {
 	font-size: 16px;
@@ -13620,7 +13633,22 @@ ul.nav-tabs > li > a {
 }
 .activity-keterangan {
 	font-size: 16px;
-	font-weight: 600
+	font-weight: 600;
+	margin-left: 5%;
+}
+.isian-tag {
+	margin-bottom: -5%;
+}
+.input-komentar {
+	position: relative;
+	margin-bottom: 2%;
+}
+.isian-history {
+	background-color: #defbec;
+	border-radius: 30px;
+}
+.justify-between {
+	justify-content: space-between !important;
 }
 .w-40l {
 	width: 85%;
@@ -13733,6 +13761,14 @@ ul.nav-tabs > li > a {
     width: 45px !important;
     position: relative;
     white-space: nowrap;
+}
+
+.avatar-activity {
+	position: relative;
+    width: 30px !important;
+	height: 30px !important;
+    border-radius: 50%;
+	top: 3px;
 }
 
 .avatar-undangan {

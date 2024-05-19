@@ -68,6 +68,19 @@ class CardLogic
     }
     // /Menambahkan Komentar pada Kartu //
 
+    // Menambahkan Komentar pada Kartu //
+    function cardComment2(int $card_id, int $user_id, string $content){
+        $event = CardHistory::create([
+            "user_id"   => $user_id,
+            "card_id"   => $card_id,
+            "type"      => "comment",
+            "content"   => $content,
+        ]);
+
+        return $event;
+    }
+    // /Menambahkan Komentar pada Kartu //
+
     // Menambahkan Histori pada Kartu //
     function getHistories(int $card_id){
         $evets = CardHistory::with("user")

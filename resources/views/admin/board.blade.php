@@ -187,7 +187,9 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('addCol', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}" id="addColForm" method="POST">
+                        @isset($dataKartu)
+                            <form action="{{ route('addCol', ['board_id' => $board->id, 'team_id' => $board->team_id, 'card_id' => $dataKartu->id]) }}" id="addColForm" method="POST">
+                        @endif
                             @csrf
                             <input type="hidden" class="form-control" name="board_id" value="{{ $board->id }}">
                             <input type="hidden" class="form-control" name="team_id" value="{{ $team->id }}">
@@ -312,7 +314,7 @@
                                 <div class="keterangan-tag">
                                     <p class="deskripsi-keterangan">Keterangan </p>
                                     <div class="border border-1 border-dark w-40l p-2 rounded">
-                                        <p>{{ $isianKartu->description }}</p>
+                                        <p class="isian-keterangan">{{ $isianKartu->description }}</p>
                                     </div>
                                 </div>
 
@@ -324,21 +326,75 @@
                                         <div class="icon-hapus">
                                             <i class="fa-solid fa-trash fa-lg"></i>
                                         </div>
-                                    <p>{{ $isianKartu->description }}</p>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="checklist-isian">
+                                        <p class="isian-checklist">{{ $isianKartu->description }}</p>
+                                    </div>
                                     <button onclick="openChecklist('{{ $isianKartu->id }}')" class="btn btn-outline-info icon-item">
                                         <i class="fa-solid fa-plus"></i> Tambahkan Item
                                     </button>
                                 </div>
 
-                                <div class="icon-activity">
-                                    <i class="fa-solid fa-list-ul fa-lg"></i>
-                                </div>
-                                <div class="activity-tag">
-                                    <p class="activity-keterangan">Activity </p>
-                                        <div class="icon-lihat">
-                                            <i class="fa-solid fa-eye fa-lg"></i>
+                                <div class="menu-activity flex flex-col flex-wrap">
+                                    <div class="header-activity">
+                                        <i class="fa-solid fa-list-ul fa-lg"></i>
+                                        <p class="activity-keterangan">Activity </p>
+                                        <div onclick="showActivity()" class="icon-lihat">
+                                            <i class="fa-solid fa-eye fa-lg" id="showActivityIcon"></i>
                                         </div>
-                                    <p>{{ $isianKartu->description }}</p>
+                                    </div>
+                                    <div class="input-komentar flex gap-2">
+                                        <img class="avatar-activity" src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" loading="lazy">
+                                        @isset($dataKartu)
+                                            <form action="{{ route('komentarKartu', ['card_id' => $dataKartu->id]) }}" method="POST">
+                                        @endif
+                                            <textarea onclick="saveComment()" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="50" id="komentar" name="komentar" placeholder="Tulis komentar..."></textarea>
+                                            <button type="submit" class="btn btn-outline-info icon-item hidden" id="simpanButton">Kirim</button>
+                                        </form>
+                                    </div>
+                                    <div class="activity-tag flex flex-col hiddens" id="showActivity">
+                                        @foreach($isianHistory as $history)
+                                            <div class="isian-tag">
+                                                @if ($history->type === 'event')
+                                                    <div class="isian-history flex gap-1">
+                                                        <img class="avatar-activity" src="{{ URL::to('/assets/images/' . $history->avatar) }}" loading="lazy">
+                                                        <div class="title-activity flex gap-1">
+                                                            @if (strpos($history->content, 'Membuat Kolom') !== false)
+                                                                <p>{{ $history->name }},</p>
+                                                                <p>telah membuat</p>
+                                                                <p>kolom</p>
+                                                                <p>ini</p>
+                                                            @elseif (strpos($history->content, 'Membuat Kartu') !== false)
+                                                                <p>{{ $history->name }},</p>
+                                                                <p>menambahkan</p>
+                                                                <p>Senin</p>
+                                                                <p>ke kartu ini</p>
+                                                            @elseif (strpos($history->content, 'Menghapus Kartu') !== false)
+                                                                <p>{{ $history->name }},</p>
+                                                                <p>menghapus</p>
+                                                                <p>Senin</p>
+                                                                <p>ke kartu ini</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="waktu-history">
+                                                        <p><i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i> {{ \Carbon\Carbon::parse($history->created_at)->translatedFormat('j F \p\u\k\u\l h:i A') }}</p>
+                                                    </div>
+                                                @endif
+                                                @if ($history->type === 'comment')
+                                                    <div class="isian-history flex gap-1">
+                                                        <img class="avatar-activity" src="{{ URL::to('/assets/images/' . $history->avatar) }}" loading="lazy">
+                                                        <div class="title-activity flex gap-1">
+                                                            <p>{{ $history->name }} <br><span>{{ $history->content }}</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="waktu-history">
+                                                        <p><i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i> {{ \Carbon\Carbon::parse($history->created_at)->translatedFormat('j F \p\u\k\u\l h:i A') }}</p>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -400,9 +456,18 @@
                 color: black;
                 cursor: pointer;
             }
-            @foreach($result_tema as $sql_user => $aplikasi_tema)
-                @if ($aplikasi_tema->tema_aplikasi == 'Gelap')
+            @foreach($result_tema as $sql_mode => $mode_tema)
+                @if ($mode_tema->tema_aplikasi == 'Gelap')
                     .fa-eye { color: white}
+                    .fa-trash { color: white}
+                    p {color: {{ $mode_tema->warna_mode }} !important}
+                    .custom-modal .tag-list {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+                    .deskripsi-keterangan {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+                    .checklist-keterangan {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+                    .activity-keterangan {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+                    .border-dark {border-color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
+                    .isian-keterangan {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+                    .isian-checklist {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
                 @endif
             @endforeach
         </style>

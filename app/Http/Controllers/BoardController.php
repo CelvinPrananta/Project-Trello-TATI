@@ -58,6 +58,16 @@ class BoardController extends Controller
         $team = Team::find($board->team_id);
         $teamOwner = $this->teamLogic->getTeamOwner($board->team_id);
         $dataColumnCard = Column::with('cards')->get();
+        $isianHistory = DB::table('card_histories')
+            ->leftjoin('users', 'card_histories.user_id', 'users.id')
+            ->leftjoin('cards', 'card_histories.card_id', 'cards.id')
+            ->select(
+                'card_histories.*',
+                'users.id',
+                'users.name',
+                'users.avatar',
+            )
+            ->get();
 
         $result_tema = DB::table('mode_aplikasi')
             ->select(
@@ -120,7 +130,7 @@ class BoardController extends Controller
             ->whereNotNull('read_at')
             ->get();
 
-        return view("admin.board", compact('dataColumnCard', 'result_tema', 'unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
+        return view("admin.board", compact('isianHistory','dataColumnCard', 'result_tema', 'unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
             ->with("team", $team)
             ->with("owner", $teamOwner)
             ->with("board", $board)
@@ -235,7 +245,7 @@ class BoardController extends Controller
     // /Hapus Papan Khusus Admin //
 
     // Membuat Kolom Admin //
-    public function addColumn(Request $request, $team_id, $board_id,)
+    public function addColumn(Request $request, $team_id, $board_id, $card_id)
     {
         $request->validate([
             "board_id" => "required",
@@ -243,6 +253,13 @@ class BoardController extends Controller
         ]);
         $team_id = intval($team_id);
         $board_id = intval($request->board_id);
+
+        $user_id = AUth::user()->id;
+        $user_id = AUth::user()->id;
+        $card_id = intval($card_id);
+        $card = Card::find($card_id);
+        $card->save();
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Membuat Kolom");
 
         $createdColumn = $this->boardLogic->addColumn($board_id, $request->column_name);
 
@@ -256,7 +273,7 @@ class BoardController extends Controller
     // /Membuat Kolom Admin //
 
     // Membuat Kolom Admin //
-    public function addColumn2(Request $request, $team_id, $board_id,)
+    public function addColumn2(Request $request, $team_id, $board_id, $card_id)
     {
         $request->validate([
             "board_id" => "required",
@@ -265,7 +282,14 @@ class BoardController extends Controller
         $team_id = intval($team_id);
         $board_id = intval($request->board_id);
 
-        $createdColumn = $this->boardLogic->addColumn2($board_id, $request->column_name);
+        $user_id = AUth::user()->id;
+        $user_id = AUth::user()->id;
+        $card_id = intval($card_id);
+        $card = Card::find($card_id);
+        $card->save();
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Membuat Kolom");
+
+        $createdColumn = $this->boardLogic->addColumn($board_id, $request->column_name);
 
         if ($createdColumn == null) {
             Toastr::error('Gagal membuat kolom, silahkan coba lagi!', 'Error');
@@ -475,6 +499,60 @@ class BoardController extends Controller
         }
     }
     // Perbaharui Kartu Admin //
+
+    // Menambahkan Komen Admin //
+    public function komentarKartu(Request $request, $card_id)
+    {
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                "content" => "required|max:200"
+            ]);
+
+            $user_id = AUth::user()->id;
+            $card_id = intval($card_id);
+            $card = Card::find($card_id);
+
+            $card->save();
+            $this->cardLogic->cardComment($card_id, $user_id, $request->content);
+
+            DB::commit();
+            Toastr::success('Anda berhasil memberikan komentar pada kartu!', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Anda gagal memberikan komentar pada kartu!', 'Error');
+            return redirect()->back();
+        }
+    }
+    // /Menambahkan Komen Admin //
+
+    // Menambahkan Komen User //
+    public function komentarKartu2(Request $request, $card_id)
+    {
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                "content" => "required|max:200"
+            ]);
+
+            $user_id = AUth::user()->id;
+            $card_id = intval($card_id);
+            $card = Card::find($card_id);
+
+            $card->save();
+            $this->cardLogic->cardComment2($card_id, $user_id, $request->content);
+
+            DB::commit();
+            Toastr::success('Anda berhasil memberikan komentar pada kartu!', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Anda gagal memberikan komentar pada kartu!', 'Error');
+            return redirect()->back();
+        }
+    }
+    // /Menambahkan Komen User //
 
 
 
