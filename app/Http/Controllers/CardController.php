@@ -112,4 +112,13 @@ class CardController extends Controller
         return redirect()->back();
     }
     // /Menambahkan Komen //
+
+    public function addDescription(Request $request)
+    {
+        Card::where('id', $request->card_id)->update([
+            'description' => $request->keterangan
+        ]);
+
+        return response()->json(['message' => 'Data saved successfully!']);
+    }
 }

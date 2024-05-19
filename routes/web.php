@@ -13,6 +13,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\TeamController;
 
 // ----------------------------- Menu Sidebar Aktif ----------------------------- //
@@ -180,6 +181,7 @@ Route::controller(BoardController::class)->group(function () {
 Route::controller(CardController::class)->group(function () {
     // ----------------------------- Admin ----------------------------- //
     Route::post("admin/tim/{team_id}/papan/{board_id}/kartu/{card_id}/perbaharui", "updateCard")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("updateCard");
+    Route::post("admin/tim/card/description", "addDescription")->name("addDescription");
 
 
 
@@ -192,4 +194,9 @@ Route::controller(CardController::class)->group(function () {
 
     // ----------------------------- User ----------------------------- //
     Route::post("user/tim/{team_id}/papan/{board_id}/kartu/{card_id}/perbaharui", "updateCard2")->middleware("auth", "auth.session", "boardAccess","cardExist")->name("updateCard2");
+});
+
+Route::controller(ChecklistController::class)->group(function () {
+    Route::post("admin/tim/title/add", "addTitle")->name("addTitle");
+    Route::post("admin/tim/title/update", "updateTitle")->name("updateTitle");
 });

@@ -282,7 +282,7 @@
         @foreach ( $dataColumnCard as $dataKolom )
             @foreach ($dataKolom->cards as $isianKartu)
             <div id="isianKartu{{ $isianKartu->id }}" class="modal custom-modal fade" role="dialog">
-                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header" style="justify-content: left;">
                             <div class="icon-card">
@@ -308,17 +308,178 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                                <div class="icon-align">
+                            <div class="row">
+                                <div class="col-md-1">
                                     <i class="fa-solid fa-align-left fa-lg"></i>
                                 </div>
-                                <div class="keterangan-tag">
-                                    <p class="deskripsi-keterangan">Keterangan </p>
-                                    <div class="border border-1 border-dark w-40l p-2 rounded">
-                                        <p class="isian-keterangan">{{ $isianKartu->description }}</p>
+                                <div class="col-md-11">
+                                    <p class="deskripsi-keterangan">Keterangan {{ $isianKartu->id }}</p>
+                                </div>
+                                <div class="col-md-1">
+                                    {{-- None --}}
+                                </div>
+                                <div class="col-md-9">
+                                    <form id="myForm{{ $isianKartu->id }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
+                                        <input type="text" class="form-control" id="keterangan{{ $isianKartu->id }}" name="keterangan" placeholder="Masukkan Keterangan" value="{{ $isianKartu->description }}">
+                                        <button type="submit" class="btn btn-sm btn-info hidden" id="saveButton{{ $isianKartu->id }}">Save</button>
+                                        <button type="button" class="btn btn-sm btn-secondary hidden" id="cancelButton{{ $isianKartu->id }}">Cancel</button>
+                                    </form>
+                                    <script>
+                                        $(document).ready(function(){
+                                            const id = '{{ $isianKartu->id }}';
+                                            $('#keterangan'+id).on('click', function(){
+                                                $('#saveButton'+id).removeClass('hidden');
+                                                $('#cancelButton'+id).removeClass('hidden');
+                                                console.log(id);
+                                            });
+                                    
+                                            $('#cancelButton'+id).on('click', function(){
+                                                $('#saveButton'+id).addClass('hidden');
+                                                $('#cancelButton'+id).addClass('hidden');
+                                                $('#myForm'+id)[0].reset();
+                                            });
+                                    
+                                                $('#myForm'+id).on('submit', function(event){
+                                                    event.preventDefault(); // Prevent the form from submitting the traditional way
+                                                    var formData = $(this).serialize(); // Serialize the form data
+                                    
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: "{{ route('addDescription') }}",
+                                                        data: formData,
+                                                        success: function(response){
+                                                            console.log(response);
+                                                            $('#saveButton'+id).addClass('hidden');
+                                                            $('#cancelButton'+id).addClass('hidden');
+                                                            // alert('Data saved successfully!');
+                                                            localStorage.clear();
+                                                        },
+                                                        error: function(){
+                                                            alert('An error occurred. Please try again.');
+                                                        }
+                                                    });
+                                                });
+
+                                            $('#addTitle-'+id).on('click', function(){
+                                                $('#titleChecklist'+id).removeClass('hidden');
+                                                $('#saveButtonTitle'+id).removeClass('hidden');
+                                                $('#cancelButtonTitle'+id).removeClass('hidden');
+                                                console.log(id);
+                                            });
+                                    
+                                            $('#cancelButtonTitle'+id).on('click', function(){
+                                                $('#titleChecklist'+id).addClass('hidden');
+                                                $('#saveButtonTitle'+id).addClass('hidden');
+                                                $('#cancelButtonTitle'+id).addClass('hidden');
+                                                $('#myFormTitle'+id)[0].reset();
+                                            });
+
+
+                                            $('#myFormTitle'+id).on('submit', function(event){
+                                                    event.preventDefault(); // Prevent the form from submitting the traditional way
+                                                    var formData = $(this).serialize(); // Serialize the form data
+                                    
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: "{{ route('addTitle') }}",
+                                                        data: formData,
+                                                        success: function(response){
+                                                            console.log(response.card_id);
+                                                            $('#titleChecklist'+id).addClass('hidden');
+                                                            $('#saveButtonTitle'+id).addClass('hidden');
+                                                            $('#cancelButtonTitle'+id).addClass('hidden');
+                                                            // alert('Data saved successfully!');
+                                                            localStorage.setItem('modal_id', response.card_id);
+                                                            window.location.reload();
+                                                        },
+                                                        error: function(){
+                                                            alert('An error occurred. Please try again.');
+                                                        }
+                                                    });
+                                                });
+
+                                            var modal_id = localStorage.getItem('modal_id');
+                                            $('#isianKartu'+modal_id).modal('show');
+
+                                            $('#isianKartu'+id).on('click', function(){
+                                                localStorage.clear();
+                                            });
+                                               
+                                        });
+                                    </script>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-sm btn-info" id="addTitle-{{ $isianKartu->id }}"><i class="fa-regular fa-square-check fa-lg"></i> Checklist</button>
+                                </div>
+                                <div class="col-md-12 mt-4">
+                                    <div class="form-group">
+                                        <form id="myFormTitle{{ $isianKartu->id }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
+                                            <input type="text" class="form-control hidden" id="titleChecklist{{ $isianKartu->id }}" name="titleChecklist" placeholder="Masukkan Judul">
+                                            <button type="submit" class="btn btn-sm btn-info hidden" id="saveButtonTitle{{ $isianKartu->id }}">Add</button>
+                                            <button type="button" class="btn btn-sm btn-secondary hidden" id="cancelButtonTitle{{ $isianKartu->id }}">Cancel</button>
+                                        </form>
                                     </div>
                                 </div>
+                                @foreach ($isianKartu->titleChecklists as $titleChecklists)
+                                    <div class="col-md-1 mb-4">
+                                        <i class="fa-regular fa-square-check fa-lg"></i>
+                                    </div>
+                                    <div class="col-md-9 mb-4">
+                                        <form id="myFormTitleUpdate{{ $titleChecklists->id }}" method="POST">
+                                        @csrf
+                                            <input type="hidden" id="title_id" name="title_id" value="{{ $titleChecklists->id }}">
+                                            <input type="text" class="form-control" id="titleChecklistUpdate{{ $titleChecklists->id }}" name="titleChecklistUpdate" placeholder="Masukkan Judul" value="{{$titleChecklists->name}}">
+                                            <button type="submit" class="btn btn-sm btn-info hidden" id="saveButtonTitleUpdate{{ $titleChecklists->id }}">Save</button>
+                                            <button type="button" class="btn btn-sm btn-secondary hidden" id="cancelButtonTitleUpdate{{ $titleChecklists->id }}">Cancel</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-2 mb-4">
+                                        {{-- None --}}
+                                    </div>
+                                    <script>
+                                        $(document).ready(function(){
+                                            const title_id = '{{ $titleChecklists->id }}';
+                                            $('#titleChecklistUpdate'+title_id).on('click', function(){
+                                                $('#saveButtonTitleUpdate'+title_id).removeClass('hidden');
+                                                $('#cancelButtonTitleUpdate'+title_id).removeClass('hidden');
+                                            });
+                                    
+                                            $('#cancelButtonTitleUpdate'+title_id).on('click', function(){
+                                                $('#saveButtonTitleUpdate'+title_id).addClass('hidden');
+                                                $('#cancelButtonTitleUpdate'+title_id).addClass('hidden');
+                                                $('#myFormTitleUpdate'+title_id)[0].reset();
+                                            });
+                                    
+                                                $('#myFormTitleUpdate'+title_id).on('submit', function(event){
+                                                    event.preventDefault(); // Prevent the form from submitting the traditional way
+                                                    var formData = $(this).serialize(); // Serialize the form data
+                                    
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: "{{ route('updateTitle') }}",
+                                                        data: formData,
+                                                        success: function(response){
+                                                            console.log(response);
+                                                            $('#saveButtonTitleUpdate'+title_id).addClass('hidden');
+                                                            $('#cancelButtonTitleUpdate'+title_id).addClass('hidden');
+                                                            // alert('Data saved successfully!');
+                                                            localStorage.clear();
+                                                        },
+                                                        error: function(){
+                                                            alert('An error occurred. Please try again.');
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        </script>
+                                @endforeach
+                            </div>
 
-                                <div class="icon-checklist">
+                                {{-- <div class="icon-checklist">
                                     <i class="fa-regular fa-square-check fa-lg"></i>
                                 </div>
                                 <div class="checklist-tag">
@@ -333,9 +494,9 @@
                                     <button onclick="openChecklist('{{ $isianKartu->id }}')" class="btn btn-outline-info icon-item">
                                         <i class="fa-solid fa-plus"></i> Tambahkan Item
                                     </button>
-                                </div>
+                                </div> --}}
 
-                                <div class="menu-activity flex flex-col flex-wrap">
+                                {{-- <div class="menu-activity flex flex-col flex-wrap">
                                     <div class="header-activity">
                                         <i class="fa-solid fa-list-ul fa-lg"></i>
                                         <p class="activity-keterangan">Activity </p>
@@ -395,7 +556,7 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -450,7 +611,6 @@
             @endforeach
         @endforeach
         <!-- /Perbaharui Kartu Modal -->
-
         <style>
             .fa-eye {
                 color: black;
