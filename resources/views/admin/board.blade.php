@@ -187,9 +187,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        @isset($dataKartu)
+                        {{-- @isset($dataKartu)
                             <form action="{{ route('addCol', ['board_id' => $board->id, 'team_id' => $board->team_id, 'card_id' => $dataKartu->id]) }}" id="addColForm" method="POST">
-                        @endif
+                        @endif --}}
+                        <form action="{{ route('addCol', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}" id="addColForm" method="POST">
                             @csrf
                             <input type="hidden" class="form-control" name="board_id" value="{{ $board->id }}">
                             <input type="hidden" class="form-control" name="team_id" value="{{ $team->id }}">
