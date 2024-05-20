@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checklists;
 use App\Models\TitleChecklists;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,34 @@ class ChecklistController extends Controller
          ]);
  
          return response()->json(['message' => 'Data saved successfully!', 'card_id' => $request->card_id]);
+    }
+
+    public function addChecklist(Request $request)
+    {
+         $data = Checklists::create([
+             'title_checklists_id' => $request->title_id,
+             'name' => $request->checklist
+         ]);
+
+         $checklist = Checklists::where('title_checklists_id', $request->title_id)->where('id', $data->id)->first();
+ 
+         return response()->json([
+            'message' => 'Data saved successfully!',
+            'checklist' => $checklist
+        ]);
+    }
+
+    public function updateChecklist(Request $request)
+    {
+        $is_active = $request->{$request->checklist_id} == 'on' ? 1 : 0;
+        Checklists::where('id', $request->checklist_id)->update([
+            'name' => $request->{'checkbox-'.$request->checklist_id},
+            'is_active' => $is_active,
+        ]);
+
+        $data = Checklists::find($request->checklist_id);
+ 
+         return response()->json(['message' => 'Data saved successfully!', 'checklist' => $data]);
     }
 
     public function index()

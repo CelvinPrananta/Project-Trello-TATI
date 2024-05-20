@@ -16,7 +16,7 @@ class TitleChecklists extends Model
 
     public function checklists()
     {
-        return $this->hasMany(Checklists::class);
+        return $this->hasMany(Checklists::class, 'title_checklists_id');
     }
 
     public function cards()

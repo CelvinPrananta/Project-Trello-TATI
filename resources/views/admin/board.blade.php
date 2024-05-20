@@ -1,5 +1,13 @@
 @extends('layouts.master')
 @section('content')
+<style>
+    .strike-through {
+        text-decoration: line-through;
+    }
+    /* .dynamicCheckboxValue {
+        border: none;border-color: transparent;
+    } */
+</style>
 
         <!-- Page Wrapper -->
         <div class="page-wrapper">
@@ -11,7 +19,7 @@
                 <div class="tampilan-kolom gap-4 p-4">
 
                     <a href="#" data-toggle="modal" data-target="#addCol" class="flex-col flex-shrink-0 gap-2 px-4 py-2 transition shadow-lg cursor-pointer select-none h-4h w-72 rounded-xl bg-slate-100 hover:scale-105 hover:relative">
-                        <p class="flex items-center justify-center gap-4 text-black"><i class="fa-solid fa-plus fa-lg"></i>Tambah Kolom...</p>
+                        <p class="flex items-center justify-center gap-4 text-black"><i class="fa-solid fa-plus fa-lg"></i>Tambah Kolom... {{$board->id}} {{$board->team_id}} {{$dataKartu->id ?? null}}</p>
                     </a>
 
                     <!-- Tampilan Kolom -->
@@ -187,9 +195,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        @isset($dataKartu)
-                            <form action="{{ route('addCol', ['board_id' => $board->id, 'team_id' => $board->team_id, 'card_id' => $dataKartu->id]) }}" id="addColForm" method="POST">
-                        @endif
+                        <form action="{{ route('addCol', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}" id="addColForm" method="POST">
                             @csrf
                             <input type="hidden" class="form-control" name="board_id" value="{{ $board->id }}">
                             <input type="hidden" class="form-control" name="team_id" value="{{ $team->id }}">
@@ -443,16 +449,16 @@
                                     <script>
                                         $(document).ready(function(){
                                             const title_id = '{{ $titleChecklists->id }}';
-                                            $('#titleChecklistUpdate'+title_id).on('click', function(){
-                                                $('#saveButtonTitleUpdate'+title_id).removeClass('hidden');
-                                                $('#cancelButtonTitleUpdate'+title_id).removeClass('hidden');
-                                            });
-                                    
-                                            $('#cancelButtonTitleUpdate'+title_id).on('click', function(){
-                                                $('#saveButtonTitleUpdate'+title_id).addClass('hidden');
-                                                $('#cancelButtonTitleUpdate'+title_id).addClass('hidden');
-                                                $('#myFormTitleUpdate'+title_id)[0].reset();
-                                            });
+                                                $('#titleChecklistUpdate'+title_id).on('click', function(){
+                                                    $('#saveButtonTitleUpdate'+title_id).removeClass('hidden');
+                                                    $('#cancelButtonTitleUpdate'+title_id).removeClass('hidden');
+                                                });
+                                        
+                                                $('#cancelButtonTitleUpdate'+title_id).on('click', function(){
+                                                    $('#saveButtonTitleUpdate'+title_id).addClass('hidden');
+                                                    $('#cancelButtonTitleUpdate'+title_id).addClass('hidden');
+                                                    $('#myFormTitleUpdate'+title_id)[0].reset();
+                                                });
                                     
                                                 $('#myFormTitleUpdate'+title_id).on('submit', function(event){
                                                     event.preventDefault(); // Prevent the form from submitting the traditional way
@@ -474,8 +480,190 @@
                                                         }
                                                     });
                                                 });
+
+
+                                                $('#AddChecklist'+title_id).on('click', function(){
+                                                    $('#AddChecklist'+title_id).addClass('hidden');
+                                                    $('#checklist'+title_id).removeClass('hidden');
+                                                    $('#saveButtonChecklist'+title_id).removeClass('hidden');
+                                                    $('#cancelButtonChecklist'+title_id).removeClass('hidden');
+                                                });
+                                    
+                                                $('#cancelButtonChecklist'+title_id).on('click', function(){
+                                                    $('#AddChecklist'+title_id).removeClass('hidden');
+                                                    $('#checklist'+title_id).addClass('hidden');
+                                                    $('#saveButtonChecklist'+title_id).addClass('hidden');
+                                                    $('#cancelButtonChecklist'+title_id).addClass('hidden');
+                                                    $('#myFormChecklist'+title_id)[0].reset();
+                                                });
+
+                                                $('#myFormChecklist'+title_id).on('submit', function(event){
+                                                    event.preventDefault(); // Prevent the form from submitting the traditional way
+                                                    var formData = $(this).serialize(); // Serialize the form data
+                                    
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: "{{ route('addChecklist') }}",
+                                                        data: formData,
+                                                        success: function(response){
+                                                            $('#AddChecklist'+title_id).removeClass('hidden');
+                                                            $('#checklist'+title_id).addClass('hidden');
+                                                            $('#checklist'+title_id).val('');
+                                                            $('#saveButtonChecklist'+title_id).addClass('hidden');
+                                                            $('#cancelButtonChecklist'+title_id).addClass('hidden');
+
+                                                            console.log(response.checklist);
+
+                                                            // var newCheckbox = '<input class="dynamicCheckbox" type="checkbox" id="'+response.checklist.id+'" name="'+response.checklist.id+'" value="' + response.checklist.name + '"><label class="dynamicCheckboxLabel" id="labelCheckbox-"'+response.checklist.id+'" for="labelCheckbox-'+response.checklist.id+'">'+ response.checklist.name + '</label><input class="dynamicCheckboxValue hidden" type="text" id="checkbox-'+response.checklist.id+'" name="checkbox-'+response.checklist.id+'" value="' + response.checklist.name + '"><br>';
+                                                            var newForm = `
+                                                                <form id="myFormChecklistUpdate${response.checklist.id}" method="POST">
+                                                                    @csrf
+                                                                    <input class="dynamicCheckbox" type="checkbox" id="${response.checklist.id}" name="${response.checklist.id}" ${response.checklist.is_active ? 'checked' : ''}>
+                                                                    <label class="dynamicCheckboxLabel ${response.checklist.is_active ? 'strike-through' : ''}" id="labelCheckbox-${response.checklist.id}" for="labelCheckbox-${response.checklist.id}">${response.checklist.name}</label>
+                                                                    
+                                                                    <input type="hidden" id="checklist_id" name="checklist_id" value="${response.checklist.id}">
+                                                                    <input class="dynamicCheckboxValue hidden" type="text" id="checkbox-${response.checklist.id}" name="checkbox-${response.checklist.id}" value="${response.checklist.name}"><br>
+                                                                    <button type="button" class="saves btn btn-sm btn-info hidden" id="saveButtonChecklistUpdate-${response.checklist.id}">Save</button>
+                                                                    <button type="button" class="cancels btn btn-sm btn-secondary hidden" id="cancelButtonChecklistUpdate-${response.checklist.id}">Cancel</button>
+                                                                </form>
+                                                                <br>
+                                                            `;
+                                                            // Append the new checkbox after existing ones
+                                                            // console.log(response.checklist.name);
+                                                            $('#checkbox-container-'+title_id).append(newForm);
+                                                        },
+                                                        error: function(){
+                                                            alert('An error occurred. Please try again.');
+                                                        }
+                                                    });
+                                                });
+
+                                                //RUMIT
+                                                $(document).on('change', '.dynamicCheckbox', function() {
+                                                    var checkbox = $(this);
+                                                    var isChecked = checkbox.is(':checked');
+                                                    var label = $('label[for="labelCheckbox-' + checkbox.attr('id') + '"]');
+
+                                                    if (isChecked) {
+                                                        label.addClass('strike-through');
+                                                        label.removeClass('hidden');
+                                                        $('#checkbox-'+checkbox.attr('id')).addClass('hidden');
+                                                        $('#saveButtonChecklistUpdate-'+checkbox.attr('id')).addClass('hidden');
+                                                        $('#cancelButtonChecklistUpdate-'+checkbox.attr('id')).addClass('hidden');
+
+                                                        formChecklist(checkbox.attr('id'));
+                                                    } else {
+                                                        label.removeClass('strike-through');
+                                                        label.removeClass('hidden');
+                                                        $('#checkbox-'+checkbox.attr('id')).addClass('hidden');
+                                                        $('#saveButtonChecklistUpdate-'+checkbox.attr('id')).addClass('hidden');
+                                                        $('#cancelButtonChecklistUpdate-'+checkbox.attr('id')).addClass('hidden');
+
+                                                        formChecklist(checkbox.attr('id'));
+                                                    }
+                                                });
+
+                                                $(document).on('click', 'label[for]', function() {
+                                                    var label = $(this).attr('for');
+                                                    var checkboxId = label.split('-');
+                                                    // $('#labelCheckbox-'+checkboxId[1]).addClass('hidden');
+                                                    $('label[for="labelCheckbox-' + checkboxId[1] + '"]').addClass('hidden');
+                                                    console.log(checkboxId[1]);
+
+                                                   $('#checkbox-'+checkboxId[1]).removeClass('hidden');
+                                                   $('#saveButtonChecklistUpdate-'+checkboxId[1]).removeClass('hidden');
+                                                   $('#cancelButtonChecklistUpdate-'+checkboxId[1]).removeClass('hidden');
+                                                });
+
+                                                $(document).on('click', '.cancels', function() {
+                                                    var id = $(this).attr('id').split('-');
+                                                  
+                                                    $('#checkbox-'+id[1]).addClass('hidden');
+                                                    $('#saveButtonChecklistUpdate-'+id[1]).addClass('hidden');
+                                                    $('#cancelButtonChecklistUpdate-'+id[1]).addClass('hidden');
+                                                    $('label[for="labelCheckbox-' + id[1] + '"]').removeClass('hidden');
+                                                });
+
+                                                $(document).on('click', '.saves', function() {
+                                                    var id = $(this).attr('id').split('-');
+                                                    console.log(id);
+                                                    event.preventDefault(); 
+                                                    var formData = $('#myFormChecklistUpdate' + id[1]).serialize();
+                                    
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: "{{ route('updateChecklist') }}",
+                                                        data: formData,
+                                                        success: function(response){
+                                                            $('label[for="labelCheckbox-' + response.checklist.id+ '"]').removeClass('hidden');
+                                                            $('label[for="labelCheckbox-' + response.checklist.id+ '"]').html(response.checklist.name);
+                                                            $('#checkbox-'+response.checklist.id).addClass('hidden');
+                                                            $('#saveButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
+                                                            $('#cancelButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
+                                                           
+                                                            localStorage.clear();
+                                                        },
+                                                        error: function(){
+                                                            alert('An error occurred. Please try again.');
+                                                        }
+                                                    });
+                                                });
+
+                                                function formChecklist(id){
+                                                    var formData = $('#myFormChecklistUpdate' + id).serialize();
+                                    
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: "{{ route('updateChecklist') }}",
+                                                        data: formData,
+                                                        success: function(response){
+                                                            $('label[for="labelCheckbox-' + response.checklist.id+ '"]').removeClass('hidden');
+                                                            $('label[for="labelCheckbox-' + response.checklist.id+ '"]').html(response.checklist.name);
+                                                            $('#checkbox-'+response.checklist.id).addClass('hidden');
+                                                            $('#saveButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
+                                                            $('#cancelButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
+                                                        
+                                                            localStorage.clear();
+                                                        },
+                                                        error: function(){
+                                                            alert('An error occurred. Please try again.');
+                                                        }
+                                                    });
+                                                }
+                                                //End RUMIT
                                             });
                                         </script>
+                                         <div class="col-md-1 mb-4">
+                                        </div>
+                                        <div class="col-md-9 mb-4">
+                                            @foreach ($titleChecklists->checklists as $checklists)
+                                            <form id="myFormChecklistUpdate{{ $checklists->id }}" method="POST">
+                                            @csrf
+                                                <input class="dynamicCheckbox" type="checkbox" id="{{$checklists->id}}" name="{{$checklists->id}}" {{$checklists->is_active == '1' ? 'checked' : ''}}>
+                                                <label class="dynamicCheckboxLabel {{$checklists->is_active == '1' ? 'strike-through' : ''}}" id="labelCheckbox-{{$checklists->id}}" for="labelCheckbox-{{$checklists->id}}">{{$checklists->name}}</label>
+                                                
+                                                    <input type="hidden" id="checklist_id" name="checklist_id" value="{{ $checklists->id }}">
+                                                    <input class="dynamicCheckboxValue hidden" type="text" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}"><br>
+                                                    <button type="button" class="saves btn btn-sm btn-info hidden" id="saveButtonChecklistUpdate-{{ $checklists->id }}">Save</button>
+                                                    <button type="button" class="cancels btn btn-sm btn-secondary hidden" id="cancelButtonChecklistUpdate-{{ $checklists->id }}">Cancel</button>
+                                                </form>
+                                                <br>
+                                            @endforeach
+                                            <div id="checkbox-container-{{ $titleChecklists->id }}">
+
+                                            </div>
+                                            <form id="myFormChecklist{{ $titleChecklists->id }}" method="POST">
+                                            @csrf
+                                                <input type="hidden" id="title_id" name="title_id" value="{{ $titleChecklists->id }}">
+                                                <input type="text" class="form-control hidden" id="checklist{{ $titleChecklists->id }}" name="checklist" placeholder="Masukkan Checklist"  >
+                                                <button type="submit" class="btn btn-sm btn-info hidden" id="saveButtonChecklist{{ $titleChecklists->id }}">Add</button>
+                                                <button type="button" class="btn btn-sm btn-secondary hidden" id="cancelButtonChecklist{{ $titleChecklists->id }}">Cancel</button>
+                                            </form>
+                                            <button type="button" class="btn btn-sm btn-info mt-1" id="AddChecklist{{ $titleChecklists->id }}">Add Item</button>
+                                        </div>
+                                        <div class="col-md-2 mb-4">
+                                            {{-- None --}}
+                                        </div>
                                 @endforeach
                             </div>
 

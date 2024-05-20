@@ -245,7 +245,7 @@ class BoardController extends Controller
     // /Hapus Papan Khusus Admin //
 
     // Membuat Kolom Admin //
-    public function addColumn(Request $request, $team_id, $board_id, $card_id)
+    public function addColumn(Request $request, $team_id, $board_id)
     {
         $request->validate([
             "board_id" => "required",
@@ -254,12 +254,12 @@ class BoardController extends Controller
         $team_id = intval($team_id);
         $board_id = intval($request->board_id);
 
-        $user_id = AUth::user()->id;
-        $user_id = AUth::user()->id;
-        $card_id = intval($card_id);
-        $card = Card::find($card_id);
-        $card->save();
-        $this->cardLogic->cardAddEvent($card_id, $user_id, "Membuat Kolom");
+        // $user_id = AUth::user()->id;
+        // $user_id = AUth::user()->id;
+        // $card_id = intval($card_id);
+        // $card = Card::find($card_id);
+        // $card->save();
+        // $this->cardLogic->cardAddEvent($card_id, $user_id, "Membuat Kolom");
 
         $createdColumn = $this->boardLogic->addColumn($board_id, $request->column_name);
 

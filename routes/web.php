@@ -151,7 +151,7 @@ Route::controller(BoardController::class)->group(function () {
     Route::get("admin/tim/papan/{team_id}/{board_id}", "showBoard")->middleware("auth", "auth.session", "boardAccess")->name("board");
     Route::post("admin/tim/papan/{team_id}/{board_id}", "updateBoard")->middleware("auth", "auth.session", "boardAccess")->name("updateBoard");
     Route::post("admin/tim/papan/hapus/{team_id}/{board_id}", "deleteBoard")->middleware("auth", "auth.session", "boardAccess")->name("deleteBoard");
-    Route::post("admin/tim/{team_id}/papan/{board_id}/kolom/{card_id}", "addColumn")->middleware("auth", "auth.session", "boardAccess")->name("addCol");
+    Route::post("admin/tim/{team_id}/papan/{board_id}/kolom", "addColumn")->middleware("auth", "auth.session", "boardAccess")->name("addCol");
     Route::post("admin/tim/papan/kolom/perbaharui/{team_id}/{board_id}", "updateCol")->middleware("auth", "auth.session", "boardAccess")->name("updateCol");
     Route::post("admin/tim/papan/kolom/hapus/{team_id}/{board_id}", "deleteCol")->middleware("auth", "auth.session", "boardAccess")->name("deleteCol");
     Route::post("admin/tim/{team_id}/papan/{board_id}/kolom/{column_id}/kartu", "addCard")->middleware("auth", "auth.session", "boardAccess")->name("addCard");
@@ -199,4 +199,6 @@ Route::controller(CardController::class)->group(function () {
 Route::controller(ChecklistController::class)->group(function () {
     Route::post("admin/tim/title/add", "addTitle")->name("addTitle");
     Route::post("admin/tim/title/update", "updateTitle")->name("updateTitle");
+    Route::post("admin/tim/checklist/add", "addChecklist")->name("addChecklist");
+    Route::post("admin/tim/checklist/update", "updateChecklist")->name("updateChecklist");
 });
