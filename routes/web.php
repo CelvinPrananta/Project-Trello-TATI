@@ -14,6 +14,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\ChecklistController;
 
 // ----------------------------- Menu Sidebar Aktif ----------------------------- //
 function set_active($route) {
@@ -157,6 +158,7 @@ Route::controller(BoardController::class)->group(function () {
     Route::post("admin/tim/{team_id}/papan/{board_id}/kolom/{column_id}/kartu", "addCard")->middleware("auth", "auth.session", "boardAccess")->name("addCard");
     Route::post("admin/tim/papan/kolom/kartu/perbaharui/{card_id}", "perbaharuiKartu")->name("perbaharuiKartu");
     Route::post("admin/tim/papan/kolom/kartu/hapus/{card_id}", "hapusKartu")->name("hapusKartu");
+    Route::post("admin/tim/papan/kolom/kartu/deskripsi/tambah", "addDescription")->name("addDescription");
     Route::post("admin/tim/papan/kolom/kartu/komentar/{card_id}", "komentarKartu")->name("komentarKartu");
 
     // ----------------------------- User ----------------------------- //
@@ -168,6 +170,7 @@ Route::controller(BoardController::class)->group(function () {
     Route::post("user/tim/{team_id}/papan/{board_id}/kolom/{column_id}/kartu", "addCard2")->middleware("auth", "auth.session", "boardAccess")->name("addCard2");
     Route::post("user/tim/papan/kolom/kartu/perbaharui/{card_id}", "perbaharuiKartu2")->name("perbaharuiKartu2");
     Route::post("user/tim/papan/kolom/kartu/hapus/{card_id}", "hapusKartu2")->name("hapusKartu2");
+    Route::post("user/tim/papan/kolom/kartu/deskripsi/tambah", "addDescription2")->name("addDescription2");
     Route::post("user/tim/papan/kolom/kartu/komentar/{card_id}", "komentarKartu2")->name("komentarKartu2");
     
 
@@ -176,6 +179,23 @@ Route::controller(BoardController::class)->group(function () {
     Route::post("team/{team_id}/board/{board_id}/card/reorder", "reorderCard")->middleware("auth", "auth.session", "boardAccess")->name("reorderCard");
     Route::post("team/{team_id}/board/{board_id}/column/reorder", "reorderCol")->middleware("auth", "auth.session", "boardAccess")->name("reorderCol");
     Route::post("team/{team_id}/board/{board_id}/column/reorder", "reorderCol2")->middleware("auth", "auth.session", "boardAccess")->name("reorderCol2");
+});
+
+Route::controller(ChecklistController::class)->group(function () {
+    // ----------------------------- Admin ----------------------------- //
+    Route::post("admin/tim/papan/kolom/kartu/judul/tambah", "addTitle")->name("addTitle");
+    Route::post("admin/tim/papan/kolom/kartu/judul/perbaharui", "updateTitle")->name("updateTitle");
+    Route::post("admin/tim/papan/kolom/kartu/judul/hapus", "hapusTitle")->name("hapusTitle");
+    Route::post("admin/tim/papan/kolom/kartu/judul/checklist/hapus", "hapusChecklist")->name("hapusChecklist");
+    Route::post("admin/tim/checklist/tambah", "addChecklist")->name("addChecklist");
+    Route::post("admin/tim/checklist/perbaharui", "updateChecklist")->name("updateChecklist");
+
+    // ----------------------------- User ----------------------------- //
+    Route::post("user/tim/papan/kolom/kartu/judul/tambah", "addTitle2")->name("addTitle2");
+    Route::post("user/tim/papan/kolom/kartu/judul/perbaharui", "updateTitle2")->name("updateTitle2");
+    Route::post("user/tim/papan/kolom/kartu/judul/hapus", "hapusTitle2")->name("hapusTitle2");
+    Route::post("user/tim/papan/kolom/kartu/judul/checklist/hapus", "hapusChecklist2")->name("hapusChecklist2");
+    Route::post("user/tim/checklist/perbaharui", "updateChecklist2")->name("updateChecklist2");
 });
 
 // ----------------------------- Card ----------------------------- //

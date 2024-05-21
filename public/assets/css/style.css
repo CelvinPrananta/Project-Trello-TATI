@@ -13586,11 +13586,6 @@ ul.nav-tabs > li > a {
     display: flex;
     align-items: baseline;
 }
-.icon-hapus {
-	position: absolute;
-	left: 80%;
-	bottom: 39px;   
-}
 .icon-item {
 	border-radius: 30px;
 	height: 35px;
@@ -13629,12 +13624,13 @@ ul.nav-tabs > li > a {
 }
 .checklist-keterangan {
 	font-size: 16px;
-	font-weight: 600
+	font-weight: 600;
+	margin-left: 4%;
 }
 .activity-keterangan {
 	font-size: 16px;
 	font-weight: 600;
-	margin-left: 5%;
+	margin-left: 4%;
 }
 .isian-tag {
 	margin-bottom: -5%;
@@ -13642,6 +13638,104 @@ ul.nav-tabs > li > a {
 .input-komentar {
 	position: relative;
 	margin-bottom: 2%;
+}
+.input-checklist {
+	position: relative;
+    margin-bottom: 1%;
+}
+.update-title {
+	width: 100%;
+    margin-left: 20px;
+}
+.dynamicCheckboxLabel {
+	background-color: #defbec;
+}
+.dynamicCheckboxValue {
+	background-color: #defbec;
+}
+.isian-title {
+	background-color: #94e6bc;
+}
+.tambah-checklist {
+	position: relative;
+    margin-bottom: 25px;
+    margin-top: -10px;
+    margin-left: 40px;
+}
+.aksi-update-keterangan {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 10px;
+    margin-right: 17%;
+}
+.aksi-tambah-checklist {
+	margin-right: 10%;
+    display: flex;
+    justify-content: flex-end;
+}
+.aksi-update-title {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 10px;
+	margin-right: 9%;
+}
+.aksi-update-checklist {
+	display: flex;
+    justify-content: flex-end;
+    margin-right: 11%;
+    margin-bottom: 2%;
+}
+.form-checklist {
+	width: 96%;
+}
+.w-406 {
+    width: 86%;
+}
+.menu-activity {
+	margin-top: 20px;
+}
+.menu-keterangan {
+	margin-bottom: -20px;
+}
+.menu-checklist {
+	margin-top: 10px;
+}
+.gap-5 {
+	gap: 1.25rem !important;
+}
+.icon-hapus-title {
+	display: flex;
+    flex: auto;
+    justify-content: flex-end;
+}
+.header-checklist {
+	position: relative;
+    align-items: baseline;
+	margin-bottom: 10px;
+}
+.header-tambah-checklist {
+	position: relative;
+    align-items: baseline;
+	margin-bottom: 10px;
+}
+.tambah-baru-checklist {
+	background-color: #defbec;
+}
+.justify-content {
+	justify-content: space-between;
+}
+.gap-3 {
+	gap: 0.75rem !important;
+}
+.icon-keterangan {
+	border-radius: 10px;
+	height: 40px;
+}
+.w-402 {
+	width: 92%;
+}
+.w-403 {
+    width: 89%;
 }
 .isian-history {
 	background-color: #defbec;

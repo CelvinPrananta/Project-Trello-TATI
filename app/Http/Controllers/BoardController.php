@@ -552,6 +552,28 @@ class BoardController extends Controller
     }
     // Perbaharui Kartu Admin //
 
+    // Perbaharui Deskripsi Kartu Admin //
+    public function addDescription(Request $request)
+    {
+        Card::where('id', $request->card_id)->update([
+            'description' => $request->keterangan
+        ]);
+
+        return response()->json(['message' => 'Data berhasil disimpan!']);
+    }
+    // Perbaharui Deskripsi Kartu Admin //
+
+    // Perbaharui Deskripsi Kartu User //
+    public function addDescription2(Request $request)
+    {
+        Card::where('id', $request->card_id)->update([
+            'description' => $request->keterangan
+        ]);
+
+        return response()->json(['message' => 'Data berhasil disimpan!']);
+    }
+    // Perbaharui Deskripsi Kartu User //
+
     // Menambahkan Komen Admin //
     public function komentarKartu(Request $request, $card_id)
     {
