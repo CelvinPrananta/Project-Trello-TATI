@@ -316,7 +316,7 @@
                                         <i class="fa-solid fa-align-left fa-lg"></i>
                                     </div>
                                     <div class="keterangan-tag">
-                                        <p class="deskripsi-keterangan">Keterangan </p>
+                                        <p class="deskripsi-keterangan">Keterangan</p>
                                         <form id="myForm{{ $isianKartu->id }}" method="POST">
                                             @csrf
                                             <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
@@ -327,91 +327,7 @@
                                             </div>
                                         </form>
                                     </div>
-
-                                    <!-- Script -->
-                                    <script>
-                                        $(document).ready(function(){
-                                            const id = '{{ $isianKartu->id }}';
-                                            $('#keterangan'+id).on('click', function(){
-                                                $('#saveButton'+id).removeClass('hidden');
-                                                $('#cancelButton'+id).removeClass('hidden');
-                                                console.log(id);
-                                            });
-                                            $('#cancelButton'+id).on('click', function(){
-                                                $('#saveButton'+id).addClass('hidden');
-                                                $('#cancelButton'+id).addClass('hidden');
-                                                $('#myForm'+id)[0].reset();
-                                            });
-                                            $('#myForm'+id).on('submit', function(event){
-                                                event.preventDefault();
-                                                var formData = $(this).serialize();
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: "{{ route('addDescription') }}",
-                                                    data: formData,
-                                                    success: function(response){
-                                                        console.log(response);
-                                                        $('#saveButton'+id).addClass('hidden');
-                                                        $('#cancelButton'+id).addClass('hidden');
-                                                        toastr.success('Anda berhasil memperbaharui keterangan!');
-                                                        localStorage.clear();
-                                                    },
-                                                    error: function(){
-                                                        toastr.error('Terjadi kesalahan, silakan coba lagi!');
-                                                    }
-                                                });
-                                            });
-                                            $('#addTitle-'+id).on('click', function(){
-                                                $('#titleChecklist'+id).removeClass('hidden');
-                                                $('#saveButtonTitle'+id).removeClass('hidden');
-                                                $('#cancelButtonTitle'+id).removeClass('hidden');
-                                                $('#iconCheck-'+id).removeClass('hidden');
-                                                $('#addTitle-'+id).addClass('hidden');
-                                                console.log(id);
-                                            });
-                                            $('#cancelButtonTitle'+id).on('click', function(){
-                                                $('#titleChecklist'+id).addClass('hidden');
-                                                $('#saveButtonTitle'+id).addClass('hidden');
-                                                $('#cancelButtonTitle'+id).addClass('hidden');
-                                                $('#iconCheck-'+id).addClass('hidden');
-                                                $('#addTitle-'+id).removeClass('hidden');
-                                                $('#myFormTitle'+id)[0].reset();
-                                            });
-                                            $('#myFormTitle'+id).on('submit', function(event){
-                                                event.preventDefault();
-                                                var formData = $(this).serialize();
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: "{{ route('addTitle') }}",
-                                                    data: formData,
-                                                    success: function(response){
-                                                        console.log(response.card_id);
-                                                        $('#titleChecklist'+id).addClass('hidden');
-                                                        $('#saveButtonTitle'+id).addClass('hidden');
-                                                        $('#cancelButtonTitle'+id).addClass('hidden');
-                                                        $('#iconCheck-'+id).addClass('hidden');
-                                                        $('#addTitle-'+id).addClass('hidden');
-                                                        toastr.success('Anda berhasil menambahkan judul!');
-                                                        localStorage.setItem('modal_id', response.card_id);
-                                                        setTimeout(function() {
-                                                            location.reload();
-                                                        }, 1000);
-                                                    },
-                                                    error: function(){
-                                                        toastr.error('Terjadi kesalahan, silakan coba lagi!');
-                                                    }
-                                                });
-                                            });
-
-                                            var modal_id = localStorage.getItem('modal_id');
-                                            $('#isianKartu'+modal_id).modal('show');
-                                            $('#isianKartu'+id).on('click', function(){
-                                                localStorage.clear();
-                                            });
-                                        });
-                                    </script>
-                                    <!-- /Script -->
-
+                                    @include('admin.script')
                                 </div>
                                 <!-- /Tambah & Edit Keterangan -->
 
@@ -438,309 +354,81 @@
                                 <!-- /Tambah Judul Checklist -->
                                 
                                 @foreach ($isianKartu->titleChecklists as $titleChecklists)
-                                    <div class="menu-checklist border border-1 border-dark p-2 rounded-xl">
-                                        <!-- Perbaharui & Hapus Judul Checklist -->
-                                        <div class="header-checklist flex justify-content">
-                                            <i class="fa-regular fa-square-check fa-xl"></i>
-                                            <form id="myFormTitleUpdate{{ $titleChecklists->id }}" method="POST" class="update-title">
-                                                @csrf
-                                                    <input type="hidden" id="title_id" name="title_id" value="{{ $titleChecklists->id }}">
-                                                    <input type="text" class="isian-title border border-1 border-dark w-402 p-2 rounded-xl" id="titleChecklistUpdate{{ $titleChecklists->id }}" name="titleChecklistUpdate" placeholder="Masukkan Judul" value="{{$titleChecklists->name}}">
-                                                    <div class="aksi-update-title gap-2">
-                                                        <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonTitleUpdate{{ $titleChecklists->id }}">Simpan</button>
-                                                        <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButtonTitleUpdate{{ $titleChecklists->id }}">Batal</button>
-                                                    </div>
-                                            </form>
-                                            @if($isianKartu->history->where('user_id', auth()->user()->id)->isNotEmpty())
-                                                <form id="myFormTitleDelete{{ $titleChecklists->id }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" id="id" name="id" value="{{ $titleChecklists->id }}">
-                                                    <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
-                                                    <div class="icon-hapus-title" id="hapus-title{{ $titleChecklists->id }}">
-                                                        <button type="submit" style="border: none; background: none; padding: 0;">
-                                                            <i class="fa-solid fa-trash fa-lg"></i>
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            @endif
-                                        </div>
-                                        <!-- /Perbaharui & Hapus Judul Checklist -->
-
-                                        <!-- Script -->
-                                        <script>
-                                            $(document).ready(function(){
-                                                const title_id = '{{ $titleChecklists->id }}';
-                                                $('#titleChecklistUpdate'+title_id).on('click', function(){
-                                                    $('#saveButtonTitleUpdate'+title_id).removeClass('hidden');
-                                                    $('#cancelButtonTitleUpdate'+title_id).removeClass('hidden');
-                                                });
-                                                $('#cancelButtonTitleUpdate'+title_id).on('click', function(){
-                                                    $('#saveButtonTitleUpdate'+title_id).addClass('hidden');
-                                                    $('#cancelButtonTitleUpdate'+title_id).addClass('hidden');
-                                                    $('#myFormTitleUpdate'+title_id)[0].reset();
-                                                });
-                                                $('#myFormTitleUpdate'+title_id).on('submit', function(event){
-                                                    event.preventDefault();
-                                                    var formData = $(this).serialize();
-                                                    $.ajax({
-                                                        type: 'POST',
-                                                        url: "{{ route('updateTitle') }}",
-                                                        data: formData,
-                                                        success: function(response){
-                                                            console.log(response);
-                                                            $('#saveButtonTitleUpdate'+title_id).addClass('hidden');
-                                                            $('#cancelButtonTitleUpdate'+title_id).addClass('hidden');
-                                                            toastr.success('Anda berhasil memperbaharui judul!');
-                                                            localStorage.clear();
-                                                        },
-                                                        error: function(){
-                                                            toastr.error('Terjadi kesalahan, silakan coba lagi!');
-                                                        }
-                                                    });
-                                                });
-                                                $('#AddChecklist'+title_id).on('click', function(){
-                                                    $('#AddChecklist'+title_id).addClass('hidden');
-                                                    $('#checklist'+title_id).removeClass('hidden');
-                                                    $('#saveButtonChecklist'+title_id).removeClass('hidden');
-                                                    $('#cancelButtonChecklist'+title_id).removeClass('hidden');
-                                                });
-                                                $('#cancelButtonChecklist'+title_id).on('click', function(){
-                                                    $('#AddChecklist'+title_id).removeClass('hidden');
-                                                    $('#checklist'+title_id).addClass('hidden');
-                                                    $('#saveButtonChecklist'+title_id).addClass('hidden');
-                                                    $('#cancelButtonChecklist'+title_id).addClass('hidden');
-                                                    $('#myFormChecklist'+title_id)[0].reset();
-                                                });
-                                                $('#myFormChecklist'+title_id).on('submit', function(event){
-                                                    event.preventDefault();
-                                                    var formData = $(this).serialize();
-                                                    $.ajax({
-                                                        type: 'POST',
-                                                        url: "{{ route('addChecklist') }}",
-                                                        data: formData,
-                                                        success: function(response){
-                                                            $('#AddChecklist'+title_id).removeClass('hidden');
-                                                            $('#checklist'+title_id).addClass('hidden');
-                                                            $('#checklist'+title_id).val('');
-                                                            $('#saveButtonChecklist'+title_id).addClass('hidden');
-                                                            $('#cancelButtonChecklist'+title_id).addClass('hidden');
-                                                            console.log(response.checklist);
-                                                            var newForm = `<div class="input-checklist">
-                                                                                <form id="myFormChecklistUpdate${response.checklist.id}" method="POST" class="form-checklist flex gap-5">
-                                                                                    @csrf
-                                                                                    <input class="dynamicCheckbox" type="checkbox" id="${response.checklist.id}" name="${response.checklist.id}" ${response.checklist.is_active ? 'checked' : ''}>
-                                                                                    <label class="dynamicCheckboxLabel border border-1 border-dark w-403 p-2 rounded-xl ${response.checklist.is_active ? 'strike-through' : ''}" id="labelCheckbox-${response.checklist.id}" for="labelCheckbox-${response.checklist.id}">${response.checklist.name}</label>
-                                                                                    <input type="hidden" id="checklist_id" name="checklist_id" value="${response.checklist.id}">
-                                                                                    <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-403 p-2 rounded-xl hidden" id="checkbox-${response.checklist.id}" name="checkbox-${response.checklist.id}" value="${response.checklist.name}"><br>
-                                                                                </form>
-                                                                            </div>
-                                                                            <div class="aksi-update-checklist gap-2">
-                                                                                <button type="button" class="saves btn btn-outline-info icon-keterangan hidden" id="saveButtonChecklistUpdate-${response.checklist.id}">Simpan</button>
-                                                                                <button type="button" class="cancels btn btn-outline-danger icon-keterangan hidden" id="cancelButtonChecklistUpdate-${response.checklist.id}">Batal</button>
-                                                                            </div>`;
-                                                            $('#checkbox-container-'+title_id).append(newForm);
-                                                        },
-                                                        error: function(){
-                                                            toastr.error('Terjadi kesalahan, silakan coba lagi!');
-                                                        }
-                                                    });
-                                                });
-                                                $(document).on('change', '.dynamicCheckbox', function() {
-                                                    var checkbox = $(this);
-                                                    var isChecked = checkbox.is(':checked');
-                                                    var label = $('label[for="labelCheckbox-' + checkbox.attr('id') + '"]');
-                                                    if (isChecked) {
-                                                        label.addClass('strike-through');
-                                                        label.removeClass('hidden');
-                                                        $('#checkbox-'+checkbox.attr('id')).addClass('hidden');
-                                                        $('#saveButtonChecklistUpdate-'+checkbox.attr('id')).addClass('hidden');
-                                                        $('#cancelButtonChecklistUpdate-'+checkbox.attr('id')).addClass('hidden');
-                                                        formChecklist(checkbox.attr('id'));
-                                                    } else {
-                                                        label.removeClass('strike-through');
-                                                        label.removeClass('hidden');
-                                                        $('#checkbox-'+checkbox.attr('id')).addClass('hidden');
-                                                        $('#saveButtonChecklistUpdate-'+checkbox.attr('id')).addClass('hidden');
-                                                        $('#cancelButtonChecklistUpdate-'+checkbox.attr('id')).addClass('hidden');
-                                                        formChecklist(checkbox.attr('id'));
-                                                    }
-                                                });
-                                                $(document).on('click', 'label[for]', function() {
-                                                    var label = $(this).attr('for');
-                                                    var checkboxId = label.split('-');
-                                                    $('label[for="labelCheckbox-' + checkboxId[1] + '"]').addClass('hidden');
-                                                    console.log(checkboxId[1]);
-                                                   $('#checkbox-'+checkboxId[1]).removeClass('hidden');
-                                                   $('#saveButtonChecklistUpdate-'+checkboxId[1]).removeClass('hidden');
-                                                   $('#cancelButtonChecklistUpdate-'+checkboxId[1]).removeClass('hidden');
-                                                });
-                                                $(document).on('click', '.cancels', function() {
-                                                    var id = $(this).attr('id').split('-');
-                                                    $('#checkbox-'+id[1]).addClass('hidden');
-                                                    $('#saveButtonChecklistUpdate-'+id[1]).addClass('hidden');
-                                                    $('#cancelButtonChecklistUpdate-'+id[1]).addClass('hidden');
-                                                    $('label[for="labelCheckbox-' + id[1] + '"]').removeClass('hidden');
-                                                });
-                                                $(document).on('click', '.saves', function() {
-                                                    var id = $(this).attr('id').split('-');
-                                                    console.log(id);
-                                                    event.preventDefault(); 
-                                                    var formData = $('#myFormChecklistUpdate' + id[1]).serialize();
-                                                    $.ajax({
-                                                        type: 'POST',
-                                                        url: "{{ route('updateChecklist') }}",
-                                                        data: formData,
-                                                        success: function(response){
-                                                            $('label[for="labelCheckbox-' + response.checklist.id+ '"]').removeClass('hidden');
-                                                            $('label[for="labelCheckbox-' + response.checklist.id+ '"]').html(response.checklist.name);
-                                                            $('#checkbox-'+response.checklist.id).addClass('hidden');
-                                                            $('#saveButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
-                                                            $('#cancelButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
-                                                            toastr.success('Anda berhasil memperbaharui checklist!');
-                                                            localStorage.clear();
-                                                        },
-                                                        error: function(){
-                                                            toastr.error('Terjadi kesalahan, silakan coba lagi!');
-                                                        }
-                                                    });
-                                                });
-                                                function formChecklist(id){
-                                                    var formData = $('#myFormChecklistUpdate' + id).serialize();
-                                                    $.ajax({
-                                                        type: 'POST',
-                                                        url: "{{ route('updateChecklist') }}",
-                                                        data: formData,
-                                                        success: function(response){
-                                                            $('label[for="labelCheckbox-' + response.checklist.id+ '"]').removeClass('hidden');
-                                                            $('label[for="labelCheckbox-' + response.checklist.id+ '"]').html(response.checklist.name);
-                                                            $('#checkbox-'+response.checklist.id).addClass('hidden');
-                                                            $('#saveButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
-                                                            $('#cancelButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
-                                                            toastr.success('Anda berhasil memperbaharui checklist!');
-                                                            localStorage.clear();
-                                                        },
-                                                        error: function(){
-                                                            toastr.error('Terjadi kesalahan, silakan coba lagi!');
-                                                        }
-                                                    });
-                                                }
-
-
-                                                // Masih ngikut ID paling atas //
-                                                $('#myFormTitleDelete'+title_id).on('submit', function(event){
-                                                    event.preventDefault();
-                                                    var formData = $(this).serialize();
-                                                    $.ajax({
-                                                        type: 'POST',
-                                                        url: "{{ route('hapusTitle') }}",
-                                                        data: formData,
-                                                        success: function(response){
-                                                            console.log(response);
-                                                            toastr.success('Anda berhasil menghapus judul!');
-                                                            localStorage.setItem('modal_id', response.card_id);
-                                                            setTimeout(function() {
-                                                                location.reload();
-                                                            }, 1000);
-                                                        },
-                                                        error: function(){
-                                                            alert('An error occurred. Please try again.');
-                                                        }
-                                                    });
-                                                });
-                                                 // /Masih ngikut ID paling atas //
-
-                                                // Belum Solving //
-                                                $('#myFormChecklistDelete'+title_id).on('submit', function(event){
-                                                    event.preventDefault();
-                                                    var formData = $(this).serialize();
-                                
-                                                    $.ajax({
-                                                        type: 'POST',
-                                                        url: "{{ route('hapusChecklist') }}",
-                                                        data: formData,
-                                                        success: function(response){
-                                                            console.log(response);
-                                                            toastr.success('Anda berhasil menghapus checklist!');
-                                                            localStorage.setItem('modal_id', response.card_id);
-                                                            setTimeout(function() {
-                                                                location.reload();
-                                                            }, 1000);
-                                                        },
-                                                        error: function(){
-                                                            alert('An error occurred. Please try again.');
-                                                        }
-                                                    });
-                                                });
-                                                // /Belum Solving //
-
-
-
-                                                var modal_id = localStorage.getItem('modal_id');
-                                                $('#isianKartu'+modal_id).modal('show');
-                                                $('#isianKartu'+id).on('click', function(){
-                                                    localStorage.clear();
-                                                });
-                                                
-                                            });
-                                        </script>
-                                        <!-- /Script -->
-
-                                        <!-- Perbaharui & Hapus Checklist -->
-                                        @foreach ($titleChecklists->checklists as $checklists)
-                                            <div class="input-checklist">
-                                                <!-- Tampilan Checklist -->
-                                                <form id="myFormChecklistUpdate{{ $checklists->id }}" method="POST" class="form-checklist flex gap-5">
-                                                    @csrf
-                                                    <input class="dynamicCheckbox" type="checkbox" id="{{$checklists->id}}" name="{{$checklists->id}}" {{$checklists->is_active == '1' ? 'checked' : ''}}>
-                                                    <label class="dynamicCheckboxLabel border border-1 border-dark w-full p-2 rounded-xl  {{$checklists->is_active == '1' ? 'strike-through' : ''}}" id="labelCheckbox-{{$checklists->id}}" for="labelCheckbox-{{$checklists->id}}">{{$checklists->name}}</label>
-                                                    <input type="hidden" id="checklist_id" name="checklist_id" value="{{ $checklists->id }}">
-                                                    <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-full p-2 rounded-xl hidden" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}" placeholder="Masukkan checklist">
-                                                    
-                                                    <!-- Icon Hapus Checklist -->
-                                                    @if($isianKartu->history->where('user_id', auth()->user()->id)->isNotEmpty())
-                                                        <form id="myFormChecklistDelete{{ $titleChecklists->id }}" method="POST">
-                                                            @csrf
-                                                            <input type="hidden" id="id" name="id" value="{{ $checklists->id }}">
-                                                            <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
-                                                            <div class="icon-hapus-checklist" id="hapus-checklist{{ $checklists->id }}">
-                                                                <button type="submit" style="border: none; background: none; padding: 0;">
-                                                                    <i class="fa-solid fa-trash fa-lg"></i>
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    @endif
-                                                    <!-- /Icon Hapus Checklist -->
-                                                </form>
-                                                <!-- /Tampilan Checklist -->
-                                            </div>
-
-                                            <!-- Untuk melakukan edit checklist -->
-                                            <div class="aksi-update-checklist gap-2">
-                                                <button type="button" class="saves btn btn-outline-info icon-keterangan hidden" id="saveButtonChecklistUpdate-{{ $checklists->id }}">Simpan</button>
-                                                <button type="button" class="cancels btn btn-outline-danger icon-keterangan hidden" id="cancelButtonChecklistUpdate-{{ $checklists->id }}">Batal</button>
-                                            </div>
-                                            <!-- /Untuk melakukan edit checklist -->
-                                        @endforeach
-                                        <!-- /Perbaharui & Hapus Checklist -->
-
-                                        <!-- Tambah baru checklist -->
-                                        <div id="checkbox-container-{{ $titleChecklists->id }}"></div>
-                                        <form id="myFormChecklist{{ $titleChecklists->id }}" method="POST">
+                                <div class="menu-checklist border border-1 border-dark p-2 rounded-xl">
+                                    <!-- Perbaharui & Hapus Judul Checklist -->
+                                    <div class="header-checklist flex justify-content">
+                                        <i class="fa-regular fa-square-check fa-xl"></i>
+                                        <form id="myFormTitleUpdate{{ $titleChecklists->id }}" method="POST" class="update-title">
                                             @csrf
                                                 <input type="hidden" id="title_id" name="title_id" value="{{ $titleChecklists->id }}">
-                                                <div class="header-tambah-checklist flex gap-4">
-                                                    <i class="fa-regular fa-square-check fa-xl"></i>
-                                                    <input type="text" class="tambah-baru-checklist border border-1 border-dark w-406 p-2 rounded-xl hidden" id="checklist{{ $titleChecklists->id }}" name="checklist" placeholder="Masukkan Checklist" required>
-                                                </div>
-                                                <div class="aksi-update-checklist gap-2">
-                                                    <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonChecklist{{ $titleChecklists->id }}">Simpan</button>
-                                                    <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButtonChecklist{{ $titleChecklists->id }}">Batal</button>
+                                                <input type="text" class="isian-title border border-1 border-dark w-402 p-2 rounded-xl" id="titleChecklistUpdate{{ $titleChecklists->id }}" name="titleChecklistUpdate" placeholder="Masukkan Judul" value="{{$titleChecklists->name}}">
+                                                <div class="aksi-update-title gap-2">
+                                                    <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonTitleUpdate{{ $titleChecklists->id }}">Simpan</button>
+                                                    <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButtonTitleUpdate{{ $titleChecklists->id }}">Batal</button>
                                                 </div>
                                         </form>
-                                        <button type="button" class="btn btn-outline-info" id="AddChecklist{{ $titleChecklists->id }}">Tambah Item</button>
-                                        <!-- Tambah baru checklist -->
-
+                                        @if($isianKartu->history->where('user_id', auth()->user()->id)->isNotEmpty())
+                                            <form id="myFormTitleDelete{{ $titleChecklists->id }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" id="id" name="id" value="{{ $titleChecklists->id }}">
+                                                <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
+                                                <div class="icon-hapus-title" id="hapus-title{{ $titleChecklists->id }}">
+                                                    <button type="submit" style="border: none; background: none; padding: 0;">
+                                                        <i class="fa-solid fa-trash fa-lg"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        @endif
                                     </div>
+                                    <!-- /Perbaharui & Hapus Judul Checklist -->
+                                    @include('admin.script2')
+                                    <!-- Perbaharui & Hapus Checklist -->
+                                    @foreach ($titleChecklists->checklists as $checklists)
+                                    <div class="input-checklist">
+                                        <!-- Tampilan Checklist -->
+                                        <form id="myFormChecklistUpdate{{ $checklists->id }}" method="POST" class="form-checklist flex gap-5">
+                                            @csrf
+                                            <input class="dynamicCheckbox" type="checkbox" id="{{$checklists->id}}" name="{{$checklists->id}}" {{$checklists->is_active == '1' ? 'checked' : ''}}>
+                                            <label class="dynamicCheckboxLabel border border-1 border-dark w-full p-2 rounded-xl  {{$checklists->is_active == '1' ? 'strike-through' : ''}}" id="labelCheckbox-{{$checklists->id}}" for="labelCheckbox-{{$checklists->id}}">{{$checklists->name}}</label>
+                                            <input type="hidden" id="checklist_id" name="checklist_id" value="{{ $checklists->id }}">
+                                            <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-full p-2 rounded-xl hidden" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}" placeholder="Masukkan checklist">
+                                        </form>
+                                        <!-- Icon Hapus Checklist -->
+                                        @if($isianKartu->history->where('user_id', auth()->user()->id)->isNotEmpty())
+                                            <form id="myFormChecklistDelete{{ $checklists->id }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" id="id" name="id" value="{{ $checklists->id }}">
+                                                <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
+                                                <div class="icon-hapus-checklist" id="hapus-checklist{{ $checklists->id }}">
+                                                    <button type="submit" style="border: none; background: none; padding: 0;">
+                                                        <i class="fa-solid fa-trash fa-lg"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        @endif
+                                        <!-- /Icon Hapus Checklist -->
+                                    </div>
+                                    @include('admin.script3')
+                                    <!-- /Tampilan Checklist -->
+                                @endforeach
+                                <!-- /Perbaharui & Hapus Checklist -->
+                                <!-- Tambah baru checklist -->
+                                <div id="checkbox-container-{{ $titleChecklists->id }}"></div>
+                                <form id="myFormChecklist{{ $titleChecklists->id }}" method="POST">
+                                    @csrf
+                                        <input type="hidden" id="title_id" name="title_id" value="{{ $titleChecklists->id }}">
+                                        <div class="header-tambah-checklist flex gap-4">
+                                            <i class="fa-xl"></i>
+                                            <input type="text" class="tambah-baru-checklist border border-1 border-dark w-406 p-2 rounded-xl hidden" id="checklist{{ $titleChecklists->id }}" name="checklist" placeholder="Masukkan Checklist" required>
+                                        </div>
+                                        <div class="aksi-update-checklist gap-2">
+                                            <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonChecklist{{ $titleChecklists->id }}">Simpan</button>
+                                            <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButtonChecklist{{ $titleChecklists->id }}">Batal</button>
+                                        </div>
+                                </form>
+                                <button type="button" class="btn btn-outline-info" id="AddChecklist{{ $titleChecklists->id }}">Tambah Item</button>
+                                <!-- Tambah baru checklist -->
+                                </div>
                                 @endforeach
 
                                 <div class="menu-activity flex flex-col flex-wrap">
