@@ -381,22 +381,27 @@
                                         @endif
                                     </div>
                                     <!-- /Perbaharui & Hapus Judul Checklist -->
-                                    @include('admin.script2')
+
+                                    <!-- Progress Bar Checklist -->
+                                    <div class="progress" data-checklist-id="{{ $titleChecklists->id }}">
+                                        <div class="progress-bar progress-bar-{{ $titleChecklists->id }}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                            0%
+                                        </div>
+                                    </div>
+                                    <!-- Progress Bar Checklist -->
+                                   
                                     <!-- Perbaharui & Hapus Checklist -->
+                                    @include('admin.script2')
                                     @foreach ($titleChecklists->checklists as $checklists)
                                     <div class="input-checklist">
                                         <!-- Tampilan Checklist -->
                                         <form id="myFormChecklistUpdate{{ $checklists->id }}" method="POST" class="form-checklist flex gap-5">
                                             @csrf
                                             <input class="dynamicCheckbox" type="checkbox" id="{{$checklists->id}}" name="{{$checklists->id}}" {{$checklists->is_active == '1' ? 'checked' : ''}}>
-                                            <label class="dynamicCheckboxLabel border border-1 border-dark w-full p-2 rounded-xl  {{$checklists->is_active == '1' ? 'strike-through' : ''}}" id="labelCheckbox-{{$checklists->id}}" for="labelCheckbox-{{$checklists->id}}">{{$checklists->name}}</label>
+                                            <label class="dynamicCheckboxLabel border border-1 border-dark w-407 p-2 rounded-xl  {{$checklists->is_active == '1' ? 'strike-through' : ''}}" id="labelCheckbox-{{$checklists->id}}" for="labelCheckbox-{{$checklists->id}}">{{$checklists->name}}</label>
 
                                             <input type="hidden" id="checklist_id" name="checklist_id" value="{{ $checklists->id }}">
-                                            <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-full p-2 rounded-xl hidden" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}" placeholder="Masukkan checklist">
-                                            <div class="aksi-update-title gap-2">
-                                                <button type="submit" class="saves btn btn-outline-info hidden" id="saveButtonChecklistUpdate-{{ $checklists->id }}">Simpan</button>
-                                                <button type="button" class="cancels btn btn-outline-danger hidden" id="cancelButtonChecklistUpdate-{{ $checklists->id }}">Batal</button>
-                                            </div>
+                                            <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-407 p-2 rounded-xl hidden" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}" placeholder="Masukkan checklist">
                                         </form>
                                         <!-- Icon Hapus Checklist -->
                                         @if($isianKartu->history->where('user_id', auth()->user()->id)->isNotEmpty())
@@ -413,10 +418,20 @@
                                         @endif
                                         <!-- /Icon Hapus Checklist -->
                                     </div>
-                                    @include('admin.script3')
                                     <!-- /Tampilan Checklist -->
-                                @endforeach
-                                <!-- /Perbaharui & Hapus Checklist -->
+
+                                    <!-- Aksi Update Checklist -->
+                                    <div class="aksi-update-checklist gap-2">
+                                        <button type="submit" class="saves btn btn-outline-info hidden" id="saveButtonChecklistUpdate-{{ $checklists->id }}">Simpan</button>
+                                        <button type="button" class="cancels btn btn-outline-danger hidden" id="cancelButtonChecklistUpdate-{{ $checklists->id }}">Batal</button>
+                                    </div>
+                                    <!-- /Aksi Update Checklist -->
+
+                                    @include('admin.script4')
+                                    @include('admin.script3')
+                                    @endforeach
+                                    <!-- /Perbaharui & Hapus Checklist -->
+
                                 <!-- Tambah baru checklist -->
                                 <div id="checkbox-container-{{ $titleChecklists->id }}"></div>
                                 <form id="myFormChecklist{{ $titleChecklists->id }}" method="POST">
@@ -424,7 +439,7 @@
                                         <input type="hidden" id="title_id" name="title_id" value="{{ $titleChecklists->id }}">
                                         <div class="header-tambah-checklist flex gap-4">
                                             <i class="fa-xl"></i>
-                                            <input type="text" class="tambah-baru-checklist border border-1 border-dark w-406 p-2 rounded-xl hidden" id="checklist{{ $titleChecklists->id }}" name="checklist" placeholder="Masukkan Checklist" required>
+                                            <input type="text" class="tambah-baru-checklist border border-1 border-dark w-407 p-2 rounded-xl hidden" id="checklist{{ $titleChecklists->id }}" name="checklist" placeholder="Masukkan Checklist" required>
                                         </div>
                                         <div class="aksi-update-checklist gap-2">
                                             <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonChecklist{{ $titleChecklists->id }}">Simpan</button>
@@ -446,11 +461,9 @@
                                     </div>
                                     <div class="input-komentar flex gap-3">
                                         <img class="avatar-activity" src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" loading="lazy">
-                                        @isset($dataKartu)
-                                            <form action="{{ route('komentarKartu', ['card_id' => $dataKartu->id]) }}" method="POST">
-                                        @endif
+                                        <form action="{{ route('komentarKartu', ['card_id' => $dataKartu->id]) }}" method="POST">
                                             <textarea onclick="saveComment()" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="79" id="komentar" name="komentar" placeholder="Tulis komentar..."></textarea>
-                                            <button type="submit" class="btn btn-outline-info icon-item hidden" id="simpanButton">Kirim</button>
+                                            <button type="submit" class="btn btn-outline-info icon-comment hidden" id="simpanButton">Kirim</button>
                                         </form>
                                     </div>
                                     <div class="activity-tag flex flex-col hiddens" id="showActivity">
@@ -556,14 +569,13 @@
                 color: black;
                 cursor: pointer;
             }
-            input[type="checkbox"] {
+            input[type="checkbox"] {    
                 appearance: none;
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 width: 20px;
                 height: 20px;
-                background-color: #eee;
-                border: 2px solid #ccc;
+                border: 2px solid black;
                 border-radius: 4px;
                 cursor: pointer;
             }
@@ -574,7 +586,7 @@
             input[type="checkbox"]:checked::after {
                 content: '✔';
                 display: block;
-                color: black;
+                color: white;
                 font-size: 16px;
                 font-weight: 700;
                 text-align: center;
@@ -582,6 +594,22 @@
             }
             .strike-through {
                 text-decoration: line-through;
+                font-weight: 600;
+                color: #dc3545;
+            }
+            .progress {
+                display:-ms-flexbox;
+                display:flex;
+                height:1rem;
+                overflow:hidden;
+                line-height:0;
+                font-size:.75rem;
+                background-color:#e9ecef;
+                border-radius:1rem;
+                margin-bottom:10px;
+                margin-top:-4px;
+                width:84.8%;
+                margin-left:5.5%
             }
             
             @foreach($result_tema as $sql_mode => $mode_tema)
@@ -598,6 +626,8 @@
                     .isian-checklist {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
                     input[type=text] {color: white;   background-color: {{ $mode_tema->warna_mode }} !important}
                     .dynamicCheckboxLabel {background-color: {{ $mode_tema->warna_mode }} !important}
+                    input[type="checkbox"] {background-color: {{ $mode_tema->warna_mode }} !important; border: 2px solid white !important}
+                    input[type="checkbox"]:checked {border-color: {{ $mode_tema->warna_sistem_tulisan }} !important}
                 @endif
             @endforeach
         </style>

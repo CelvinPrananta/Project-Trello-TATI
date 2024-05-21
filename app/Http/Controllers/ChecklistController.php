@@ -149,4 +149,24 @@ class ChecklistController extends Controller
          return response()->json(['message' => 'Data berhasil diperbaharui!', 'checklist' => $data]);
     }
     // /Perbaharui Checklist Admin //
+
+    // Mendapatkan Data Progress Bar Admin //
+    public function getProgress($title_checklists_id)
+    {
+        $total_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->count();
+        $active_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->where('is_active', 1)->count();
+        $percentage = $total_checklist_id > 0 ? ($active_checklist_id / $total_checklist_id) * 100 : 0;
+        return response()->json(['percentage' => $percentage]);
+    }
+    // /Mendapatkan Data Progress Bar Admin //
+
+    // Mendapatkan Data Progress Bar User //
+    public function getProgress2($title_checklists_id)
+    {
+        $total_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->count();
+        $active_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->where('is_active', 1)->count();
+        $percentage = $total_checklist_id > 0 ? ($active_checklist_id / $total_checklist_id) * 100 : 0;
+        return response()->json(['percentage' => $percentage]);
+    }
+    // /Mendapatkan Data Progress Bar User //
 }

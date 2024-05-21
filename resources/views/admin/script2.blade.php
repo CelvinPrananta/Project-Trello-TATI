@@ -92,14 +92,15 @@
                     $('#checklist'+title_id).val('');
                     $('#saveButtonChecklist'+title_id).addClass('hidden');
                     $('#cancelButtonChecklist'+title_id).addClass('hidden');
+                    toastr.success('Anda berhasil membuat checklist!');
                     console.log(response.checklist);
                     var newForm = `<div class="input-checklist">
                                         <form id="myFormChecklistUpdate${response.checklist.id}" method="POST" class="form-checklist flex gap-5">
                                             @csrf
                                             <input class="dynamicCheckbox" type="checkbox" id="${response.checklist.id}" name="${response.checklist.id}" ${response.checklist.is_active ? 'checked' : ''}>
-                                            <label class="dynamicCheckboxLabel border border-1 border-dark w-403 p-2 rounded-xl ${response.checklist.is_active ? 'strike-through' : ''}" id="labelCheckbox-${response.checklist.id}" for="labelCheckbox-${response.checklist.id}">${response.checklist.name}</label>
+                                            <label class="dynamicCheckboxLabel border border-1 border-dark w-407 p-2 rounded-xl ${response.checklist.is_active ? 'strike-through' : ''}" id="labelCheckbox-${response.checklist.id}" for="labelCheckbox-${response.checklist.id}">${response.checklist.name}</label>
                                             <input type="hidden" id="checklist_id" name="checklist_id" value="${response.checklist.id}">
-                                            <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-403 p-2 rounded-xl hidden" id="checkbox-${response.checklist.id}" name="checkbox-${response.checklist.id}" value="${response.checklist.name}"><br>
+                                            <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-407 p-2 rounded-xl hidden" id="checkbox-${response.checklist.id}" name="checkbox-${response.checklist.id}" value="${response.checklist.name}"><br>
                                         </form>
                                     </div>
                                     <div class="aksi-update-checklist gap-2">
@@ -176,6 +177,8 @@
                     $('#saveButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
                     $('#cancelButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
                     toastr.success('Anda berhasil memperbaharui checklist!');
+                    // Update Progress Bar
+                    updateProgressBar();
                     localStorage.clear();
                 },
                 error: function(){
@@ -197,6 +200,8 @@
                     $('#saveButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
                     $('#cancelButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
                     toastr.success('Anda berhasil memperbaharui checklist!');
+                    // Update Progress Bar
+                    updateProgressBar();
                     localStorage.clear();
                 },
                 error: function(){

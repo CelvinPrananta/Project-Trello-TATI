@@ -189,6 +189,7 @@ Route::controller(ChecklistController::class)->group(function () {
     Route::post("admin/tim/papan/kolom/kartu/judul/checklist/hapus", "hapusChecklist")->name("hapusChecklist");
     Route::post("admin/tim/checklist/tambah", "addChecklist")->name("addChecklist");
     Route::post("admin/tim/checklist/perbaharui", "updateChecklist")->name("updateChecklist");
+    Route::get('/admin/tim/checklist/perbaharui/{title_checklists_id}', 'getProgress');
 
     // ----------------------------- User ----------------------------- //
     Route::post("user/tim/papan/kolom/kartu/judul/tambah", "addTitle2")->name("addTitle2");
@@ -196,6 +197,7 @@ Route::controller(ChecklistController::class)->group(function () {
     Route::post("user/tim/papan/kolom/kartu/judul/hapus", "hapusTitle2")->name("hapusTitle2");
     Route::post("user/tim/papan/kolom/kartu/judul/checklist/hapus", "hapusChecklist2")->name("hapusChecklist2");
     Route::post("user/tim/checklist/perbaharui", "updateChecklist2")->name("updateChecklist2");
+    Route::get('/user/tim/checklist/perbaharui/{title_checklists_id}', 'getProgress2');
 });
 
 // ----------------------------- Card ----------------------------- //

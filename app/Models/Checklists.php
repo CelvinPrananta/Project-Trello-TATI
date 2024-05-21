@@ -12,6 +12,7 @@ class Checklists extends Model
     protected $fillable = [
         'name',
         'title_checklists_id',
+        'is_active',
     ];
 
     public function titleChecklists()
