@@ -390,8 +390,13 @@
                                             @csrf
                                             <input class="dynamicCheckbox" type="checkbox" id="{{$checklists->id}}" name="{{$checklists->id}}" {{$checklists->is_active == '1' ? 'checked' : ''}}>
                                             <label class="dynamicCheckboxLabel border border-1 border-dark w-full p-2 rounded-xl  {{$checklists->is_active == '1' ? 'strike-through' : ''}}" id="labelCheckbox-{{$checklists->id}}" for="labelCheckbox-{{$checklists->id}}">{{$checklists->name}}</label>
+
                                             <input type="hidden" id="checklist_id" name="checklist_id" value="{{ $checklists->id }}">
                                             <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-full p-2 rounded-xl hidden" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}" placeholder="Masukkan checklist">
+                                            <div class="aksi-update-title gap-2">
+                                                <button type="submit" class="saves btn btn-outline-info hidden" id="saveButtonChecklistUpdate-{{ $titleChecklists->id }}">Simpan</button>
+                                                <button type="button" class="cancels btn btn-outline-danger hidden" id="cancelButtonChecklistUpdate-{{ $titleChecklists->id }}">Batal</button>
+                                            </div>
                                         </form>
                                         <!-- Icon Hapus Checklist -->
                                         @if($isianKartu->history->where('user_id', auth()->user()->id)->isNotEmpty())
