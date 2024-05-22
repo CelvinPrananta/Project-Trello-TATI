@@ -95,10 +95,12 @@ class ChecklistController extends Controller
          ]);
 
          $checklist = Checklists::where('title_checklists_id', $request->title_id)->where('id', $data->id)->first();
+         $titleChecklist = TitleChecklists::find($request->title_id);
 
          return response()->json([
             'message' => 'Data berhasil ditambahkan!',
-            'checklist' => $checklist
+            'checklist' => $checklist,
+            'titlechecklist' => $titleChecklist,
         ]);
     }
     // /Tambahkan Checklist Admin //
@@ -129,9 +131,24 @@ class ChecklistController extends Controller
             'is_active' => $is_active,
         ]);
 
-        $data = Checklists::find($request->checklist_id);
+        $checklist = Checklists::find($request->checklist_id);
+        $totData = Checklists::where('title_checklists_id', $checklist->title_checklists_id)
+                        ->count();
+        $countActive = Checklists::where('title_checklists_id', $checklist->title_checklists_id)
+                        ->where('is_active', 1)
+                        ->count();
+        $percentage = !empty($countActive) ? round(($countActive / $totData) * 100) : 0; 
+        TitleChecklists::where('id', $checklist->title_checklists_id)->update([
+            'percentage' => $percentage
+        ]);
 
-         return response()->json(['message' => 'Data berhasil diperbaharui!', 'checklist' => $data]);
+        $titleChecklist = TitleChecklists::find($checklist->title_checklists_id);
+
+        return response()->json([
+            'message' => 'Data berhasil diperbaharui!',
+            'checklist' => $checklist,
+            'titlechecklist' => $titleChecklist,
+        ]);
     }
     // /Perbaharui Checklist Admin //
 
@@ -151,22 +168,22 @@ class ChecklistController extends Controller
     // /Perbaharui Checklist Admin //
 
     // Mendapatkan Data Progress Bar Admin //
-    public function getProgress($title_checklists_id)
-    {
-        $total_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->count();
-        $active_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->where('is_active', 1)->count();
-        $percentage = $total_checklist_id > 0 ? ($active_checklist_id / $total_checklist_id) * 100 : 0;
-        return response()->json(['percentage' => $percentage]);
-    }
-    // /Mendapatkan Data Progress Bar Admin //
+    // public function getProgress($title_checklists_id)
+    // {
+    //     $total_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->count();
+    //     $active_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->where('is_active', 1)->count();
+    //     $percentage = $total_checklist_id > 0 ? ($active_checklist_id / $total_checklist_id) * 100 : 0;
+    //     return response()->json(['percentage' => $percentage]);
+    // }
+    // // /Mendapatkan Data Progress Bar Admin //
 
-    // Mendapatkan Data Progress Bar User //
-    public function getProgress2($title_checklists_id)
-    {
-        $total_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->count();
-        $active_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->where('is_active', 1)->count();
-        $percentage = $total_checklist_id > 0 ? ($active_checklist_id / $total_checklist_id) * 100 : 0;
-        return response()->json(['percentage' => $percentage]);
-    }
+    // // Mendapatkan Data Progress Bar User //
+    // public function getProgress2($title_checklists_id)
+    // {
+    //     $total_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->count();
+    //     $active_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->where('is_active', 1)->count();
+    //     $percentage = $total_checklist_id > 0 ? ($active_checklist_id / $total_checklist_id) * 100 : 0;
+    //     return response()->json(['percentage' => $percentage]);
+    // }
     // /Mendapatkan Data Progress Bar User //
 }

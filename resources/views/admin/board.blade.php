@@ -410,24 +410,22 @@
                                                 <input type="hidden" id="id" name="id" value="{{ $checklists->id }}">
                                                 <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
                                                 <div class="icon-hapus-checklist" id="hapus-checklist{{ $checklists->id }}">
-                                                    <button type="submit" style="border: none; background: none; padding: 0;">
+                                                    <button type="submit" class="deletes" id="deleteButtonChecklist-{{ $checklists->id }}" style="border: none; background: none; padding: 0;">
                                                         <i class="fa-solid fa-trash fa-lg"></i>
                                                     </button>
                                                 </div>
                                             </form>
                                         {{-- @endif --}}
                                         <!-- /Icon Hapus Checklist -->
+                                        <!-- Aksi Update Checklist -->
+                                        <div class="aksi-update-checklist gap-2">
+                                            <button type="submit" class="saves btn btn-outline-info hidden" id="saveButtonChecklistUpdate-{{ $checklists->id }}">Simpan</button>
+                                            <button type="button" class="cancels btn btn-outline-danger hidden" id="cancelButtonChecklistUpdate-{{ $checklists->id }}">Batal</button>
+                                        </div>
+                                        <!-- /Aksi Update Checklist -->
                                     </div>
                                     <!-- /Tampilan Checklist -->
 
-                                    <!-- Aksi Update Checklist -->
-                                    <div class="aksi-update-checklist gap-2">
-                                        <button type="submit" class="saves btn btn-outline-info hidden" id="saveButtonChecklistUpdate-{{ $checklists->id }}">Simpan</button>
-                                        <button type="button" class="cancels btn btn-outline-danger hidden" id="cancelButtonChecklistUpdate-{{ $checklists->id }}">Batal</button>
-                                    </div>
-                                    <!-- /Aksi Update Checklist -->
-
-                                    @include('admin.script4')
                                     @include('admin.script3')
                                     @endforeach
                                     <!-- /Perbaharui & Hapus Checklist -->
