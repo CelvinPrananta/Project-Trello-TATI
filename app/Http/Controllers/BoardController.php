@@ -57,7 +57,9 @@ class BoardController extends Controller
         $board = $this->boardLogic->getData($board_id);
         $team = Team::find($board->team_id);
         $teamOwner = $this->teamLogic->getTeamOwner($board->team_id);
-        $dataColumnCard = Column::with('cards')->get();
+        $dataColumnCard = Column::with('cards')
+            ->where('board_id', '=', $board_id )
+            ->get();
         $isianHistory = DB::table('card_histories')
             ->leftjoin('users', 'card_histories.user_id', 'users.id')
             ->leftjoin('cards', 'card_histories.card_id', 'cards.id')
@@ -145,7 +147,19 @@ class BoardController extends Controller
         $board = $this->boardLogic->getData($board_id);
         $team = Team::find($board->team_id);
         $teamOwner = $this->teamLogic->getTeamOwner($board->team_id);
-        $dataColumnCard = Column::with('cards')->get();
+        $dataColumnCard = Column::with('cards')
+            ->where('board_id', '=', $board_id )
+            ->get();
+        $isianHistory = DB::table('card_histories')
+            ->leftjoin('users', 'card_histories.user_id', 'users.id')
+            ->leftjoin('cards', 'card_histories.card_id', 'cards.id')
+            ->select(
+                'card_histories.*',
+                'users.id',
+                'users.name',
+                'users.avatar',
+            )
+            ->get();
 
         $result_tema = DB::table('mode_aplikasi')
             ->select(
@@ -208,7 +222,7 @@ class BoardController extends Controller
             ->whereNotNull('read_at')
             ->get();
 
-        return view("user.board", compact('dataColumnCard', 'result_tema', 'unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
+        return view("user.board", compact('isianHistory', 'dataColumnCard', 'result_tema', 'unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
             ->with("team", $team)
             ->with("owner", $teamOwner)
             ->with("board", $board)

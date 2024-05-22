@@ -1,13 +1,16 @@
 // Khusus ketika klik button +Tambah Kartu //
 function openAdd(id){
     const cardTrello = document.getElementById(`cardTrello${id}`);
+    const btnadd = document.getElementById(`btn-add${id}`);
 
     let style = cardTrello.getAttribute("class")
     
-    if (style.includes('hidden')) {
-        cardTrello.classList.remove("hidden");
+    if (style.includes('flex')) {
+        cardTrello.classList.remove("flex");
+        btnadd.innerHTML="Tambah Kartu...";
     } else {
-        cardTrello.classList.add("hidden");
+        cardTrello.classList.add("flex");
+        btnadd.innerHTML="Batalkan";
     }
 }
 // /Khusus ketika klik button +Tambah Kartu //

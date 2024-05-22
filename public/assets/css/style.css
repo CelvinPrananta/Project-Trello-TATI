@@ -13508,7 +13508,6 @@ ul.nav-tabs > li > a {
 }
 .tampilan-kolom {
 	display: flex;
-	min-width: 760%;
 }
 .kolom-nama {
 	border-bottom: 3px solid #f5fffa;
@@ -13668,6 +13667,9 @@ ul.nav-tabs > li > a {
 	display: flex;
 	margin-top: 10px;
 }
+.btn-add {
+	margin-top: 10px;
+}
 .aksi-tambah-checklist {
     display: flex;
 	margin-left: 6%;
@@ -13695,6 +13697,9 @@ ul.nav-tabs > li > a {
 }
 .w-407 {
     width: 88%;
+}
+.w-408 {
+    width: 91%;
 }
 .menu-activity {
 	margin-top: 20px;

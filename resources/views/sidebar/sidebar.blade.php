@@ -135,13 +135,13 @@
                         <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 10px">
                             <a href="#" data-toggle="modal" data-target="#updateBoard">
                                 <i class="fa-solid fa-pencil" style="font-size: 20px"></i>
-                                <span>Perbaharui Kartu</span>
+                                <span>Perbaharui Papan</span>
                             </a>
                         </li>
                         <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 20px">
                             <a href="#" data-toggle="modal" data-target="#deleteBoard">
                                 <i class="fa-solid fa-trash" style="font-size: 20px"></i>
-                                <span>Hapus Kartu</span>
+                                <span>Hapus Papan</span>
                             </a>
                         </li><br><br>
                     @endif

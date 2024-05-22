@@ -196,6 +196,7 @@ Route::controller(ChecklistController::class)->group(function () {
     Route::post("user/tim/papan/kolom/kartu/judul/perbaharui", "updateTitle2")->name("updateTitle2");
     Route::post("user/tim/papan/kolom/kartu/judul/hapus", "hapusTitle2")->name("hapusTitle2");
     Route::post("user/tim/papan/kolom/kartu/judul/checklist/hapus", "hapusChecklist2")->name("hapusChecklist2");
+    Route::post("user/tim/checklist/tambah", "addChecklist2")->name("addChecklist2");
     Route::post("user/tim/checklist/perbaharui", "updateChecklist2")->name("updateChecklist2");
     Route::get('/user/tim/checklist/perbaharui/{title_checklists_id}', 'getProgress2');
 });
