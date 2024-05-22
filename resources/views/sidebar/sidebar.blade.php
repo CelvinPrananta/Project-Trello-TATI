@@ -46,7 +46,7 @@
                         </a>
                     </li>
                     @if (Route::is('showTeams'))
-                    <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                    <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0">
                         <a href="#" data-toggle="modal" data-target="#createTeam">
                             <i class="fa-solid fa-cubes" style="font-size: 20px"></i>
                             <span>Buat Tim</span>
@@ -54,7 +54,7 @@
                     </li>
                     @endif
                     @if (Route::is('searchTeam'))
-                    <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                    <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0">
                         <a href="#" data-toggle="modal" data-target="#createTeam">
                             <i class="fa-solid fa-cubes" style="font-size: 20px"></i>
                             <span>Buat Tim</span>
@@ -62,31 +62,33 @@
                     </li>
                     @endif
                     @if (Route::is('viewTeam'))
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0">
                             <a href="#" data-toggle="modal" data-target="#updateTeam">
                                 <i class="fa-solid fa-pencil" style="font-size: 20px"></i>
                                 <span>Perbaharui Tim</span>
                             </a>
                         </li>
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 5px">
+                        @if ($statusTeams->contains('Member'))
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0; top: 5px">
                             <a href="#" data-toggle="modal" data-target="#manageMember">
                                 <i class="fa-solid fa-user-gear" style="font-size: 20px"></i>
                                 <span>Anggota Tim</span>
                             </a>
                         </li>
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 10px">
+                        @endif
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0; top: 10px">
                             <a href="#" data-toggle="modal" data-target="#inviteMember">
                                 <i class="fa-solid fa-user-plus" style="font-size: 20px"></i>
                                 <span>Undang Anggota</span>
                             </a>
                         </li>
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 15px">
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0; top: 15px">
                             <a href="#" data-toggle="modal" data-target="#createBoard">
                                 <i class="fa-solid fa-table-columns" style="font-size: 20px"></i>
                                 <span>Buat Papan</span>
                             </a>
                         </li>
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 20px">
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0; top: 20px">
                             <a href="#" data-toggle="modal" data-target="#deleteTeam">
                                 <i class="fa-solid fa-trash" style="font-size: 20px"></i>
                                 <span>Hapus Papan</span>
@@ -94,31 +96,33 @@
                         </li><br><br>
                     @endif
                     @if (Route::is('searchBoard'))
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0">
                             <a href="#" data-toggle="modal" data-target="#updateTeam">
                                 <i class="fa-solid fa-pencil" style="font-size: 20px"></i>
                                 <span>Perbaharui Tim</span>
                             </a>
                         </li>
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 5px">
+                        @if ($statusTeams->contains('Member'))
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0; top: 5px">
                             <a href="#" data-toggle="modal" data-target="#manageMember">
                                 <i class="fa-solid fa-user-gear" style="font-size: 20px"></i>
                                 <span>Anggota Tim</span>
                             </a>
                         </li>
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 10px">
+                        @endif
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0; top: 10px">
                             <a href="#" data-toggle="modal" data-target="#inviteMember">
                                 <i class="fa-solid fa-user-plus" style="font-size: 20px"></i>
                                 <span>Undang Anggota</span>
                             </a>
                         </li>
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 15px">
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0; top: 15px">
                             <a href="#" data-toggle="modal" data-target="#createBoard">
                                 <i class="fa-solid fa-table-columns" style="font-size: 20px"></i>
                                 <span>Buat Papan</span>
                             </a>
                         </li>
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 20px">
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0; top: 20px">
                             <a href="#" data-toggle="modal" data-target="#deleteTeam">
                                 <i class="fa-solid fa-trash" style="font-size: 20px"></i>
                                 <span>Hapus Papan</span>
@@ -127,18 +131,18 @@
                     @endif
                     @if (Route::is('board'))
                         <a href="{{ route('viewTeam', ['team_id' => $team->id]) }}">
-                            <div class="btn btn-outline-warning" style="border-radius: 30px; width: 70%; margin-left: 48px;">
+                            <div class="btn btn-outline-warning" style="border-radius: 30px; width: 70%; margin-left: 24px;">
                                 <span><h4>Papan:</h4></span>
                                 <span><h5>{{ $board->name }}</h5></span>
                             </div>
                         </a>
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 10px">
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0; top: 10px">
                             <a href="#" data-toggle="modal" data-target="#updateBoard">
                                 <i class="fa-solid fa-pencil" style="font-size: 20px"></i>
                                 <span>Perbaharui Papan</span>
                             </a>
                         </li>
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0; top: 20px">
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0; top: 20px">
                             <a href="#" data-toggle="modal" data-target="#deleteBoard">
                                 <i class="fa-solid fa-trash" style="font-size: 20px"></i>
                                 <span>Hapus Papan</span>
@@ -169,7 +173,7 @@
                         </a>
                     </li>
                     @if (Route::is('viewTeam2'))
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0">
                             <a href="#" data-toggle="modal" data-target="#leaveTeam">
                                 <i class="fa-solid fa-right-from-bracket" style="font-size: 20px"></i>
                                 <span>Keluar dari Tim</span>
@@ -177,7 +181,7 @@
                         </li>
                     @endif
                     @if (Route::is('searchBoard2'))
-                        <li class="btn btn-outline-warning" style="left: 20%; border-radius: 30px; padding: 0">
+                        <li class="btn btn-outline-warning" style="left: 10%; border-radius: 30px; padding: 0">
                             <a href="#" data-toggle="modal" data-target="#leaveTeam">
                                 <i class="fa-solid fa-right-from-bracket" style="font-size: 20px"></i>
                                 <span>Keluar dari Tim</span>
@@ -186,7 +190,7 @@
                     @endif
                     @if (Route::is('board2'))
                         <a href="{{ route('viewTeam2', ['team_id' => $team->id]) }}">
-                            <div class="btn btn-outline-warning" style="border-radius: 30px; width: 70%; margin-left: 48px;">
+                            <div class="btn btn-outline-warning" style="border-radius: 30px; width: 70%; margin-left: 24px;">
                                 <span><h4>Papan:</h4></span>
                                 <span><h5>{{ $board->name }}</h5></span>
                             </div>

@@ -16,7 +16,7 @@
 
                     <!-- Tampilan Kolom -->
                     @foreach ( $dataColumnCard as $dataKolom )
-                        <div class="max-w-73 p-4 bg-whites border border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700" onmouseenter="aksiKolomShow({{ $dataKolom->id }})" onmouseleave="aksiKolomHide({{ $dataKolom->id }})">
+                        <div class="kolom-card" onmouseenter="aksiKolomShow({{ $dataKolom->id }})" onmouseleave="aksiKolomHide({{ $dataKolom->id }})">
 
                             <!-- Tampilan Aksi Edit & Hapus -->
                             <a href="#" data-toggle="modal" data-target="#updateColumn{{ $dataKolom->id }}">
@@ -77,7 +77,7 @@
                                                 </form>
                                             </div>
                                         </li>
-                                        <button onclick="openAdd('{{ $dataKolom->id }}')" class="btn btn-outline-info" style="border-radius: 30px" id="btn-add{{ $dataKolom->id }}">
+                                        <button onclick="openAdd('{{ $dataKolom->id }}')" class="btn btn-outline-info" id="btn-add{{ $dataKolom->id }}">
                                             <i class="fa-solid fa-plus"></i> Tambah Kartu...
                                         </button>
                                 <!-- /Tampilan Kartu -->
@@ -387,43 +387,67 @@
                                 @endforeach
                             @endif
 
-                                <div class="menu-activity flex flex-col flex-wrap">
-                                    <div class="header-activity">
+
+
+
+
+
+                            
+                                <div class="menu-activity">
+                                    <div class="header-activity flex">
                                         <i class="fa-solid fa-list-ul fa-lg"></i>
                                         <p class="activity-keterangan">Activity </p>
                                         <div onclick="showActivity()" class="icon-lihat">
                                             <i class="fa-solid fa-eye fa-lg" id="showActivityIcon"></i>
                                         </div>
                                     </div>
-                                    <div class="input-komentar flex gap-3">
+                                    <div class="input-komentar flex gap-4">
                                         <img class="avatar-activity" src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" loading="lazy">
                                         <form action="{{ route('komentarKartu2', ['card_id' => $dataKartu->id]) }}" method="POST">
-                                            <textarea onclick="saveComment()" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="79" id="komentar" name="komentar" placeholder="Tulis komentar..."></textarea>
+                                            <textarea onclick="saveComment()" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="77" id="komentar" name="komentar" placeholder="Tulis komentar..."></textarea>
                                             <button type="submit" class="btn btn-outline-info icon-comment hidden" id="simpanButton">Kirim</button>
                                         </form>
                                     </div>
                                     <div class="activity-tag flex flex-col hiddens" id="showActivity">
                                         @foreach($isianHistory as $history)
-                                            <div class="isian-tag">
+                                            <div class="isian-tag w-403">
                                                 @if ($history->type === 'event')
-                                                    <div class="isian-history flex gap-1">
+                                                    <div class="isian-history flex gap-1" style="height: 40px">
                                                         <img class="avatar-activity" src="{{ URL::to('/assets/images/' . $history->avatar) }}" loading="lazy">
                                                         <div class="title-activity flex gap-1">
                                                             @if (strpos($history->content, 'Membuat Kolom') !== false)
                                                                 <p>{{ $history->name }},</p>
-                                                                <p>telah membuat</p>
-                                                                <p>kolom</p>
-                                                                <p>ini</p>
+                                                                <p>telah membuat {{ $history->name }} ini</p>
                                                             @elseif (strpos($history->content, 'Membuat Kartu') !== false)
                                                                 <p>{{ $history->name }},</p>
-                                                                <p>menambahkan</p>
-                                                                <p>Senin</p>
-                                                                <p>ke kartu ini</p>
+                                                                <p>menambahkan {{ $history->name }} ke kartu ini</p>
+                                                            @elseif (strpos($history->content, 'Memperbaharui Kartu') !== false)
+                                                                <p>{{ $history->name }},</p>
+                                                                <p>memperbaharui {{ $history->name }} ke kartu ini</p>
+                                                            @elseif (strpos($history->content, 'Memperbaharui Nama Kartu') !== false)
+                                                                <p>{{ $history->name }},</p>
+                                                                <p>memperbaharui nama {{ $history->name }} ke kartu ini</p>
+                                                            @elseif (strpos($history->content, 'Membuat Judul Checklist') !== false)
+                                                                <p>{{ $history->name }},</p>
+                                                                <p>menambahkan judul {{ $history->name }} ke kartu ini</p>
+                                                            @elseif (strpos($history->content, 'Memperbaharui Judul Checklist') !== false)
+                                                                <p>{{ $history->name }},</p>
+                                                                <p>memperbaharui judul {{ $history->name }} ke kartu ini</p>
+                                                            @elseif (strpos($history->content, 'Menghapus Judul Checklist') !== false)
+                                                                <p>{{ $history->name }},</p>
+                                                                <p>menghapus judul {{ $history->name }} ke kartu ini</p>
+                                                            @elseif (strpos($history->content, 'Membuat Checklist') !== false)
+                                                                <p>{{ $history->name }},</p>
+                                                                <p>menambahkan {{ $history->name }} ke kartu ini</p>
+                                                            @elseif (strpos($history->content, 'Memperbaharui Checklist') !== false)
+                                                                <p>{{ $history->name }},</p>
+                                                                <p>memperbaharui {{ $history->name }} ke kartu ini</p>
+                                                            @elseif (strpos($history->content, 'Menghapus Checklist') !== false)
+                                                                <p>{{ $history->name }},</p>
+                                                                <p>menghapus {{ $history->name }} ke kartu ini</p>
                                                             @elseif (strpos($history->content, 'Menghapus Kartu') !== false)
                                                                 <p>{{ $history->name }},</p>
-                                                                <p>menghapus</p>
-                                                                <p>Senin</p>
-                                                                <p>ke kartu ini</p>
+                                                                <p>menghapus {{ $history->name }} ke kartu ini</p>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -531,7 +555,7 @@
             .strike-through {
                 text-decoration: line-through;
                 font-weight: 600;
-                color: #dc3545;
+                /* color: #dc3545; */
             }
             .progress {
                 display:-ms-flexbox;
@@ -561,6 +585,16 @@
                 width:90%;
                 margin-left:5.5%
             }
+            .kolom-card {
+                --tw-bg-opacity: 1;
+                --tw-border-opacity: 1;
+                min-width: 290px !important;
+                padding: 1rem !important;
+                border-radius: 0.5rem !important;
+                box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+                background-color: rgb(241 245 249 / var(--tw-bg-opacity)) !important;
+                border-color: rgb(229 231 235 / var(--tw-border-opacity)) !important;
+            }
             
             @foreach($result_tema as $sql_mode => $mode_tema)
                 @if ($mode_tema->tema_aplikasi == 'Gelap')
@@ -578,6 +612,9 @@
                     .dynamicCheckboxLabel {background-color: {{ $mode_tema->warna_mode }} !important}
                     input[type="checkbox"] {background-color: {{ $mode_tema->warna_mode }} !important; border: 2px solid white !important}
                     input[type="checkbox"]:checked {border-color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+                    .kolom-card {background-color: {{ $mode_tema->warna_sistem }} !important; border-color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+                    .progress{background-color: {{ $mode_tema->warna_sistem }} !important;}
+                    .progress2{background-color: {{ $mode_tema->warna_sistem }} !important;}
                 @endif
             @endforeach
         </style>

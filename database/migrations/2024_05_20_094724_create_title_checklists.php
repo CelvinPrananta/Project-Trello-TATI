@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('cards_id')->constrained('cards')->onDelete('cascade');
+            $table->double('percentage')->nullable();
             $table->timestamps();
         });
     }

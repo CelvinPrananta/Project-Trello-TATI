@@ -13525,8 +13525,9 @@ ul.nav-tabs > li > a {
 .kartu-trello {
 	background-color: #f5fffa;
 	list-style-type: none;
-	border-radius: 30px;
+	border-radius: 10px;
 	margin-bottom: 10px;
+	margin-left: -18%;
 }
 .text-base {
 	font-size: 1rem !important;
@@ -13582,7 +13583,6 @@ ul.nav-tabs > li > a {
 }
 .header-activity {
 	position: relative;
-    display: flex;
     align-items: baseline;
 }
 .icon-item {
@@ -13593,6 +13593,7 @@ ul.nav-tabs > li > a {
 	display: flex;
 	flex: auto;
 	justify-content: flex-end;
+	margin-right: 8px;
 }
 .keterangan-tag {
 	position: relative;
@@ -13632,7 +13633,7 @@ ul.nav-tabs > li > a {
 	margin-left: 4%;
 }
 .isian-tag {
-	margin-bottom: -5%;
+	margin-bottom: -3%;
 }
 .input-komentar {
 	position: relative;
@@ -13702,7 +13703,7 @@ ul.nav-tabs > li > a {
     width: 91%;
 }
 .menu-activity {
-	margin-top: 20px;
+	margin-top: 30px;
 }
 .menu-keterangan {
 	margin-bottom: -20px;
@@ -13876,7 +13877,7 @@ ul.nav-tabs > li > a {
     width: 30px !important;
 	height: 30px !important;
     border-radius: 50%;
-	top: 3px;
+	top: 5px;
 }
 
 .avatar-undangan {

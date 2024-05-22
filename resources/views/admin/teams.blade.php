@@ -112,7 +112,7 @@
                             @csrf
                             <div class="form-group">
                                 <label>Nama Tim</label><span class="text-danger">*</span>
-                                <input type="text" class="form-control @error('team_name') is-invalid @enderror" id="team_name" name="team_name" required>
+                                <input type="text" class="form-control @error('team_name') is-invalid @enderror" id="team_name" name="team_name" value="{{ old('team_name') }}">
                                 @error('team_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -121,7 +121,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Deskripsi Tim</label><span class="text-danger">*</span>
-                                <textarea class="form-control @error('team_description') is-invalid @enderror" id="team_description" name="team_description" required></textarea>
+                                <textarea class="form-control @error('team_description') is-invalid @enderror" id="team_description" name="team_description">{{ old('team_description') }}</textarea>
                                 @error('team_description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -230,6 +230,14 @@
                 selectedCheck.style.opacity = '100';
             }
         </script>
+
+        @if ($errors->any())
+            <script>
+                $(document).ready(function() {
+                    $('#createTeam').modal('show');
+                });
+            </script>
+        @endif
 
         <script src="{{ asset('assets/js/memuat-ulang.js') }}"></script>
 

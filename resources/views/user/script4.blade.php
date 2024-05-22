@@ -1,5 +1,5 @@
 <!-- Methods Ke-1 tanpa menggunakan localStorage setInterval -->
-{{-- <script>
+<script>
     $(document).ready(function() {
         $('.progress').each(function() {
             var checklistId = $(this).data('checklist-id');
@@ -30,11 +30,11 @@
             }
         });
     }
-</script> --}}
+</script>
 <!-- /Methods Ke-1 tanpa menggunakan localStorage setInterval -->
 
 <!-- Methods ke-2 menggunakan localStorage setInterval -->
-<script>
+{{-- <script>
     function updateProgressBar(checklistId) {
         $.ajax({
             url: '/user/tim/checklist/perbaharui/' + checklistId,
@@ -77,5 +77,5 @@
         // Memperbarui progress bar setiap detik
         setInterval(updateProgressBars, 1000);
     });
-</script>
+</script> --}}
 <!-- /Methods ke-2 menggunakan localStorage setInterval -->
