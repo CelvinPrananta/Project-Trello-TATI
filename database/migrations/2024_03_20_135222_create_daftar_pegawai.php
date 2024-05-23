@@ -248,7 +248,7 @@ return new class extends Migration
              'email'                        => 'kelvin.p2504@gmail.com',
              'username'                     => 'kelvin',
              'employee_id'                  => '2024050107010',
-             'role_name'                    => 'Admin',
+             'role_name'                    => 'User',
              'avatar'                       => 'photo_defaults.jpg',
             ],
             ['name'                         => 'Nur Aini Ersanti',
