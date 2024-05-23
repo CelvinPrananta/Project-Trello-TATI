@@ -37,7 +37,7 @@
                                         <li class="kartu-trello" id="kartu-trello" onmouseenter="aksiKartuShow({{ $dataKartu->id }})" onmouseleave="aksiKartuHide({{ $dataKartu->id }})">
                                             
                                             <!-- Tampilan Aksi Edit -->
-                                            @if($dataKartu->history->where('user_id', auth()->user()->id)->isNotEmpty())
+                                            @if($dataKartu->history->where('content', 'Membuat Kartu')->where('user_id', auth()->user()->id)->isNotEmpty())
                                                 <a href="#" data-toggle="modal" data-target="#editCard{{ $dataKartu->id }}">
                                                     <div class="aksi-card" id="aksi-card{{ $dataKartu->id }}">
                                                         <i class="fa-solid fa-pencil fa-sm"></i>
@@ -172,7 +172,7 @@
                                 </div>
                                 <div>
                                     <h5 class="nama-kartu">{{ $isianKartu->name  }}</h5>
-                                    @if($isianKartu->history->where('user_id', auth()->user()->id)->isNotEmpty())
+                                    @if($isianKartu->history->where('content', 'Membuat Kartu')->where('user_id', auth()->user()->id)->isNotEmpty())
                                         <form action="{{ route('hapusKartu2', ['card_id' => $isianKartu->id]) }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $isianKartu->id  }}">
@@ -191,7 +191,7 @@
                             </div>
                             <div class="modal-body">
 
-                            @if($isianKartu->history->where('user_id', auth()->user()->id)->isNotEmpty())
+                            @if($isianKartu->history->where('content', 'Membuat Kartu')->where('user_id', auth()->user()->id)->isNotEmpty())
                                 <!-- Tambah & Edit Keterangan -->
                                 <div class="menu-keterangan">
                                     <div class="icon-align">
@@ -242,13 +242,13 @@
                                     </div>
                                     <div class="keterangan-tag">
                                         <p class="deskripsi-keterangan">Keterangan</p>
-                                        <p class="border border-1 border-dark w-403 p-2 rounded-xl">{{ $isianKartu->description }}<br>
+                                        <p class="border border-1 border-dark w-403 p-2 rounded-xl" style="color: white !important">{{ $isianKartu->description }}</p><br>
                                     </div>
                                 </div>
                                 <!-- /Tampilan Keterangan Apabila Bukan Punyanya -->
                             @endif
                                 
-                            @if($isianKartu->history->where('user_id', auth()->user()->id)->isNotEmpty())
+                            @if($isianKartu->history->where('content', 'Membuat Kartu')->where('user_id', auth()->user()->id)->isNotEmpty())
                                 @foreach ($isianKartu->titleChecklists as $titleChecklists)
                                 <div class="menu-checklist border border-1 border-darkss p-2 rounded-xl">
                                     <!-- Perbaharui & Hapus Judul Checklist -->
@@ -300,7 +300,7 @@
                                             <input type="text" class="dynamicCheckboxValue border border-1 border-darks w-407 p-2 rounded-xl hidden" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}" placeholder="Masukkan checklist">
                                         </form>
                                         <!-- Icon Hapus Checklist -->
-                                        @if($isianKartu->history->where('user_id', auth()->user()->id)->isNotEmpty())
+                                        @if($isianKartu->history->where('content', 'Membuat Kartu')->where('user_id', auth()->user()->id)->isNotEmpty())
                                             <form id="myFormChecklistDelete{{ $checklists->id }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" id="id" name="id" value="{{ $checklists->id }}">
@@ -352,7 +352,7 @@
                                         <!-- Perbaharui & Hapus Judul Checklist -->
                                         <div class="header-checklist flex gap-4">
                                             <i class="fa-regular fa-square-check fa-xl"></i>
-                                            <p class="isian-title border border-1 border-dark w-408 p-2 rounded-xl">{{$titleChecklists->name}}</p>
+                                            <p class="isian-title border border-1 border-darks w-408 p-2 rounded-xl" style="color: white !important">{{$titleChecklists->name}}</p>
                                         </div>
                                         <!-- /Perbaharui & Hapus Judul Checklist -->
 
@@ -382,8 +382,8 @@
                                     <div class="header-activity flex">
                                         <i class="fa-solid fa-list-ul fa-lg"></i>
                                         <p class="activity-keterangan">Activity </p>
-                                        <div onclick="showActivity()" class="icon-lihat">
-                                            <i class="fa-solid fa-eye fa-lg" id="showActivityIcon"></i>
+                                        <div onclick="showActivity('{{ $dataKolom->id }}')" class="icon-lihat">
+                                            <i class="fa-solid fa-eye fa-lg" id="showActivityIcon{{ $dataKolom->id }}"></i>
                                         </div>
                                     </div>
                                     <div class="input-komentar flex gap-4">
@@ -392,11 +392,11 @@
                                             @csrf
                                             <input type="hidden" name="user_id" value="{{ Auth::user()->id  }}">
                                             <input type="hidden" name="card_id" value="{{ $isianKartu->id }}">
-                                            <textarea onclick="saveComment()" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="77" id="content-area" name="content" placeholder="Tulis komentar..."></textarea>
-                                            <button type="submit" class="btn btn-outline-info icon-comment hidden" id="simpanButton">Kirim</button>
+                                            <textarea onclick="saveComment('{{ $dataKolom->id }}')" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="77" id="contentarea{{ $dataKolom->id }}" name="content" placeholder="Tulis komentar..."></textarea>
+                                            <button type="submit" class="btn btn-outline-info icon-comment hidden" id="simpanButton{{ $dataKolom->id }}">Kirim</button>
                                         </form>
                                     </div>
-                                    <div class="activity-tag flex flex-col hiddens" id="showActivity">
+                                    <div class="activity-tag flex flex-col hiddens" id="showActivity{{ $dataKolom->id }}">
                                         @foreach($isianHistory as $history)
                                             <div class="isian-tag w-403">
                                                 @if ($history->type === 'event')
@@ -499,6 +499,9 @@
         <style>
             .fa-eye {
                 color: black;
+                cursor: pointer;
+            }
+            .fa-eye-slash {
                 cursor: pointer;
             }
             input[type="checkbox"] {    

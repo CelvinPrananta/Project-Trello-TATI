@@ -449,8 +449,8 @@
                                     <div class="header-activity flex">
                                         <i class="fa-solid fa-list-ul fa-lg"></i>
                                         <p class="activity-keterangan">Activity </p>
-                                        <div onclick="showActivity()" class="icon-lihat">
-                                            <i class="fa-solid fa-eye fa-lg" id="showActivityIcon"></i>
+                                        <div onclick="showActivity('{{ $dataKolom->id }}')" class="icon-lihat">
+                                            <i class="fa-solid fa-eye fa-lg" id="showActivityIcon{{ $dataKolom->id }}"></i>
                                         </div>
                                     </div>
                                     <div class="input-komentar flex gap-4">
@@ -459,11 +459,11 @@
                                             @csrf
                                             <input type="hidden" name="user_id" value="{{ Auth::user()->id  }}">
                                             <input type="hidden" name="card_id" value="{{ $isianKartu->id }}">
-                                            <textarea onclick="saveComment()" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="77" id="content-area" name="content" placeholder="Tulis komentar..."></textarea>
-                                            <button type="submit" class="btn btn-outline-info icon-comment hidden" id="simpanButton">Kirim</button>
+                                            <textarea onclick="saveComment('{{ $dataKolom->id }}')" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="77" id="contentarea{{ $dataKolom->id }}" name="content" placeholder="Tulis komentar..."></textarea>
+                                            <button type="submit" class="btn btn-outline-info icon-comment hidden" id="simpanButton{{ $dataKolom->id }}">Kirim</button>
                                         </form>
                                     </div>
-                                    <div class="activity-tag flex flex-col hiddens" id="showActivity">
+                                    <div class="activity-tag flex flex-col hiddens" id="showActivity{{ $dataKolom->id }}">
                                         @foreach($isianHistory as $history)
                                             <div class="isian-tag w-403">
                                                 @if ($history->type === 'event')
@@ -566,6 +566,9 @@
         <style>
             .fa-eye {
                 color: black;
+                cursor: pointer;
+            }
+            .fa-eye-slash {
                 cursor: pointer;
             }
             input[type="checkbox"] {    

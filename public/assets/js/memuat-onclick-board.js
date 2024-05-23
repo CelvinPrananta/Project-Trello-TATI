@@ -59,9 +59,9 @@ function aksiKartuHide(id){
 // /Khusus untuk menghilangkan dan memunculkan edit kartu //
 
 // Untuk menyembunyikan dan melihat activity //
-function showActivity() {
-    var activityDiv = document.getElementById('showActivity');
-    var icon = document.getElementById('showActivityIcon');
+function showActivity(id){
+    var activityDiv = document.getElementById(`showActivity${id}`);
+    var icon = document.getElementById(`showActivityIcon${id}`);
 
     if (icon.classList.contains('fa-eye')) {
         icon.classList.remove('fa-eye');
@@ -80,9 +80,9 @@ function showActivity() {
 // /Untuk menyembunyikan dan melihat activity //
 
 // Untuk menyembunyikan dan melihat simpan komentar //
-function saveComment() {
-    var komentarTextarea = document.getElementById('content-area');
-    var simpanButton = document.getElementById('simpanButton');
+function saveComment(id) {
+    var komentarTextarea = document.getElementById(`contentarea${id}`);
+    var simpanButton = document.getElementById(`simpanButton${id}`);
 
     komentarTextarea.addEventListener('input', function () {
         if (komentarTextarea.value.trim() !== "") {

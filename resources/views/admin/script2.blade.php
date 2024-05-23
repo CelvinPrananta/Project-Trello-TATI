@@ -100,10 +100,10 @@
                                         <form id="myFormChecklistUpdate${response.checklist.id}" method="POST" class="form-checklist flex gap-5">
                                             @csrf
                                             <input class="dynamicCheckbox" type="checkbox" id="${response.checklist.id}" name="${response.checklist.id}" ${response.checklist.is_active ? 'checked' : ''}>
-                                            <label class="dynamicCheckboxLabel border border-1 border-dark w-407s p-2 rounded-xl ${response.checklist.is_active ? 'strike-through' : ''}" id="labelCheckbox-${response.checklist.id}" for="labelCheckbox-${response.checklist.id}">${response.checklist.name}</label>
+                                            <label class="dynamicCheckboxLabel border border-1 border-darks w-407s p-2 rounded-xl ${response.checklist.is_active ? 'strike-through' : ''}" id="labelCheckbox-${response.checklist.id}" for="labelCheckbox-${response.checklist.id}">${response.checklist.name}</label>
                                             <input type="hidden" id="checklist_id" name="checklist_id" value="${response.checklist.id}">
                                             <input type="hidden" id="card_id" name="card_id" value="${response.titlechecklist.cards_id}">
-                                            <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-407s p-2 rounded-xl hidden" id="checkbox-${response.checklist.id}" name="checkbox-${response.checklist.id}" value="${response.checklist.name}">
+                                            <input type="text" class="dynamicCheckboxValue border border-1 border-darks w-407s p-2 rounded-xl hidden" id="checkbox-${response.checklist.id}" name="checkbox-${response.checklist.id}" value="${response.checklist.name}">
                                         </form>
                                         <form id="myFormChecklistDelete${response.checklist.id}" method="POST">
                                             @csrf
