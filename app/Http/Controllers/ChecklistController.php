@@ -5,57 +5,85 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TitleChecklists;
 use App\Models\Checklists;
+use Illuminate\Support\Facades\Auth;
+use App\Logic\CardLogic;
 
 class ChecklistController extends Controller
 {
+    public function __construct(
+        protected CardLogic $cardLogic
+    ) {
+    }
+
     // Tambahkan Title Kartu Admin //
     public function addTitle(Request $request)
     {
-         TitleChecklists::create([
-             'cards_id' => $request->card_id,
-             'name' => $request->titleChecklist
-         ]);
+        TitleChecklists::create([
+            'cards_id' => $request->card_id,
+            'name' => $request->titleChecklist
+        ]);
 
-         return response()->json(['message' => 'Data berhasil disimpan!', 'card_id' => $request->card_id]);
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Membuat Judul Checklist");
+
+        return response()->json(['message' => 'Data berhasil disimpan!', 'card_id' => $request->card_id]);
     }
     // /Tambahkan Title Kartu Admin //
 
     // Tambahkan Title Kartu User //
     public function addTitle2(Request $request)
     {
-         TitleChecklists::create([
-             'cards_id' => $request->card_id,
-             'name' => $request->titleChecklist
-         ]);
+        TitleChecklists::create([
+            'cards_id' => $request->card_id,
+            'name' => $request->titleChecklist
+        ]);
 
-         return response()->json(['message' => 'Data berhasil disimpan!', 'card_id' => $request->card_id]);
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Membuat Judul Checklist");
+
+        return response()->json(['message' => 'Data berhasil disimpan!', 'card_id' => $request->card_id]);
     }
     // /Tambahkan Title Kartu User //
 
     // Perbaharui Title Kartu Admin //
     public function updateTitle(Request $request)
     {
-         TitleChecklists::where('id', $request->title_id)->update([
-             'name' => $request->titleChecklistUpdate
-         ]);
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Memperbaharui Judul Checklist");
 
-         return response()->json(['message' => 'Data berhasil disimpan!', 'card_id' => $request->card_id]);
+        TitleChecklists::where('id', $request->title_id)->update([
+            'name' => $request->titleChecklistUpdate
+        ]);
+
+        return response()->json(['message' => 'Data berhasil disimpan!', 'card_id' => $request->card_id]);
     }
     // /Perbaharui Title Kartu Admin //
 
     // Perbaharui Title Kartu User //
     public function updateTitle2(Request $request)
     {
-         TitleChecklists::where('id', $request->title_id)->update([
-             'name' => $request->titleChecklistUpdate
-         ]);
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Memperbaharui Judul Checklist");
+        
+        TitleChecklists::where('id', $request->title_id)->update([
+            'name' => $request->titleChecklistUpdate
+        ]);
 
-         return response()->json(['message' => 'Data berhasil disimpan!', 'card_id' => $request->card_id]);
+        return response()->json(['message' => 'Data berhasil disimpan!', 'card_id' => $request->card_id]);
     }
     // /Perbaharui Title Kartu User //
 
     // Hapus Judul Kartu Admin //
-    public function hapusTitle(Request $request) {
+    public function hapusTitle(Request $request)
+    {
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Menghapus Judul Checklist");
+
         TitleChecklists::destroy($request->id);
 
         return response()->json(['message' => 'Data berhasil dihapus!', 'card_id' => $request->card_id]);
@@ -63,7 +91,12 @@ class ChecklistController extends Controller
     // /Hapus Judul Kartu Admin //
 
     // Hapus Judul Kartu User //
-    public function hapusTitle2(Request $request) {
+    public function hapusTitle2(Request $request)
+    {
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Menghapus Judul Checklist");
+
         TitleChecklists::destroy($request->id);
 
         return response()->json(['message' => 'Data berhasil dihapus!', 'card_id' => $request->card_id]);
@@ -74,6 +107,10 @@ class ChecklistController extends Controller
     public function hapusChecklist(Request $request) {
         Checklists::destroy($request->id);
 
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Menghapus Checklist");
+
         return response()->json(['message' => 'Data berhasil dihapus!', 'card_id' => $request->card_id]);
     }
     // /Hapus Checklist Kartu Admin //
@@ -82,6 +119,10 @@ class ChecklistController extends Controller
     public function hapusChecklist2(Request $request) {
         Checklists::destroy($request->id);
 
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Menghapus Checklist");
+
         return response()->json(['message' => 'Data berhasil dihapus!', 'card_id' => $request->card_id]);
     }
     // /Hapus Checklist Kartu Admin //
@@ -89,16 +130,22 @@ class ChecklistController extends Controller
     // Tambahkan Checklist Admin //
     public function addChecklist(Request $request)
     {
-         $data = Checklists::create([
-             'title_checklists_id' => $request->title_id,
-             'name' => $request->checklist
-         ]);
+        $data = Checklists::create([
+            'title_checklists_id' => $request->title_id,
+            'name' => $request->checklist
+        ]);
 
-         $checklist = Checklists::where('title_checklists_id', $request->title_id)->where('id', $data->id)->first();
+        $checklist = Checklists::where('title_checklists_id', $request->title_id)->where('id', $data->id)->first();
+        $titleChecklist = TitleChecklists::find($request->title_id);
 
-         return response()->json([
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Membuat Checklist");
+
+        return response()->json([
             'message' => 'Data berhasil ditambahkan!',
-            'checklist' => $checklist
+            'checklist' => $checklist,
+            'titlechecklist' => $titleChecklist,
         ]);
     }
     // /Tambahkan Checklist Admin //
@@ -106,16 +153,22 @@ class ChecklistController extends Controller
     // Tambahkan Checklist User //
     public function addChecklist2(Request $request)
     {
-         $data = Checklists::create([
-             'title_checklists_id' => $request->title_id,
-             'name' => $request->checklist
-         ]);
+        $data = Checklists::create([
+            'title_checklists_id' => $request->title_id,
+            'name' => $request->checklist
+        ]);
 
-         $checklist = Checklists::where('title_checklists_id', $request->title_id)->where('id', $data->id)->first();
+        $checklist = Checklists::where('title_checklists_id', $request->title_id)->where('id', $data->id)->first();
+        $titleChecklist = TitleChecklists::find($request->title_id);
 
-         return response()->json([
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Membuat Checklist");
+
+        return response()->json([
             'message' => 'Data berhasil ditambahkan!',
-            'checklist' => $checklist
+            'checklist' => $checklist,
+            'titlechecklist' => $titleChecklist,
         ]);
     }
     // /Tambahkan Checklist User //
@@ -129,9 +182,28 @@ class ChecklistController extends Controller
             'is_active' => $is_active,
         ]);
 
-        $data = Checklists::find($request->checklist_id);
+        $checklist = Checklists::find($request->checklist_id);
+        $totData = Checklists::where('title_checklists_id', $checklist->title_checklists_id)
+                        ->count();
+        $countActive = Checklists::where('title_checklists_id', $checklist->title_checklists_id)
+                        ->where('is_active', 1)
+                        ->count();
+        $percentage = !empty($countActive) ? round(($countActive / $totData) * 100) : 0; 
+        TitleChecklists::where('id', $checklist->title_checklists_id)->update([
+            'percentage' => $percentage
+        ]);
 
-         return response()->json(['message' => 'Data berhasil diperbaharui!', 'checklist' => $data]);
+        $titleChecklist = TitleChecklists::find($checklist->title_checklists_id);
+
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Memperbaharui Checklist");
+
+        return response()->json([
+            'message' => 'Data berhasil diperbaharui!',
+            'checklist' => $checklist,
+            'titlechecklist' => $titleChecklist,
+        ]);
     }
     // /Perbaharui Checklist Admin //
 
@@ -144,29 +216,28 @@ class ChecklistController extends Controller
             'is_active' => $is_active,
         ]);
 
-        $data = Checklists::find($request->checklist_id);
+        $checklist = Checklists::find($request->checklist_id);
+        $totData = Checklists::where('title_checklists_id', $checklist->title_checklists_id)
+                        ->count();
+        $countActive = Checklists::where('title_checklists_id', $checklist->title_checklists_id)
+                        ->where('is_active', 1)
+                        ->count();
+        $percentage = !empty($countActive) ? round(($countActive / $totData) * 100) : 0; 
+        TitleChecklists::where('id', $checklist->title_checklists_id)->update([
+            'percentage' => $percentage
+        ]);
 
-         return response()->json(['message' => 'Data berhasil diperbaharui!', 'checklist' => $data]);
+        $titleChecklist = TitleChecklists::find($checklist->title_checklists_id);
+
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Memperbaharui Checklist");
+
+        return response()->json([
+            'message' => 'Data berhasil diperbaharui!',
+            'checklist' => $checklist,
+            'titlechecklist' => $titleChecklist,
+        ]);
     }
     // /Perbaharui Checklist Admin //
-
-    // Mendapatkan Data Progress Bar Admin //
-    public function getProgress($title_checklists_id)
-    {
-        $total_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->count();
-        $active_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->where('is_active', 1)->count();
-        $percentage = $total_checklist_id > 0 ? ($active_checklist_id / $total_checklist_id) * 100 : 0;
-        return response()->json(['percentage' => $percentage]);
-    }
-    // /Mendapatkan Data Progress Bar Admin //
-
-    // Mendapatkan Data Progress Bar User //
-    public function getProgress2($title_checklists_id)
-    {
-        $total_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->count();
-        $active_checklist_id = Checklists::where('title_checklists_id', $title_checklists_id)->where('is_active', 1)->count();
-        $percentage = $total_checklist_id > 0 ? ($active_checklist_id / $total_checklist_id) * 100 : 0;
-        return response()->json(['percentage' => $percentage]);
-    }
-    // /Mendapatkan Data Progress Bar User //
 }

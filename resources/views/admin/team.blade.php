@@ -99,7 +99,7 @@
                 <!-- Tampilan Papan dan Anggota Tim -->
                 <div class="flex flex-col max-h-96 gap-4 w-96">
                     <h2 class="ml-4 text-2xl font-bold">Anggota</h2>
-                    <div class="flex flex-col flex-grow w-full gap-2 p-4 overflow-x-hidden overflow-y-auto border-2 border-gray-200 rounded-xl">
+                    <div class="isian-anggota  flex flex-col flex-grow w-full gap-2 p-4 border-2 border-gray-200 rounded-xl">
                         <div class="flex items-center gap-4">
                             <a href="{{ URL::to('/assets/images/' . $owner->avatar) }}" data-fancybox="foto-profil">
                                 <img src="{{ URL::to('/assets/images/' . $owner->avatar) }}" loading="lazy" class="!flex-shrink-0 !flex-grow-0 w-12 avatar-undangan">
@@ -243,7 +243,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="input-text-inv-email" class="form-label">E-mail</label>
-                            <div class="input-group">
+                            <div class="input-group gap-2">
                                 <input type="email" class="form-control" id="inv-email" placeholder="Masukkan email anggota">
                                 <button class="btn btn-primary" type="button" id="add-btn">
                                     <i class="fa-solid fa-user-plus"></i>
@@ -251,7 +251,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <div class="input-group" style="flex-wrap: nowrap;">
+                            <div class="input-group gap-2" style="flex-wrap: nowrap;">
                                 <select class="theSelect" id="inv-email2" style="width: 100% !important">
                                     <option selected disabled>-- Pilih Anggota Tim --</option>
                                     @foreach ($UserTeams as $result_team)
@@ -499,7 +499,7 @@
                 
                 addBtn.addEventListener('click', () => {
                     const email = emailInput.value.trim();
-                    if (email) {
+                    if (email && email !== '-- Pilih Anggota Tim --') {
                         const emailDiv = document.createElement('div');
                         emailDiv.className = 'd-flex justify-content-between align-items-center mb-2 bg-red-200 rounded-pill';
                         emailDiv.innerHTML = `
@@ -517,7 +517,7 @@
 
                 addBtn2.addEventListener('click', () => {
                     const email = emailInput2.value.trim();
-                    if (email) {
+                    if (email && email !== '-- Pilih Anggota Tim --') {
                         const emailDiv = document.createElement('div');
                         emailDiv.className = 'd-flex justify-content-between align-items-center mb-2 bg-red-200 rounded-pill';
                         emailDiv.innerHTML = `

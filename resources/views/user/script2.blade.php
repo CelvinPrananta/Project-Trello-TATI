@@ -1,6 +1,8 @@
 <script>
     $(document).ready(function(){
         const title_id = '{{ $titleChecklists->id }}';
+        const percentage = '{{ $titleChecklists->percentage }}';
+        progressBar(title_id, percentage);
         // Section Update Title
         // Input update title
         $('#titleChecklistUpdate'+title_id).on('click', function(){
@@ -93,19 +95,30 @@
                     $('#saveButtonChecklist'+title_id).addClass('hidden');
                     $('#cancelButtonChecklist'+title_id).addClass('hidden');
                     toastr.success('Anda berhasil membuat checklist!');
-                    console.log(response.checklist);
-                    var newForm = `<div class="input-checklist">
+                    console.log(response);
+                    var newForm = `<div class="input-checklist2">
                                         <form id="myFormChecklistUpdate${response.checklist.id}" method="POST" class="form-checklist flex gap-5">
                                             @csrf
                                             <input class="dynamicCheckbox" type="checkbox" id="${response.checklist.id}" name="${response.checklist.id}" ${response.checklist.is_active ? 'checked' : ''}>
-                                            <label class="dynamicCheckboxLabel border border-1 border-dark w-407 p-2 rounded-xl ${response.checklist.is_active ? 'strike-through' : ''}" id="labelCheckbox-${response.checklist.id}" for="labelCheckbox-${response.checklist.id}">${response.checklist.name}</label>
+                                            <label class="dynamicCheckboxLabel border border-1 border-dark w-407s p-2 rounded-xl ${response.checklist.is_active ? 'strike-through' : ''}" id="labelCheckbox-${response.checklist.id}" for="labelCheckbox-${response.checklist.id}">${response.checklist.name}</label>
                                             <input type="hidden" id="checklist_id" name="checklist_id" value="${response.checklist.id}">
-                                            <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-407 p-2 rounded-xl hidden" id="checkbox-${response.checklist.id}" name="checkbox-${response.checklist.id}" value="${response.checklist.name}"><br>
+                                            <input type="hidden" id="card_id" name="card_id" value="${response.titlechecklist.cards_id}">
+                                            <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-407s p-2 rounded-xl hidden" id="checkbox-${response.checklist.id}" name="checkbox-${response.checklist.id}" value="${response.checklist.name}">
                                         </form>
-                                    </div>
-                                    <div class="aksi-update-checklist gap-2">
-                                        <button type="button" class="saves btn btn-outline-info icon-keterangan hidden" id="saveButtonChecklistUpdate-${response.checklist.id}">Simpan</button>
-                                        <button type="button" class="cancels btn btn-outline-danger icon-keterangan hidden" id="cancelButtonChecklistUpdate-${response.checklist.id}">Batal</button>
+                                        <form id="myFormChecklistDelete${response.checklist.id}" method="POST">
+                                            @csrf
+                                            <input type="hidden" id="id" name="id" value="${response.checklist.id}">
+                                            <input type="hidden" id="card_id" name="card_id" value="${response.titlechecklist.cards_id}">
+                                            <div class="icon-hapus-checklist" id="hapus-checklist${response.checklist.id}">
+                                                <button type="button" class="deletes" id="deleteButtonChecklist-${response.checklist.id}" style="border: none; background: none; padding: 0;">
+                                                    <i class="fa-solid fa-trash fa-lg"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <div class="aksi-update-checklist2 gap-2">
+                                            <button type="button" class="saves btn btn-outline-info hidden" id="saveButtonChecklistUpdate-${response.checklist.id}">Simpan</button>
+                                            <button type="button" class="cancels btn btn-outline-danger hidden" id="cancelButtonChecklistUpdate-${response.checklist.id}">Batal</button>
+                                        </div>
                                     </div>`;
                     $('#checkbox-container-'+title_id).append(newForm);
                 },
@@ -118,8 +131,6 @@
         $(document).off('change', '.dynamicCheckbox');
         $(document).on('change', '.dynamicCheckbox', function() {
             var checkbox = $(this);
-            console.log(checkbox);
-            console.log('ax');
             var isChecked = checkbox.is(':checked');
             var label = $('label[for="labelCheckbox-' + checkbox.attr('id') + '"]');
             if (isChecked) {
@@ -177,8 +188,6 @@
                     $('#saveButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
                     $('#cancelButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
                     toastr.success('Anda berhasil memperbaharui checklist!');
-                    // Update Progress Bar
-                    updateProgressBar2();
                     localStorage.clear();
                 },
                 error: function(){
@@ -199,9 +208,9 @@
                     $('#checkbox-'+response.checklist.id).addClass('hidden');
                     $('#saveButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
                     $('#cancelButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
+                    console.log(response);
                     toastr.success('Anda berhasil memperbaharui checklist!');
-                    // Update Progress Bar
-                    updateProgressBar2();
+                    progressBar(response.titlechecklist.id, response.titlechecklist.percentage);
                     localStorage.clear();
                 },
                 error: function(){
@@ -210,6 +219,21 @@
             });
         }
         // End Section Checklist
+        function progressBar(id,percentage ) {
+            var progressBar = $('.progress-bar-' + id);
+            progressBar.css('width', percentage + '%');
+            progressBar.attr('aria-valuenow', percentage);
+            progressBar.text(Math.round(percentage) + '%');
+            progressBar.removeClass('bg-danger bg-warning bg-info bg-success');
+            if (percentage <= 25) {
+                progressBar.addClass('bg-danger');
+            } else if (percentage > 25 && percentage < 50) {
+                progressBar.addClass('bg-warning');
+            } else if (percentage >= 50 && percentage <= 75) {
+                progressBar.addClass('bg-info');
+            } else if (percentage > 75) {
+                progressBar.addClass('bg-success');
+            }
+        }
     });
-    
 </script>

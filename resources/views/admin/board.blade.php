@@ -42,18 +42,11 @@
                                         <li class="kartu-trello" id="kartu-trello" onmouseenter="aksiKartuShow({{ $dataKartu->id }})" onmouseleave="aksiKartuHide({{ $dataKartu->id }})">
                                             
                                             <!-- Tampilan Aksi Edit -->
-                                            {{-- <a href="#" data-toggle="modal" data-target="#editCard{{ $dataKartu->id }}">
+                                            <a href="#" data-toggle="modal" data-target="#editCard{{ $dataKartu->id }}">
                                                 <div class="aksi-card" id="aksi-card{{ $dataKartu->id }}">
                                                     <i class="fa-solid fa-pencil fa-sm"></i>
                                                 </div>
-                                            </a> --}}
-                                            {{-- @if($dataKartu->history->where('user_id', auth()->user()->id)->isNotEmpty()) --}}
-                                                <a href="#" data-toggle="modal" data-target="#editCard{{ $dataKartu->id }}">
-                                                    <div class="aksi-card" id="aksi-card{{ $dataKartu->id }}">
-                                                        <i class="fa-solid fa-pencil fa-sm"></i>
-                                                    </div>
-                                                </a>
-                                            {{-- @endif --}}
+                                            </a>
                                             <!-- /Tampilan Aksi Edit -->
 
                                             <!-- Tampilan Kartu Pengguna -->
@@ -72,7 +65,7 @@
                                                     <input type="hidden" class="form-control" name="board_id" value="{{ $board->id }}">
                                                     <input type="hidden" class="form-control" name="team_id" value="{{ $team->id }}">
                                                     <input type="hidden" class="form-control" name="column_id" value="{{ $dataKolom->id }}">
-                                                    <input type="text" class="form-control" name="name" id="cardName" style="border-radius: 15px; background-color: #f5fffa;" placeholder="Masukkan judul ini.." required>
+                                                    <input type="text" class="form-control" name="name" id="cardName" style="border-radius: 15px; background-color: #f5fffa;" placeholder="Masukkan nama kartu.." required>
                                                     <button type="submit" class="btn btn-outline-info btn-add">Tambah Kartu</button>
                                                 </form>
                                             </div>
@@ -114,7 +107,7 @@
                             <input type="hidden" name="board_id" value="{{ $board->id }}">
                             <div class="form-group">
                                 <label>Nama Papan</label><span class="text-danger">*</span>
-                                <input type="text" class="form-control @error('board_name') is-invalid @enderror" id="board_name" name="board_name" value="{{ old('board_name', $board->name) }}">
+                                <input type="text" class="form-control @error('board_name') is-invalid @enderror" id="board_name" name="board_name" value="{{ $board->name }}" required />
                                 @error('board_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -354,14 +347,15 @@
                                 <!-- /Tambah Judul Checklist -->
                                 
                                 @foreach ($isianKartu->titleChecklists as $titleChecklists)
-                                <div class="menu-checklist border border-1 border-dark p-2 rounded-xl">
+                                <div class="menu-checklist border border-1 border-darkss p-2 rounded-xl">
                                     <!-- Perbaharui & Hapus Judul Checklist -->
                                     <div class="header-checklist flex justify-content">
                                         <i class="fa-regular fa-square-check fa-xl"></i>
                                         <form id="myFormTitleUpdate{{ $titleChecklists->id }}" method="POST" class="update-title">
                                             @csrf
                                                 <input type="hidden" id="title_id" name="title_id" value="{{ $titleChecklists->id }}">
-                                                <input type="text" class="isian-title border border-1 border-dark w-402 p-2 rounded-xl" id="titleChecklistUpdate{{ $titleChecklists->id }}" name="titleChecklistUpdate" placeholder="Masukkan Judul" value="{{$titleChecklists->name}}">
+                                                <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
+                                                <input type="text" class="isian-title border border-1 border-darks w-402 p-2 rounded-xl" id="titleChecklistUpdate{{ $titleChecklists->id }}" name="titleChecklistUpdate" placeholder="Masukkan Judul" value="{{$titleChecklists->name}}">
                                                 <div class="aksi-update-title gap-2">
                                                     <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonTitleUpdate{{ $titleChecklists->id }}">Simpan</button>
                                                     <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButtonTitleUpdate{{ $titleChecklists->id }}">Batal</button>
@@ -398,10 +392,11 @@
                                         <form id="myFormChecklistUpdate{{ $checklists->id }}" method="POST" class="form-checklist flex gap-5">
                                             @csrf
                                             <input class="dynamicCheckbox" type="checkbox" id="{{$checklists->id}}" name="{{$checklists->id}}" {{$checklists->is_active == '1' ? 'checked' : ''}}>
-                                            <label class="dynamicCheckboxLabel border border-1 border-dark w-407 p-2 rounded-xl  {{$checklists->is_active == '1' ? 'strike-through' : ''}}" id="labelCheckbox-{{$checklists->id}}" for="labelCheckbox-{{$checklists->id}}">{{$checklists->name}}</label>
+                                            <label class="dynamicCheckboxLabel border border-1 border-darks w-407 p-2 rounded-xl  {{$checklists->is_active == '1' ? 'strike-through' : ''}}" id="labelCheckbox-{{$checklists->id}}" for="labelCheckbox-{{$checklists->id}}">{{$checklists->name}}</label>
 
                                             <input type="hidden" id="checklist_id" name="checklist_id" value="{{ $checklists->id }}">
-                                            <input type="text" class="dynamicCheckboxValue border border-1 border-dark w-407 p-2 rounded-xl hidden" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}" placeholder="Masukkan checklist">
+                                            <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
+                                            <input type="text" class="dynamicCheckboxValue border border-1 border-darks w-407 p-2 rounded-xl hidden" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}" placeholder="Masukkan checklist">
                                         </form>
                                         <!-- Icon Hapus Checklist -->
                                         {{-- @if($isianKartu->history->where('user_id', auth()->user()->id)->isNotEmpty()) --}}
@@ -410,7 +405,7 @@
                                                 <input type="hidden" id="id" name="id" value="{{ $checklists->id }}">
                                                 <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
                                                 <div class="icon-hapus-checklist" id="hapus-checklist{{ $checklists->id }}">
-                                                    <button type="submit" style="border: none; background: none; padding: 0;">
+                                                    <button type="submit" class="deletes" id="deleteButtonChecklist-{{ $checklists->id }}" style="border: none; background: none; padding: 0;">
                                                         <i class="fa-solid fa-trash fa-lg"></i>
                                                     </button>
                                                 </div>
@@ -427,7 +422,6 @@
                                     </div>
                                     <!-- /Aksi Update Checklist -->
 
-                                    @include('admin.script4')
                                     @include('admin.script3')
                                     @endforeach
                                     <!-- /Perbaharui & Hapus Checklist -->
@@ -437,9 +431,10 @@
                                     <form id="myFormChecklist{{ $titleChecklists->id }}" method="POST">
                                         @csrf
                                             <input type="hidden" id="title_id" name="title_id" value="{{ $titleChecklists->id }}">
+                                            <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
                                             <div class="header-tambah-checklist flex gap-4">
                                                 <i class="fa-xl"></i>
-                                                <input type="text" class="tambah-baru-checklist border border-1 border-dark w-407 p-2 rounded-xl hidden" id="checklist{{ $titleChecklists->id }}" name="checklist" placeholder="Masukkan Checklist" required>
+                                                <input type="text" class="tambah-baru-checklist border border-1 border-dark w-407s p-2 rounded-xl hidden" id="checklist{{ $titleChecklists->id }}" name="checklist" placeholder="Masukkan Checklist" required>
                                             </div>
                                             <div class="aksi-update-checklist gap-2">
                                                 <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonChecklist{{ $titleChecklists->id }}">Simpan</button>
@@ -450,13 +445,6 @@
                                     <!-- Tambah baru checklist -->
                                     </div>
                                 @endforeach
-
-
-
-
-
-
-
                                 <div class="menu-activity">
                                     <div class="header-activity flex">
                                         <i class="fa-solid fa-list-ul fa-lg"></i>
@@ -466,9 +454,12 @@
                                         </div>
                                     </div>
                                     <div class="input-komentar flex gap-4">
-                                        <img class="avatar-activity" src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" loading="lazy">
-                                        <form action="{{ route('komentarKartu', ['card_id' => $dataKartu->id]) }}" method="POST">
-                                            <textarea onclick="saveComment()" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="77" id="komentar" name="komentar" placeholder="Tulis komentar..."></textarea>
+                                        <img class="avatar-comment" src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" loading="lazy">
+                                        <form action="{{ route('komentarKartu', ['card_id' => $isianKartu->id]) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id  }}">
+                                            <input type="hidden" name="card_id" value="{{ $isianKartu->id }}">
+                                            <textarea onclick="saveComment()" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="77" id="content-area" name="content" placeholder="Tulis komentar..."></textarea>
                                             <button type="submit" class="btn btn-outline-info icon-comment hidden" id="simpanButton">Kirim</button>
                                         </form>
                                     </div>
@@ -476,43 +467,36 @@
                                         @foreach($isianHistory as $history)
                                             <div class="isian-tag w-403">
                                                 @if ($history->type === 'event')
-                                                    <div class="isian-history flex gap-1" style="height: 40px">
+                                                    <div class="isian-history flex gap-1" style="height: 45px">
                                                         <img class="avatar-activity" src="{{ URL::to('/assets/images/' . $history->avatar) }}" loading="lazy">
                                                         <div class="title-activity flex gap-1">
-                                                            @if (strpos($history->content, 'Membuat Kolom') !== false)
-                                                                <p>{{ $history->name }},</p>
-                                                                <p>telah membuat {{ $history->name }} ini</p>
-                                                            @elseif (strpos($history->content, 'Membuat Kartu') !== false)
-                                                                <p>{{ $history->name }},</p>
-                                                                <p>menambahkan {{ $history->name }} ke kartu ini</p>
+                                                        @if (strpos($history->content, 'Membuat Kartu') !== false)
+                                                             <!-- Berdasarkan kolom masing-masing -->
+                                                                <p>{{ $history->name }}, telah menambahkan {{ $history->name }} ke kolom ini</p>
                                                             @elseif (strpos($history->content, 'Memperbaharui Kartu') !== false)
-                                                                <p>{{ $history->name }},</p>
-                                                                <p>memperbaharui {{ $history->name }} ke kartu ini</p>
-                                                            @elseif (strpos($history->content, 'Memperbaharui Nama Kartu') !== false)
-                                                                <p>{{ $history->name }},</p>
-                                                                <p>memperbaharui nama {{ $history->name }} ke kartu ini</p>
+                                                                <p>{{ $history->name }}, telah memperbaharui {{ $history->name }} ke kolom ini</p>
+                                                            @elseif (strpos($history->content, 'Memperbaharui Keterangan Kartu') !== false)
+                                                                <p>{{ $history->name }}, telah memperbaharui keterangan kartu {{ $history->name }} ke kolom ini</p>
+                                                            <!-- /Berdasarkan kolom masing-masing -->
+
+                                                            <!-- Berdasarkan kartu masing-masing -->
                                                             @elseif (strpos($history->content, 'Membuat Judul Checklist') !== false)
-                                                                <p>{{ $history->name }},</p>
-                                                                <p>menambahkan judul {{ $history->name }} ke kartu ini</p>
+                                                                <p>{{ $history->name }}, telah menambahkan judul {{ $history->name }} ke kartu ini</p>
                                                             @elseif (strpos($history->content, 'Memperbaharui Judul Checklist') !== false)
-                                                                <p>{{ $history->name }},</p>
-                                                                <p>memperbaharui judul {{ $history->name }} ke kartu ini</p>
+                                                                <p>{{ $history->name }}, telah memperbaharui judul {{ $history->name }} ke kartu ini</p>
                                                             @elseif (strpos($history->content, 'Menghapus Judul Checklist') !== false)
-                                                                <p>{{ $history->name }},</p>
-                                                                <p>menghapus judul {{ $history->name }} ke kartu ini</p>
+                                                                <p>{{ $history->name }}, telah menghapus judul {{ $history->name }} ke kartu ini</p>
+                                                            <!-- /Berdasarkan kartu masing-masing -->
+
+                                                            <!-- Berdasarkan judul masing-masing -->
                                                             @elseif (strpos($history->content, 'Membuat Checklist') !== false)
-                                                                <p>{{ $history->name }},</p>
-                                                                <p>menambahkan {{ $history->name }} ke kartu ini</p>
+                                                                <p>{{ $history->name }}, telah menambahkan checklist ke judul {{ $history->name }}</p>
                                                             @elseif (strpos($history->content, 'Memperbaharui Checklist') !== false)
-                                                                <p>{{ $history->name }},</p>
-                                                                <p>memperbaharui {{ $history->name }} ke kartu ini</p>
+                                                                <p>{{ $history->name }}, telah memperbaharui checklist ke judul {{ $history->name }}</p>
                                                             @elseif (strpos($history->content, 'Menghapus Checklist') !== false)
-                                                                <p>{{ $history->name }},</p>
-                                                                <p>menghapus {{ $history->name }} ke kartu ini</p>
-                                                            @elseif (strpos($history->content, 'Menghapus Kartu') !== false)
-                                                                <p>{{ $history->name }},</p>
-                                                                <p>menghapus {{ $history->name }} ke kartu ini</p>
-                                                            @endif
+                                                                <p>{{ $history->name }}, telah menghapus checklist ke judul {{ $history->name }}</p>
+                                                            <!-- /Berdasarkan judul masing-masing -->
+                                                        @endif
                                                         </div>
                                                     </div>
                                                     <div class="waktu-history">
@@ -562,15 +546,6 @@
                                         <label>Nama Kartu</label><span class="text-danger">*</span>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $perbaharuiKartu->name  }}" required />
                                         @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Keterangan Kartu</label><span class="text-danger">*</span>
-                                        <input type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ $perbaharuiKartu->description  }}" />
-                                        @error('description')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -645,6 +620,11 @@
                 background-color: rgb(241 245 249 / var(--tw-bg-opacity)) !important;
                 border-color: rgb(229 231 235 / var(--tw-border-opacity)) !important;
             }
+            .border-darks {border: 2px solid transparent !important; cursor: pointer;}
+            .border-darkss {border-color: #343a40 !important;}
+            .border-darks:focus {border-color: #343a40 !important; cursor: pointer;}
+            .border-dark:hover {background-color: #091E420F; !important; cursor: pointer;}
+            .border-darks:hover {background-color: #091E420F; !important; cursor: pointer;}
             
             @foreach($result_tema as $sql_mode => $mode_tema)
                 @if ($mode_tema->tema_aplikasi == 'Gelap')
@@ -656,6 +636,11 @@
                     .checklist-keterangan {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
                     .activity-keterangan {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
                     .border-dark {border-color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
+                    .border-darks {border: 2px solid transparent !important; cursor: pointer;}
+                    .border-darkss {border-color: {{ $mode_tema->warna_sistem_tulisan }} !important;}  
+                    .border-darks:focus {border-color: {{ $mode_tema->warna_sistem_tulisan }} !important; cursor: pointer;}
+                    .border-dark:hover {background-color: {{ $mode_tema->warna_sistem }} !important; cursor: pointer;}
+                    .border-darks:hover {background-color: {{ $mode_tema->warna_sistem }} !important; cursor: pointer;}
                     .isian-keterangan {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
                     .isian-checklist {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
                     input[type=text] {color: white;   background-color: {{ $mode_tema->warna_mode }} !important}
@@ -673,14 +658,6 @@
         <script src="{{ asset('assets/js/memuat-data-kolom-board.js') }}"></script>
         <script src="{{ asset('assets/js/memuat-onclick-board.js') }}"></script>
         <script src="{{ asset('assets/js/memuat-ulang.js') }}"></script>
-
-        @if ($errors->any())
-            <script>
-                $(document).ready(function() {
-                    $('#updateBoard').modal('show');
-                });
-            </script>
-        @endif
 
         <script>
             history.pushState({}, "", '/admin/tim/papan/{{ $team->id }}/{{ $board->id }}');

@@ -1,11 +1,11 @@
 <script>
     $(document).ready(function(){
        // Form delete Checklist
-       const checklist_id = '{{$checklists->id}}'
-        $('#myFormChecklistDelete'+checklist_id).on('submit', function(event){
-            event.preventDefault();
-            var formData = $(this).serialize();
-            console.log(checklist_id);
+       $(document).off('click', '.deletes');
+       $(document).on('click', '.deletes', function() {
+           event.preventDefault();
+            var id = $(this).attr('id').split('-');
+            var formData = $('#myFormChecklistDelete' + id[1]).serialize();
             $.ajax({
                 type: 'POST',
                 url: "{{ route('hapusChecklist2') }}",

@@ -478,12 +478,11 @@ class BoardController extends Controller
             $updateKartu = [
                 'id'            => $request->id,
                 'name'          => $request->name,
-                'description'   => $request->description,
             ];
 
             $card->save();
             Card::where('id', $request->id)->update($updateKartu);
-            $this->cardLogic->cardAddEvent($card_id, $user_id, "Informasi kartu telah diperbarui");
+            $this->cardLogic->cardAddEvent($card_id, $user_id, "Memperbaharui Kartu");
 
             DB::commit();
             Toastr::success('Anda berhasil memperbaharui kartu!', 'Success');
@@ -512,12 +511,11 @@ class BoardController extends Controller
             $updateKartu = [
                 'id'            => $request->id,
                 'name'          => $request->name,
-                'description'   => $request->description,
             ];
 
             $card->save();
             Card::where('id', $request->id)->update($updateKartu);
-            $this->cardLogic->cardAddEvent($card_id, $user_id, "Informasi kartu telah diperbarui");
+            $this->cardLogic->cardAddEvent($card_id, $user_id, "Memperbaharui Kartu");
 
             DB::commit();
             Toastr::success('Anda berhasil memperbaharui kartu!', 'Success');
@@ -573,6 +571,10 @@ class BoardController extends Controller
             'description' => $request->keterangan
         ]);
 
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Memperbaharui Keterangan Kartu");
+
         return response()->json(['message' => 'Data berhasil disimpan!']);
     }
     // Perbaharui Deskripsi Kartu Admin //
@@ -584,25 +586,33 @@ class BoardController extends Controller
             'description' => $request->keterangan
         ]);
 
+        $user_id = AUth::user()->id;
+        $card_id = $request->card_id;
+        $this->cardLogic->cardAddEvent($card_id, $user_id, "Memperbaharui Keterangan Kartu");
+
         return response()->json(['message' => 'Data berhasil disimpan!']);
     }
     // Perbaharui Deskripsi Kartu User //
 
     // Menambahkan Komen Admin //
-    public function komentarKartu(Request $request, $card_id)
+    public function komentarKartu(Request $request)
     {
         DB::beginTransaction();
         try {
-            $request->validate([
-                "content" => "required|max:200"
+            $request->validate(
+                ["content" => "required|max:255"
             ]);
 
-            $user_id = AUth::user()->id;
-            $card_id = intval($card_id);
-            $card = Card::find($card_id);
+            $user_id = $request->user_id;
+            $card_id = $request->card_id;
 
-            $card->save();
-            $this->cardLogic->cardComment($card_id, $user_id, $request->content);
+            $createComment = [
+                "user_id"   => $user_id,
+                "card_id"   => $card_id,
+                "type"      => "comment",
+                "content"   => $request->content,
+            ];
+            DB::table('card_histories')->insert($createComment);
 
             DB::commit();
             Toastr::success('Anda berhasil memberikan komentar pada kartu!', 'Success');
@@ -616,20 +626,24 @@ class BoardController extends Controller
     // /Menambahkan Komen Admin //
 
     // Menambahkan Komen User //
-    public function komentarKartu2(Request $request, $card_id)
+    public function komentarKartu2(Request $request)
     {
         DB::beginTransaction();
         try {
-            $request->validate([
-                "content" => "required|max:200"
+            $request->validate(
+                ["content" => "required|max:255"
             ]);
 
-            $user_id = AUth::user()->id;
-            $card_id = intval($card_id);
-            $card = Card::find($card_id);
+            $user_id = $request->user_id;
+            $card_id = $request->card_id;
 
-            $card->save();
-            $this->cardLogic->cardComment2($card_id, $user_id, $request->content);
+            $createComment = [
+                "user_id"   => $user_id,
+                "card_id"   => $card_id,
+                "type"      => "comment",
+                "content"   => $request->content,
+            ];
+            DB::table('card_histories')->insert($createComment);
 
             DB::commit();
             Toastr::success('Anda berhasil memberikan komentar pada kartu!', 'Success');
@@ -641,16 +655,6 @@ class BoardController extends Controller
         }
     }
     // /Menambahkan Komen User //
-
-
-
-
-
-
-    
-
-
-
 
     // Mendapatkan Data Admin & User //
     public function getData($team_id, $board_id)

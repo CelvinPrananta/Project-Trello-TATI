@@ -13357,6 +13357,9 @@ ul.nav-tabs > li > a {
 	max-height: 35rem !important;
 	overflow: auto;
 }
+.isian-anggota  {
+	overflow: auto;
+}
 .w-72 {
 	width: 18rem !important;
 }
@@ -13521,6 +13524,7 @@ ul.nav-tabs > li > a {
 	list-style-type: none;
 	border-radius: 30px;
 	margin-bottom: 10px;
+	margin-left: -6%;
 }
 .kartu-trello {
 	background-color: #f5fffa;
@@ -13606,7 +13610,9 @@ ul.nav-tabs > li > a {
 	bottom: 39px;
 }
 .activity-tag {
-	position: relative;
+    position: relative;
+	max-height: 17.5rem !important;
+    overflow: auto;
 }
 .waktu-history {
 	position: relative;
@@ -13645,18 +13651,16 @@ ul.nav-tabs > li > a {
     margin-bottom: 1%;
 	align-items: baseline;
 }
+.input-checklist2 {
+    position: relative;
+    display: flex;
+	flex-wrap: wrap;
+    margin-bottom: 1%;
+    align-items: baseline;
+}
 .update-title {
 	width: 100%;
     margin-left: 20px;
-}
-.dynamicCheckboxLabel {
-	background-color: #defbec;
-}
-.dynamicCheckboxValue {
-	background-color: #defbec;
-}
-.isian-title {
-	background-color: #94e6bc;
 }
 .tambah-checklist {
 	position: relative;
@@ -13684,6 +13688,12 @@ ul.nav-tabs > li > a {
     margin-left: 5%;
     margin-bottom: 2%;
 }
+.aksi-update-checklist2 {
+    display: flex;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    margin-top: 1%;
+}
 .icon-comment {
 	margin-top: 1%;
 }
@@ -13698,6 +13708,9 @@ ul.nav-tabs > li > a {
 }
 .w-407 {
     width: 88%;
+}
+.w-407s {
+    width: 87%;
 }
 .w-408 {
     width: 91%;
@@ -13732,9 +13745,6 @@ ul.nav-tabs > li > a {
     align-items: baseline;
 	margin-bottom: 10px;
 	margin-left: 22px;
-}
-.tambah-baru-checklist {
-	background-color: #defbec;
 }
 .justify-content {
 	justify-content: space-between;
@@ -13877,7 +13887,14 @@ ul.nav-tabs > li > a {
     width: 30px !important;
 	height: 30px !important;
     border-radius: 50%;
-	top: 5px;
+	top: 7px;
+}
+
+.avatar-comment {
+	position: relative;
+    width: 30px !important;
+	height: 30px !important;
+    border-radius: 50%;
 }
 
 .avatar-undangan {

@@ -81,7 +81,7 @@ function showActivity() {
 
 // Untuk menyembunyikan dan melihat simpan komentar //
 function saveComment() {
-    var komentarTextarea = document.getElementById('komentar');
+    var komentarTextarea = document.getElementById('content-area');
     var simpanButton = document.getElementById('simpanButton');
 
     komentarTextarea.addEventListener('input', function () {
