@@ -54,4 +54,9 @@ class Column extends Model
     {
         return $this->belongsTo(Column::class, 'next_id');
     }
+
+    public function card()
+    {
+        return $this->hasMany(Card::class);
+    }
 }

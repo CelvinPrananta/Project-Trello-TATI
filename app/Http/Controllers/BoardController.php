@@ -15,6 +15,7 @@ use Illuminate\Http\Response as HttpResponse;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Notification;
 use DB;
+use Carbon\Carbon;
 
 class BoardController extends Controller
 {
@@ -60,16 +61,6 @@ class BoardController extends Controller
         $dataColumnCard = Column::with('cards')
             ->where('board_id', '=', $board_id )
             ->get();
-        $isianHistory = DB::table('card_histories')
-            ->leftjoin('users', 'card_histories.user_id', 'users.id')
-            ->leftjoin('cards', 'card_histories.card_id', 'cards.id')
-            ->select(
-                'card_histories.*',
-                'users.id',
-                'users.name',
-                'users.avatar',
-            )
-            ->get();
 
         $result_tema = DB::table('mode_aplikasi')
             ->select(
@@ -132,7 +123,7 @@ class BoardController extends Controller
             ->whereNotNull('read_at')
             ->get();
 
-        return view("admin.board", compact('isianHistory','dataColumnCard', 'result_tema', 'unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
+        return view("admin.board", compact('dataColumnCard', 'result_tema', 'unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
             ->with("team", $team)
             ->with("owner", $teamOwner)
             ->with("board", $board)
@@ -150,16 +141,6 @@ class BoardController extends Controller
         $dataColumnCard = Column::with('cards')
             ->where('board_id', '=', $board_id )
             ->get();
-        $isianHistory = DB::table('card_histories')
-            ->leftjoin('users', 'card_histories.user_id', 'users.id')
-            ->leftjoin('cards', 'card_histories.card_id', 'cards.id')
-            ->select(
-                'card_histories.*',
-                'users.id',
-                'users.name',
-                'users.avatar',
-            )
-            ->get();
 
         $result_tema = DB::table('mode_aplikasi')
             ->select(
@@ -222,7 +203,7 @@ class BoardController extends Controller
             ->whereNotNull('read_at')
             ->get();
 
-        return view("user.board", compact('isianHistory', 'dataColumnCard', 'result_tema', 'unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
+        return view("user.board", compact('dataColumnCard', 'result_tema', 'unreadNotifications', 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'))
             ->with("team", $team)
             ->with("owner", $teamOwner)
             ->with("board", $board)
@@ -611,6 +592,8 @@ class BoardController extends Controller
                 "card_id"   => $card_id,
                 "type"      => "comment",
                 "content"   => $request->content,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ];
             DB::table('card_histories')->insert($createComment);
 
@@ -642,6 +625,8 @@ class BoardController extends Controller
                 "card_id"   => $card_id,
                 "type"      => "comment",
                 "content"   => $request->content,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ];
             DB::table('card_histories')->insert($createComment);
 

@@ -464,57 +464,70 @@
                                         </form>
                                     </div>
                                     <div class="activity-tag flex flex-col hiddens" id="showActivity{{ $dataKolom->id }}">
-                                        @foreach($isianHistory as $history)
-                                            <div class="isian-tag w-403">
-                                                @if ($history->type === 'event')
-                                                    <div class="isian-history flex gap-1" style="height: 45px">
-                                                        <img class="avatar-activity" src="{{ URL::to('/assets/images/' . $history->avatar) }}" loading="lazy">
-                                                        <div class="title-activity flex gap-1">
-                                                        @if (strpos($history->content, 'Membuat Kartu') !== false)
-                                                             <!-- Berdasarkan kolom masing-masing -->
-                                                                <p>{{ $history->name }}, telah menambahkan {{ $history->name }} ke kolom ini</p>
-                                                            @elseif (strpos($history->content, 'Memperbaharui Kartu') !== false)
-                                                                <p>{{ $history->name }}, telah memperbaharui {{ $history->name }} ke kolom ini</p>
-                                                            @elseif (strpos($history->content, 'Memperbaharui Keterangan Kartu') !== false)
-                                                                <p>{{ $history->name }}, telah memperbaharui keterangan kartu {{ $history->name }} ke kolom ini</p>
-                                                            <!-- /Berdasarkan kolom masing-masing -->
+                                        @php
+                                            $columns = DB::table('columns')->where('id', $dataKolom->id)->get();
+                                            $cards = DB::table('cards')->where('column_id', $dataKolom->id)->where('id', $isianKartu->id)->get();
+                                        @endphp
+                                        @foreach($columns as $column)
+                                            @foreach($cards as $card)
+                                                @php
+                                                    $isianHistory = DB::table('card_histories')->leftjoin('users', 'card_histories.user_id', 'users.id')->where('card_id', $card->id)->select('card_histories.*','users.id','users.name','users.avatar')->orderBy('card_histories.created_at', 'desc')->get();
+                                                @endphp
+                                                @foreach($isianHistory as $history)
+                                                    @foreach ($isianKartu->titleChecklists as $titleChecklists)
+                                                        <div class="isian-tag w-403">
+                                                            @if ($history->type === 'event')
+                                                                <div class="isian-history flex gap-1" style="height: 45px">
+                                                                    <img class="avatar-activity" src="{{ URL::to('/assets/images/' . $history->avatar) }}" loading="lazy">
+                                                                    <div class="title-activity flex gap-1">
+                                                                    @if (strpos($history->content, 'Membuat Kartu') !== false)
+                                                                        <!-- Berdasarkan kolom masing-masing -->
+                                                                            <p>{{ $history->name }}, telah menambahkan {{ $card->name }} ke kolom ini</p>
+                                                                        @elseif (strpos($history->content, 'Memperbaharui Kartu') !== false)
+                                                                            <p>{{ $history->name }}, telah memperbaharui {{ $card->name }} ke kolom ini</p>
+                                                                        @elseif (strpos($history->content, 'Memperbaharui Keterangan Kartu') !== false)
+                                                                            <p>{{ $history->name }}, telah memperbaharui keterangan kartu {{ $card->name }} ke kolom ini</p>
+                                                                        <!-- /Berdasarkan kolom masing-masing -->
 
-                                                            <!-- Berdasarkan kartu masing-masing -->
-                                                            @elseif (strpos($history->content, 'Membuat Judul Checklist') !== false)
-                                                                <p>{{ $history->name }}, telah menambahkan judul {{ $history->name }} ke kartu ini</p>
-                                                            @elseif (strpos($history->content, 'Memperbaharui Judul Checklist') !== false)
-                                                                <p>{{ $history->name }}, telah memperbaharui judul {{ $history->name }} ke kartu ini</p>
-                                                            @elseif (strpos($history->content, 'Menghapus Judul Checklist') !== false)
-                                                                <p>{{ $history->name }}, telah menghapus judul {{ $history->name }} ke kartu ini</p>
-                                                            <!-- /Berdasarkan kartu masing-masing -->
+                                                                        <!-- Berdasarkan kartu masing-masing -->
+                                                                        @elseif (strpos($history->content, 'Membuat Judul Checklist') !== false)
+                                                                            <p>{{ $history->name }}, telah menambahkan judul {{ $titleChecklists->name }} ke kartu ini</p>
+                                                                        @elseif (strpos($history->content, 'Memperbaharui Judul Checklist') !== false)
+                                                                            <p>{{ $history->name }}, telah memperbaharui judul {{ $titleChecklists->name }} ke kartu ini</p>
+                                                                        @elseif (strpos($history->content, 'Menghapus Judul Checklist') !== false)
+                                                                            <p>{{ $history->name }}, telah menghapus judul {{ $titleChecklists->name }} ke kartu ini</p>
+                                                                        <!-- /Berdasarkan kartu masing-masing -->
 
-                                                            <!-- Berdasarkan judul masing-masing -->
-                                                            @elseif (strpos($history->content, 'Membuat Checklist') !== false)
-                                                                <p>{{ $history->name }}, telah menambahkan checklist ke judul {{ $history->name }}</p>
-                                                            @elseif (strpos($history->content, 'Memperbaharui Checklist') !== false)
-                                                                <p>{{ $history->name }}, telah memperbaharui checklist ke judul {{ $history->name }}</p>
-                                                            @elseif (strpos($history->content, 'Menghapus Checklist') !== false)
-                                                                <p>{{ $history->name }}, telah menghapus checklist ke judul {{ $history->name }}</p>
-                                                            <!-- /Berdasarkan judul masing-masing -->
-                                                        @endif
+                                                                        <!-- Berdasarkan judul masing-masing -->
+                                                                        @elseif (strpos($history->content, 'Membuat Checklist') !== false)
+                                                                            <p>{{ $history->name }}, telah menambahkan checklist ke judul {{ $titleChecklists->name }}</p>
+                                                                        @elseif (strpos($history->content, 'Memperbaharui Checklist') !== false)
+                                                                            <p>{{ $history->name }}, telah memperbaharui checklist ke judul {{ $titleChecklists->name }}</p>
+                                                                        @elseif (strpos($history->content, 'Menghapus Checklist') !== false)
+                                                                            <p>{{ $history->name }}, telah menghapus checklist ke judul {{ $titleChecklists->name }}</p>
+                                                                        <!-- /Berdasarkan judul masing-masing -->
+                                                                    @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="waktu-history">
+                                                                    <p><i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i> {{ \Carbon\Carbon::parse($history->created_at)->translatedFormat('j F \p\u\k\u\l h:i A') }}</p>
+                                                                </div>
+                                                            @endif
+                                                            @if ($history->type === 'comment')
+                                                                <div class="isian-history flex gap-1">
+                                                                    <img class="avatar-activity" src="{{ URL::to('/assets/images/' . $history->avatar) }}" loading="lazy">
+                                                                    <div class="title-activity flex gap-1">
+                                                                        <p>{{ $history->name }}<br><span>{{ $history->content }}</span></p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="waktu-history">
+                                                                    <p><i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i> {{ \Carbon\Carbon::parse($history->created_at)->translatedFormat('j F \p\u\k\u\l h:i A') }}</p>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    </div>
-                                                    <div class="waktu-history">
-                                                        <p><i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i> {{ \Carbon\Carbon::parse($history->created_at)->translatedFormat('j F \p\u\k\u\l h:i A') }}</p>
-                                                    </div>
-                                                @endif
-                                                @if ($history->type === 'comment')
-                                                    <div class="isian-history flex gap-1">
-                                                        <img class="avatar-activity" src="{{ URL::to('/assets/images/' . $history->avatar) }}" loading="lazy">
-                                                        <div class="title-activity flex gap-1">
-                                                            <p>{{ $history->name }} <br><span>{{ $history->content }}</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="waktu-history">
-                                                        <p><i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i> {{ \Carbon\Carbon::parse($history->created_at)->translatedFormat('j F \p\u\k\u\l h:i A') }}</p>
-                                                    </div>
-                                                @endif
-                                            </div>
+                                                    @endforeach
+                                                @endforeach
+                                            @endforeach
                                         @endforeach
                                     </div>
                                 </div>
