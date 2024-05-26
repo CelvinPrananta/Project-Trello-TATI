@@ -109,7 +109,7 @@ class HomeController extends Controller
 
         elseif ($user->role_name === 'User')
         {
-            $tampilanPerusahaan = CompanySettings::where('id',1)->first();
+            // $tampilanPerusahaan = CompanySettings::where('id',1)->first();
 
             $result_tema = DB::table('mode_aplikasi')
                 ->select(
@@ -172,7 +172,7 @@ class HomeController extends Controller
                 ->whereNotNull('read_at')
                 ->get();
             
-            return view('dashboard.Halaman-user', compact('tampilanPerusahaan', 'result_tema', 'unreadNotifications',
+            return view('dashboard.Halaman-user', compact('result_tema', 'unreadNotifications',
                 'readNotifications', 'semua_notifikasi', 'belum_dibaca', 'dibaca'));
         }
     }
