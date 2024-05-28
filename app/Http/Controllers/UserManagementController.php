@@ -1004,6 +1004,84 @@ class UserManagementController extends Controller
     }
     // /Proses Data Riwayat Aktivitas //
 
+    // Proses Data Riwayat History //
+    public function getHistoryActivity(Request $request)
+    {
+        $columns = array(
+            0 => 'id',
+            1 => 'user_id',
+            2 => 'card_id',
+            3 => 'type',
+            4 => 'content',
+            5 => 'created_at'
+        );
+
+        $historyActivity = DB::table('card_histories')
+            ->leftjoin('users', 'card_histories.user_id', '=', 'users.id')
+            ->select('card_histories.*', 'users.name as result_name');
+        $totalData = $historyActivity->count();
+
+        $totalFiltered = $totalData;
+
+        $limit = $request->length;
+        $start = $request->start;
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+        $search = $request->input('search.value');
+
+        if (empty($search)) {
+            $historyActivity = DB::table('card_histories')
+                ->leftjoin('users', 'card_histories.user_id', '=', 'users.id')
+                ->select('card_histories.*', 'users.name as result_name')
+                ->offset($start)
+                ->limit($limit)
+                ->orderBy($order, $dir)
+                ->get();
+        } else {
+            $historyActivity = DB::table('card_histories')
+                ->leftjoin('users', 'card_histories.user_id', '=', 'users.id')
+                ->select('card_histories.*', 'users.name as result_name')
+                ->where(function ($query) use ($search) {
+                    $query->where('users.name', 'like', "%{$search}%");})
+                ->offset($start)
+                ->limit($limit)
+                ->orderBy($order, $dir)
+                ->get();
+
+            $totalFiltered = DB::table('card_histories')
+                ->leftjoin('users', 'card_histories.user_id', '=', 'users.id')
+                ->select('card_histories.*', 'users.name as result_name')
+                ->where(function ($query) use ($search) {
+                    $query->where('users.name', 'like', "%{$search}%");})
+                ->count();
+        }
+
+        $data_arr = [];
+        if (!empty($historyActivity)) {
+            foreach ($historyActivity as $key => $item) {
+                $formattedDate = Carbon::parse($item->created_at)->translatedFormat('l, j F Y || h:i A');
+                $data_arr [] = [
+                    "id"            => '<span class="id" data-id="' . $item->id . '">' . ($start + ($key + 1)) . '</span>',
+                    "user_id"       => '<span class="user_id">' . $item->result_name . '</span>',
+                    "card_id"       => '<span class="card_id">' . $item->card_id . '</span>',
+                    "type"          => '<span class="type">' . $item->type . '</span>',
+                    "content"       => '<span class="content">' . $item->content . '</span>',
+                    "created_at"    => '<span class="created_at">' . $formattedDate . '</span>',
+                ];
+            }
+        }
+
+        $response = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data_arr
+        );
+
+        return response()->json($response);
+    }
+    // /Proses Data Riwayat History //
+
     // Proses Data Aktivitas Pengguna //
     public function getAktivitasPengguna(Request $request)
     {

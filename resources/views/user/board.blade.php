@@ -2,10 +2,11 @@
 @section('content')
 
         <!-- Page Wrapper -->
-        <div class="page-wrapper">
+        <div class="page-wrapper" style="height: 100vh">
 
             <!-- Tampilan Background Kolom & Card -->
-            <div class="overflow-x-scroll overflow-y-auto bg-grad-{{ $board->pattern }}" style="height: 93vh !important">
+            {{-- <div class="overflow-x-scroll overflow-y-auto bg-grad-{{ $board->pattern }}" style="height: 93vh !important"> --}}
+            <div class="overflow-x-scroll overflow-y-auto bg-grad-{{ $board->pattern }}" style="height: 100%">
 
                 <!-- Tampilan Kolom & Kartu -->
                 <div class="tampilan-kolom gap-4 p-4">
@@ -18,13 +19,26 @@
                     @foreach ( $dataColumnCard as $dataKolom )
                         <div class="kolom-card" onmouseenter="aksiKolomShow({{ $dataKolom->id }})" onmouseleave="aksiKolomHide({{ $dataKolom->id }})">
 
-                            <!-- Tampilan Aksi Edit & Hapus -->
+                            {{-- <!-- Tampilan Aksi Edit & Hapus -->
+                            <a href="#" data-toggle="modal" data-target="#updateColumn{{ $dataKolom->id }}">
+                                <div class="aksi-kolom" id="aksi-kolom{{ $dataKolom->id }}">
+                                    <i class="fa-solid fa-pencil fa-sm"></i>
+                                </div>
+                            </a>
+                            <a href="#" data-toggle="modal" data-target="#deleteColumn{{ $dataKolom->id }}">
+                                <div class="aksi-kolom2" id="aksi-kolom2{{ $dataKolom->id }}">
+                                    <i class="fa-solid fa-trash fa-sm"></i>
+                                </div>
+                            </a>
+                            <!-- /Tampilan Aksi Edit & Hapus --> --}}
+
+                            <!-- Tampilan Aksi Edit & Hapus Bersama Auth -->
                             <a href="#" data-toggle="modal" data-target="#updateColumn{{ $dataKolom->id }}">
                                 <div class="aksi-kolom2" id="aksi-kolom{{ $dataKolom->id }}">
                                     <i class="fa-solid fa-pencil fa-sm"></i>
                                 </div>
                             </a>
-                            <!-- /Tampilan Aksi Edit & Hapus -->
+                            <!-- /Tampilan Aksi Edit & Hapus Bersama Auth -->
 
                             <!-- Tampilan Nama Kolom -->
                             <h5 class="kolom-nama mb-3 font-semibold text-lgs dark:text-white">{{ $dataKolom->name }}</h5>
@@ -37,13 +51,13 @@
                                         <li class="kartu-trello" id="kartu-trello" onmouseenter="aksiKartuShow({{ $dataKartu->id }})" onmouseleave="aksiKartuHide({{ $dataKartu->id }})">
                                             
                                             <!-- Tampilan Aksi Edit -->
-                                            @if($dataKartu->history->where('content', 'Membuat Kartu')->where('user_id', auth()->user()->id)->isNotEmpty())
+                                            {{-- @if($dataKartu->history->where('content', 'Membuat Kartu')->where('user_id', auth()->user()->id)->isNotEmpty()) --}}
                                                 <a href="#" data-toggle="modal" data-target="#editCard{{ $dataKartu->id }}">
                                                     <div class="aksi-card" id="aksi-card{{ $dataKartu->id }}">
                                                         <i class="fa-solid fa-pencil fa-sm"></i>
                                                     </div>
                                                 </a>
-                                            @endif
+                                            {{-- @endif --}}
                                             <!-- /Tampilan Aksi Edit -->
 
                                             <!-- Tampilan Kartu Pengguna -->
@@ -405,7 +419,7 @@
                                         <div onclick="showActivity('{{ $isianKartu->id }}')" class="icon-lihat">
                                             <div class="info-status7">
                                                 <i class="fa-solid fa-eye fa-lg" id="showActivityIcon{{ $isianKartu->id }}"></i>
-                                                <span class="text-status7"><b>Lihat/Sembunyikan<br>Komentar</b></span>
+                                                <span class="text-status7"><b>Lihat Komentar</b></span>
                                             </div>
                                         </div>
                                     </div>
