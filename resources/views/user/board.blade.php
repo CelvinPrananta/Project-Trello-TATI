@@ -178,12 +178,26 @@
                                             <input type="hidden" name="id" value="{{ $isianKartu->id  }}">
                                             <div class="hapus-kartu">
                                                 <button type="submit" style="border: none; background: none; padding: 0;">
-                                                    <i class="fa-solid fa-trash fa-lg"></i>
+                                                    <div class="info-status4">
+                                                        <i class="fa-solid fa-trash fa-lg" @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white;" @endif @endforeach></i>
+                                                        <span class="text-status4"><b>Hapus Kartu</b></span>
+                                                    </div>
                                                 </button>
                                             </div>
                                         </form>
                                     @endif
-                                    <p class="tag-list">dalam daftar <a class="tag-name">{{ $dataKolom->name  }}</a></p>
+                                    <div class="aksi-move-card">
+                                        <p class="tag-list">dalam daftar</p>
+                                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" style="margin-left: -12px;">{{ $dataKolom->name  }}</a>
+                                        <div class="dropdown-menu notifications">
+                                            <div class="topnav-dropdown-header">
+                                                <span class="move-card">Pindah Kartu</span>
+                                            </div><br>
+                                            <div class="noti-content" style="margin-left: 20px;">
+                                                <h5 @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white !important" @endif @endforeach>Daftar Kartu</h5>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -202,7 +216,7 @@
                                         <form id="myForm{{ $isianKartu->id }}" method="POST">
                                             @csrf
                                             <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
-                                            <input type="text" class="border border-1 border-dark w-40l p-2 rounded-xl" id="keterangan{{ $isianKartu->id }}" name="keterangan" placeholder="Masukkan Keterangan" value="{{ $isianKartu->description }}"><br>
+                                            <textarea class="border border-1 border-dark w-40l p-2 rounded-xl" @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white !important; background-color: #292D3E" @endif @endforeach rows="4" id="keterangan{{ $isianKartu->id }}" name="keterangan" placeholder="Masukkan Keterangan">{{ $isianKartu->description }}</textarea><br>
                                             <div class="aksi-update-keterangan gap-2">
                                                 <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButton{{ $isianKartu->id }}">Simpan</button>
                                                 <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButton{{ $isianKartu->id }}">Batal</button>
@@ -219,7 +233,7 @@
                                     <div class="menu-tambah-checklist flex flex-col flex-wrap">
                                         <div class="header-checklist flex gap-5">
                                             <div class="icon-tambah-checklist hidden" id="iconCheck-{{ $isianKartu->id }}">
-                                                <i class="fa-regular fa-square-check fa-xl"></i>
+                                                <i class="fa-regular fa-square-check fa-xl" style="color: #489bdb;"></i>
                                             </div>
                                             <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
                                             <input type="text" class="border border-1 border-dark w-40l p-2 rounded-xl hidden" id="titleChecklist{{ $isianKartu->id }}" name="titleChecklist" placeholder="Masukkan Judul" required>
@@ -242,7 +256,7 @@
                                     </div>
                                     <div class="keterangan-tag">
                                         <p class="deskripsi-keterangan">Keterangan</p>
-                                        <p class="border border-1 border-dark w-403 p-2 rounded-xl" style="color: white !important">{{ $isianKartu->description }}</p><br>
+                                        <textarea class="border border-1 border-dark w-403 p-2 rounded-xl" rows="4" readonly @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white !important; background-color: #292D3E" @endif @endforeach>{{ $isianKartu->description }}</textarea><br>
                                     </div>
                                 </div>
                                 <!-- /Tampilan Keterangan Apabila Bukan Punyanya -->
@@ -253,12 +267,13 @@
                                 <div class="menu-checklist border border-1 border-darkss p-2 rounded-xl">
                                     <!-- Perbaharui & Hapus Judul Checklist -->
                                     <div class="header-checklist flex justify-content">
-                                        <i class="fa-regular fa-square-check fa-xl"></i>
+                                        {{-- <i class="fa-regular fa-square-check fa-xl"></i> --}}
+                                        <i class="fa-regular fa-square-check fa-xl" style="position: absolute; color: #489bdb; margin-top: 20px;"></i>
                                         <form id="myFormTitleUpdate{{ $titleChecklists->id }}" method="POST" class="update-title">
                                             @csrf
                                                 <input type="hidden" id="title_id" name="title_id" value="{{ $titleChecklists->id }}">
                                                 <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
-                                                <input type="text" class="isian-title border border-1 border-darks w-402 p-2 rounded-xl" id="titleChecklistUpdate{{ $titleChecklists->id }}" name="titleChecklistUpdate" placeholder="Masukkan Judul" value="{{$titleChecklists->name}}">
+                                                <input type="text" class="isian-title border border-1 border-darks w-402 p-2 rounded-xl" style="font-size: 17px" id="titleChecklistUpdate{{ $titleChecklists->id }}" name="titleChecklistUpdate" placeholder="Masukkan Judul" value="{{$titleChecklists->name}}">
                                                 <div class="aksi-update-title gap-2">
                                                     <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonTitleUpdate{{ $titleChecklists->id }}">Simpan</button>
                                                     <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButtonTitleUpdate{{ $titleChecklists->id }}">Batal</button>
@@ -270,7 +285,10 @@
                                             <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
                                             <div class="icon-hapus-title" id="hapus-title{{ $titleChecklists->id }}">
                                                 <button type="submit" style="border: none; background: none; padding: 0;">
-                                                    <i class="fa-solid fa-trash fa-lg"></i>
+                                                    <div class="info-status5">
+                                                        <i class="fa-solid fa-trash fa-lg" @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white;" @endif @endforeach></i>
+                                                        <span class="text-status5"><b>Hapus Judul</b></span>
+                                                    </div>
                                                 </button>
                                             </div>
                                         </form>
@@ -290,11 +308,10 @@
                                     @foreach ($titleChecklists->checklists as $checklists)
                                     <div class="input-checklist">
                                         <!-- Tampilan Checklist -->
-                                        <form id="myFormChecklistUpdate{{ $checklists->id }}" method="POST" class="form-checklist flex gap-5">
+                                        <form id="myFormChecklistUpdate{{ $checklists->id }}" method="POST" class="form-checklist gap-5">
                                             @csrf
                                             <input class="dynamicCheckbox" type="checkbox" id="{{$checklists->id}}" name="{{$checklists->id}}" {{$checklists->is_active == '1' ? 'checked' : ''}}>
                                             <label class="dynamicCheckboxLabel border border-1 border-darks w-407 p-2 rounded-xl  {{$checklists->is_active == '1' ? 'strike-through' : ''}}" id="labelCheckbox-{{$checklists->id}}" for="labelCheckbox-{{$checklists->id}}">{{$checklists->name}}</label>
-
                                             <input type="hidden" id="checklist_id" name="checklist_id" value="{{ $checklists->id }}">
                                             <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
                                             <input type="text" class="dynamicCheckboxValue border border-1 border-darks w-407 p-2 rounded-xl hidden" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}" placeholder="Masukkan checklist">
@@ -307,7 +324,10 @@
                                                 <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
                                                 <div class="icon-hapus-checklist" id="hapus-checklist{{ $checklists->id }}">
                                                     <button type="submit" class="deletes" id="deleteButtonChecklist-{{ $checklists->id }}" style="border: none; background: none; padding: 0;">
-                                                        <i class="fa-solid fa-trash fa-lg"></i>
+                                                        <div class="info-status6">
+                                                            <i class="fa-solid fa-trash fa-lg" @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white;" @endif @endforeach></i>
+                                                            <span class="text-status6"><b>Hapus Checklist</b></span>
+                                                        </div>
                                                     </button>
                                                 </div>
                                             </form>
@@ -351,8 +371,8 @@
                                     <div class="menu-checklist border border-1 border-darkss p-2 rounded-xl">
                                         <!-- Perbaharui & Hapus Judul Checklist -->
                                         <div class="header-checklist flex gap-4">
-                                            <i class="fa-regular fa-square-check fa-xl"></i>
-                                            <p class="isian-title border border-1 border-darks w-408 p-2 rounded-xl" style="color: white !important">{{$titleChecklists->name}}</p>
+                                            <i class="fa-regular fa-square-check fa-xl" style="position: absolute; color: #489bdb; margin-top: 20px;"></i>
+                                            <p class="isian-title border border-1 border-darks w-408 p-2 rounded-xl" style="font-size: 17px; margin-left: 20px; @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') color: white !important @endif @endforeach">{{$titleChecklists->name}}</p>
                                         </div>
                                         <!-- /Perbaharui & Hapus Judul Checklist -->
 
@@ -367,10 +387,10 @@
                                         <!-- Perbaharui & Hapus Checklist -->
                                         @include('user.script2')
                                         @foreach ($titleChecklists->checklists as $checklists)
-                                            <div class="input-checklist gap-4">
+                                            <div class="input-checklist">
                                                 <!-- Tampilan Checklist -->
-                                                <i class="fa-regular fa-square-check fa-xl"></i>
-                                                <label class="dynamicCheckboxLabel border border-1 border-darks w-408 p-2 rounded-xl">{{$checklists->name}}</label>
+                                                <input class="dynamicCheckbox" type="checkbox" id="{{$checklists->id}}" name="{{$checklists->id}}" {{$checklists->is_active == '1' ? 'checked' : ''}} disabled>
+                                                <label class="dynamicCheckboxLabel border border-1 border-darks w-408 p-2 rounded-xl  {{$checklists->is_active == '1' ? 'strike-through' : ''}}">{{$checklists->name}}</label>
                                             </div>
                                             <!-- /Tampilan Checklist -->
                                         @endforeach
@@ -383,7 +403,10 @@
                                         <i class="fa-solid fa-list-ul fa-lg"></i>
                                         <p class="activity-keterangan">Activity </p>
                                         <div onclick="showActivity('{{ $dataKolom->id }}')" class="icon-lihat">
-                                            <i class="fa-solid fa-eye fa-lg" id="showActivityIcon{{ $dataKolom->id }}"></i>
+                                            <div class="info-status7">
+                                                <i class="fa-solid fa-eye fa-lg" id="showActivityIcon{{ $dataKolom->id }}"></i>
+                                                <span class="text-status7"><b>Lihat/Sembunyikan<br>Komentar</b></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="input-komentar flex gap-4">
@@ -526,10 +549,11 @@
                 border: 2px solid black;
                 border-radius: 4px;
                 cursor: pointer;
+                margin-bottom: -5px;
             }
             input[type="checkbox"]:checked {
-                background-color: #539dec;
-                border-color: #539dec;
+                background-color: #6cd274;
+                border-color: #6cd274;
             }
             input[type="checkbox"]:checked::after {
                 content: '✔';
@@ -554,7 +578,7 @@
                 font-size:.75rem;
                 background-color:#e9ecef;
                 border-radius:1rem;
-                margin-bottom:10px;
+                margin-bottom: 25px;
                 margin-top:-4px;
                 width:84.8%;
                 margin-left:5.5%
@@ -568,7 +592,7 @@
                 font-size:.75rem;
                 background-color:#e9ecef;
                 border-radius:1rem;
-                margin-bottom:10px;
+                margin-bottom: 25px;
                 margin-top:-4px;
                 width:90%;
                 margin-left:5.5%
@@ -584,7 +608,7 @@
                 border-color: rgb(229 231 235 / var(--tw-border-opacity)) !important;
             }
             .border-darks {border: 2px solid transparent !important; cursor: pointer;}
-            .border-darkss {border-color: #343a40 !important;}
+            .border-darkss {border-color: #d1d1d1 !important;}
             .border-darks:focus {border-color: #343a40 !important; cursor: pointer;}
             .border-dark:hover {background-color: #091E420F; !important; cursor: pointer;}
             .border-darks:hover {background-color: #091E420F; !important; cursor: pointer;}
@@ -600,7 +624,7 @@
                     .activity-keterangan {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
                     .border-dark {border-color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
                     .border-darks {border: 2px solid transparent !important; cursor: pointer;}
-                    .border-darkss {border-color: {{ $mode_tema->warna_sistem_tulisan }} !important;}  
+                    .border-darkss {border-color: #d1d1d175 !important;}
                     .border-darks:focus {border-color: {{ $mode_tema->warna_sistem_tulisan }} !important; cursor: pointer;}
                     .border-dark:hover {background-color: {{ $mode_tema->warna_sistem }} !important; cursor: pointer;}
                     .border-darks:hover {background-color: {{ $mode_tema->warna_sistem }} !important; cursor: pointer;}
@@ -613,6 +637,7 @@
                     .kolom-card {background-color: {{ $mode_tema->warna_sistem }} !important; border-color: {{ $mode_tema->warna_sistem_tulisan }} !important}
                     .progress{background-color: {{ $mode_tema->warna_sistem }} !important;}
                     .progress2{background-color: {{ $mode_tema->warna_sistem }} !important;}
+                    .move-card {color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
                 @endif
             @endforeach
         </style>

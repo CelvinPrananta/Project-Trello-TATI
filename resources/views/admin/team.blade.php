@@ -363,6 +363,10 @@
         .p-4 {
             padding: 1rem !important;
         }
+        .fa-trash:hover {
+            color: #5edd97;
+            cursor: pointer;
+        }
         .rounded-xl {
             --tw-border-opacity: 1;
             background-color: rgb(229 231 235 / var(--tw-border-opacity)) !important;
@@ -501,7 +505,7 @@
                     const email = emailInput.value.trim();
                     if (email && email !== '-- Pilih Anggota Tim --') {
                         const emailDiv = document.createElement('div');
-                        emailDiv.className = 'd-flex justify-content-between align-items-center mb-2 bg-red-200 rounded-pill';
+                        emailDiv.className = 'd-flex justify-content-between align-items-center mb-2 bg-red-200 rounded-lg';
                         emailDiv.innerHTML = `
                         <span>${email}</span>
                         <button type="button" class="btn btn-danger btn-sm remove-btn"><i class="fa-solid fa-trash"></i></button>
@@ -519,7 +523,7 @@
                     const email = emailInput2.value.trim();
                     if (email && email !== '-- Pilih Anggota Tim --') {
                         const emailDiv = document.createElement('div');
-                        emailDiv.className = 'd-flex justify-content-between align-items-center mb-2 bg-red-200 rounded-pill';
+                        emailDiv.className = 'd-flex justify-content-between align-items-center mb-2 bg-red-200 rounded-lg';
                         emailDiv.innerHTML = `
                         <span>${email}</span>
                         <button type="button" class="btn btn-danger btn-sm remove-btn"><i class="fa-solid fa-trash"></i></button>

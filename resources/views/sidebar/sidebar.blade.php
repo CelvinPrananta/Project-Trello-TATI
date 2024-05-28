@@ -15,7 +15,7 @@
                 </li>
                 <li class="{{ set_active(['home']) }}">
                     <a href="{{ route('home') }}" class="{{ set_active(['home']) ? 'noti-dot' : '' }}">
-                        <i class="fa fa-building-columns fa-2xs"></i>
+                        <i class="fa-solid fa-building-columns"></i>
                         <span>Beranda</span>
                     </a>
                 </li>
@@ -210,7 +210,6 @@
                         </a>
                     </li>
                 @endif
-                
             </ul>
         </div>
     </div>

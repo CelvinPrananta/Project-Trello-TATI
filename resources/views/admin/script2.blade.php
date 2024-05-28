@@ -97,7 +97,7 @@
                     toastr.success('Anda berhasil membuat checklist!');
                     console.log(response);
                     var newForm = `<div class="input-checklist2">
-                                        <form id="myFormChecklistUpdate${response.checklist.id}" method="POST" class="form-checklist flex gap-5">
+                                        <form id="myFormChecklistUpdate${response.checklist.id}" method="POST" class="form-checklist gap-5">
                                             @csrf
                                             <input class="dynamicCheckbox" type="checkbox" id="${response.checklist.id}" name="${response.checklist.id}" ${response.checklist.is_active ? 'checked' : ''}>
                                             <label class="dynamicCheckboxLabel border border-1 border-darks w-407s p-2 rounded-xl ${response.checklist.is_active ? 'strike-through' : ''}" id="labelCheckbox-${response.checklist.id}" for="labelCheckbox-${response.checklist.id}">${response.checklist.name}</label>
@@ -111,7 +111,10 @@
                                             <input type="hidden" id="card_id" name="card_id" value="${response.titlechecklist.cards_id}">
                                             <div class="icon-hapus-checklist" id="hapus-checklist${response.checklist.id}">
                                                 <button type="button" class="deletes" id="deleteButtonChecklist-${response.checklist.id}" style="border: none; background: none; padding: 0;">
-                                                    <i class="fa-solid fa-trash fa-lg"></i>
+                                                    <div class="info-status6">
+                                                        <i class="fa-solid fa-trash fa-lg" @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white;" @endif @endforeach></i>
+                                                        <span class="text-status6"><b>Hapus Checklist</b></span>
+                                                    </div>
                                                 </button>
                                             </div>
                                         </form>
