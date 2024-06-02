@@ -36,30 +36,36 @@
             });
         });
         // Form delete title
-        $('#myFormTitleDelete'+title_id).on('submit', function(event){
-            event.preventDefault();
-            var formData = $(this).serialize();
-            console.log(title_id);
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('hapusTitle2') }}",
-                data: formData,
-                success: function(response){
-                    console.log(response);
-                    localStorage.setItem('modal_id', response.card_id);
-                    location.reload();
-                    toastr.success('Anda berhasil menghapus judul!');
+        $(document).ready(function() {
+            $(document).off('submit', '[id^="myFormTitleDelete"]');
+            $(document).on('submit', '[id^="myFormTitleDelete"]', function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                var formId = $(this).attr('id');
+                var titleId = formId.split('myFormTitleDelete')[1];
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('hapusTitle2') }}",
+                    data: formData,
+                    success: function(response) {
+                        console.log(response);
+                        localStorage.setItem('modal_id', response.card_id);
+                        // location.reload();
+                        // Menghilangkan Title Checklist //
+                        $('#' + formId).closest('.menu-checklist').hide();
+                        toastr.success('Anda berhasil menghapus judul!');
 
-                    // Show modal after create title
-                    var modal_id = localStorage.getItem('modal_id');
-                    $('#isianKartu'+modal_id).modal('show');
-                    $('#isianKartu'+id).on('click', function(){
-                        localStorage.clear();
-                    });
-                },
-                error: function(){
-                    alert('An error occurred. Please try again.');
-                }
+                        // Show modal after create title
+                        var modal_id = localStorage.getItem('modal_id');
+                        // $('#isianKartu'+modal_id).modal('show');
+                        $('#isianKartu' + modal_id).on('click', function() {
+                            localStorage.clear();
+                        });
+                    },
+                    error: function(){
+                        toastr.error('Terjadi kesalahan, silakan coba lagi!');
+                    }
+                });
             });
         });
         // End Section Update Title
