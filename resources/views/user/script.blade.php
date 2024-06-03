@@ -75,7 +75,7 @@
                     $('#iconCheck-'+id).addClass('hidden');
                     $('#addTitle-'+id).removeClass('hidden');
                     localStorage.setItem('modal_id', response.card_id);
-                    // window.location.reload();
+                    window.location.reload();
                     toastr.success('Anda berhasil menambahkan judul!');
                 },
                 error: function(){
@@ -85,7 +85,7 @@
         });
         // Show modal after create title
         var modal_id = localStorage.getItem('modal_id');
-        // $('#isianKartu'+modal_id).modal('show');
+        $('#isianKartu'+modal_id).modal('show');
         $('#isianKartu'+id).on('click', function(){
             localStorage.clear();
         });
