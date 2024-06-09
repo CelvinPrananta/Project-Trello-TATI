@@ -112,7 +112,7 @@
                             @csrf
                             <div class="form-group">
                                 <label>Nama Tim</label><span class="text-danger">*</span>
-                                <input type="text" class="form-control @error('team_name') is-invalid @enderror" id="team_name" name="team_name" value="{{ old('team_name') }}">
+                                <input type="text" class="form-control @error('team_name') is-invalid @enderror" id="team_name" name="team_name" placeholder="Masukkan nama tim" value="{{ old('team_name') }}">
                                 @error('team_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -121,7 +121,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Deskripsi Tim</label><span class="text-danger">*</span>
-                                <textarea class="form-control @error('team_description') is-invalid @enderror" id="team_description" name="team_description">{{ old('team_description') }}</textarea>
+                                <textarea class="form-control @error('team_description') is-invalid @enderror" id="team_description" placeholder="Masukkan deskripsi tim" name="team_description">{{ old('team_description') }}</textarea>
                                 @error('team_description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -135,7 +135,7 @@
                                 <div class="flex items-center justify-start w-full max-w-2xl gap-2 px-4 py-2 overflow-hidden overflow-x-scroll border-2 border-gray-200 h-36 rounded-xl">
                                     @isset($patterns)
                                         @foreach ($patterns as $pattern)
-                                            <div onclick="selectPattern('{{ $pattern }}')" class="{{ $pattern == $patterns[0] ? 'order-first' : '' }} h-full flex-shrink-0 border-4 rounded-lg w-36 bg-pattern-{{ $pattern }} hover:border-black" id="pattern-{{ $pattern }}">
+                                            <div onclick="selectPattern('{{ $pattern }}')" class="{{ $pattern == $patterns[0] ? 'order-first' : '' }} h-full flex-shrink-0 border-4 rounded-lg w-36 bg-pattern-{{ $pattern }} hover:border-black" id="pattern-{{ $pattern }}" style="cursor: pointer">
                                                 <div id="check-{{ $pattern }}" class="flex items-center justify-center w-full h-full {{ $pattern == $patterns[0] ? 'opacity-100' : 'opacity-0' }}">
                                                     <i class="fa-solid fa-circle-check"></i>
                                                 </div>
@@ -145,7 +145,7 @@
                                 </div>
                             </div>
                             <div class="submit-section">
-                                <button type="submit" class="btn btn-primary submit-btn">Simpan</button>
+                                <button type="submit" class="btn btn-outline-info submit-btn">Simpan</button>
                             </div>
                         </form>
                     </div>

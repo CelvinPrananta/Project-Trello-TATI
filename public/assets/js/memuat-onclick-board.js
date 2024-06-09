@@ -7,7 +7,7 @@ function openAdd(id){
     
     if (style.includes('flex')) {
         cardTrello.classList.remove("flex");
-        btnadd.innerHTML="Tambah Kartu...";
+        btnadd.innerHTML="<i class='fa-solid fa-plus'></i> Tambah Kartu...";
     } else {
         cardTrello.classList.add("flex");
         btnadd.innerHTML="Batalkan";
@@ -108,3 +108,15 @@ function changeCard(id) {
     }
 }
 // /Untuk menyembunyikan dan melihat simpan komentar //
+
+// Textarea mengikuti jumlah data yang ada //
+document.addEventListener('DOMContentLoaded', (event) => {
+    const textareas = document.querySelectorAll('textarea');
+    textareas.forEach(textarea => {
+        if (textarea.id.startsWith('keterangan')) {
+            const lineCount = textarea.value.split('\n').length;
+            textarea.rows = Math.max(lineCount, 4);
+        }
+    });
+});
+// /Textarea mengikuti jumlah data yang ada //
