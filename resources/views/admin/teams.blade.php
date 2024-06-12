@@ -246,7 +246,7 @@
         </script>
         
         <script>
-            document.getElementById('pageTitle').innerHTML = 'Tim - Admin | Trello - PT TATI';
+            document.getElementById('pageTitle').innerHTML = 'Tim - Admin | Trello - PT TATI ';
         </script>
     @endsection
 @endsection

@@ -249,6 +249,37 @@
         @endforeach
         <!-- /Perbaharui Kolom Modal -->
 
+        <!-- Hapus Kolom Modal Dicomment ketika menggunakan auth -->
+        {{-- @foreach ( $dataColumnCard as $hapusKolom )
+            <div id="deleteColumn{{ $hapusKolom->id }}" class="modal custom-modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="form-header">
+                                <h3>Hapus Kolom "{{ $hapusKolom->name }}"?</h3>
+                                <p>Apakah anda yakin ingin menghapus kolom ini?</p>
+                            </div>
+                            <div class="modal-btn delete-action">
+                                <form action="{{ route('deleteCol2', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="column_id" id="column_id" value="{{ $hapusKolom->id  }}">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button type="submit" class="btn btn-primary continue-btn submit-btn">Hapus</button>
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Batal</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach --}}
+        <!-- /Hapus Kolom Modal Dicomment ketika menggunakan auth -->
+
         <!-- Isian Kartu Modal -->
         @foreach ( $dataColumnCard as $dataKolom )
             @foreach ($dataKolom->cards as $isianKartu)
@@ -309,7 +340,7 @@
                                                         <form action="{{ route('hapusKartu2', ['card_id' => $isianKartu->id]) }}" method="POST">
                                                             @csrf
                                                             <input type="hidden" name="id" value="{{ $isianKartu->id  }}">
-                                                            <button type="submit" style="border: none; background: none; padding: 0; @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') color: white; @endif @endforeach"><i class='fa fa-trash-o m-r-5'></i> Hapus Kartu</button>
+                                                            <button type="submit" class="deleteCard" style="@foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') color: white; @endif @endforeach"><i class='fa fa-trash-o m-r-5'></i> Hapus Kartu</button>
                                                         </form>
                                                     </a>
                                                 </div>
@@ -322,7 +353,7 @@
                                     <div class="aksi-move-card">
                                         <p class="tag-list">dalam daftar</p>
                                         <div class="dropdown info-status10">
-                                            <a href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false" data-auto-close="outside" style="margin-left: -12px;">{{ $dataKolom->name }}</a>
+                                            <a href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false" data-auto-close="outside" style="color: #489bdb; @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') color: #489bdb !important; @endif @endforeach margin-left: -12px; text-decoration: underline;">{{ $dataKolom->name }}</a>
                                             <span class="text-status10"><b>Pindah Kartu</b></span>
                                             <form class="dropdown-menu p-4" style="min-width: 18rem !important; margin-left: 34px !important;">
                                                 <div class="topnav-dropdown-header">
@@ -358,7 +389,8 @@
                                         <form id="myForm{{ $isianKartu->id }}" method="POST">
                                             @csrf
                                             <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
-                                            <textarea class="border border-1 border-dark w-40l p-2 rounded-xl" @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white !important; background-color: #292D3E" @endif @endforeach rows="4" id="keterangan{{ $isianKartu->id }}" name="keterangan" placeholder="Masukkan Keterangan">{{ $isianKartu->description }}</textarea><br>
+                                            <textarea onclick="mentionTags2('keterangan{{ $isianKartu->id }}')" class="border border-1 border-dark w-40l p-2 rounded-xl" @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white !important; background-color: #292D3E" @endif @endforeach rows="4" id="keterangan{{ $isianKartu->id }}" name="keterangan" placeholder="Masukkan Keterangan">{{ $isianKartu->description }}</textarea><br>
+                                            <div class="mention-tag-keterangan" id="mention-tag-keterangan{{ $isianKartu->id }}"></div>
                                             <div class="aksi-update-keterangan gap-2">
                                                 <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButton{{ $isianKartu->id }}">Simpan</button>
                                                 <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButton{{ $isianKartu->id }}">Batal</button>
@@ -366,6 +398,7 @@
                                         </form>
                                     </div>
                                     @include('user.script')
+                                    @include('user.script6')
                                 </div>
                                 <!-- /Tambah & Edit Keterangan -->
 
@@ -409,7 +442,6 @@
                                 <div class="menu-checklist border border-1 border-darkss p-2 rounded-xl">
                                     <!-- Perbaharui & Hapus Judul Checklist -->
                                     <div class="header-checklist flex justify-content">
-                                        {{-- <i class="fa-regular fa-square-check fa-xl"></i> --}}
                                         <i class="fa-regular fa-square-check fa-xl" style="position: absolute; color: #489bdb; margin-top: 20px;"></i>
                                         <form id="myFormTitleUpdate{{ $titleChecklists->id }}" method="POST" class="update-title">
                                             @csrf
@@ -448,15 +480,24 @@
                                     <!-- Perbaharui & Hapus Checklist -->
                                     @include('user.script2')
                                     @foreach ($titleChecklists->checklists as $checklists)
-                                    <div class="input-checklist">
+                                    <div class="input-checklist flex justify-content">
                                         <!-- Tampilan Checklist -->
-                                        <form id="myFormChecklistUpdate{{ $checklists->id }}" method="POST" class="form-checklist gap-5">
+                                        <form id="myFormChecklistUpdate{{ $checklists->id }}" method="POST" class="form-checklist">
                                             @csrf
-                                            <input class="dynamicCheckbox" type="checkbox" id="{{$checklists->id}}" name="{{$checklists->id}}" {{$checklists->is_active == '1' ? 'checked' : ''}}>
-                                            <label class="dynamicCheckboxLabel border border-1 border-darks w-407 p-2 rounded-xl  {{$checklists->is_active == '1' ? 'strike-through' : ''}}" id="labelCheckbox-{{$checklists->id}}" for="labelCheckbox-{{$checklists->id}}">{{$checklists->name}}</label>
+                                            <input class="dynamicCheckbox" type="checkbox" id="{{$checklists->id}}" name="{{$checklists->id}}" {{$checklists->is_active == '1' ? 'checked' : ''}} style="margin-left: -20px;">
+                                            <label class="dynamicCheckboxLabel border border-1 border-darks w-402 p-2 rounded-xl  {{$checklists->is_active == '1' ? 'strike-through' : ''}}" id="labelCheckbox-{{$checklists->id}}" for="labelCheckbox-{{$checklists->id}}">{{$checklists->name}}</label>
                                             <input type="hidden" id="checklist_id" name="checklist_id" value="{{ $checklists->id }}">
                                             <input type="hidden" id="card_id" name="card_id" value="{{ $isianKartu->id }}">
-                                            <input type="text" class="dynamicCheckboxValue border border-1 border-darks w-407 p-2 rounded-xl hidden" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}" placeholder="Masukkan checklist">
+                                            <input onclick="mentionTags4('checkbox-{{ $checklists->id }}')" type="text" class="dynamicCheckboxValue border border-1 border-darks w-402 p-2 rounded-xl hidden" id="checkbox-{{$checklists->id}}" name="checkbox-{{$checklists->id}}" value="{{$checklists->name}}" placeholder="Masukkan checklist">
+                                            <div class="mention-tag" id="mention-tag-checkbox{{ $checklists->id }}"></div>
+                                            @include('user.script8')
+
+                                            <!-- Aksi Update Checklist -->
+                                            <div class="aksi-update-checklist gap-2 margin-bottom-0" id="checklist-{{ $checklists->id }}">
+                                                <button type="submit" class="saves btn btn-outline-info hidden" id="saveButtonChecklistUpdate-{{ $checklists->id }}">Simpan</button>
+                                                <button type="button" class="cancels btn btn-outline-danger hidden" id="cancelButtonChecklistUpdate-{{ $checklists->id }}">Batal</button>
+                                            </div>
+                                            <!-- /Aksi Update Checklist -->
                                         </form>
                                         <!-- Icon Hapus Checklist -->
                                         @if($isianKartu->history->where('content', 'Membuat Kartu')->where('user_id', auth()->user()->id)->isNotEmpty())
@@ -468,7 +509,7 @@
                                                 <div class="icon-hapus-checklist" id="hapus-checklist{{ $checklists->id }}">
                                                     <button type="submit" class="deletes" id="deleteButtonChecklist-{{ $checklists->id }}" style="border: none; background: none; padding: 0;">
                                                         <div class="info-status6">
-                                                            <i class="fa-solid fa-trash fa-lg" @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white;" @endif @endforeach></i>
+                                                            <i class="fa-solid fa-trash fa-lg icon-trash" @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white;" @endif @endforeach></i>
                                                             <span class="text-status6"><b>Hapus Checklist</b></span>
                                                         </div>
                                                     </button>
@@ -478,13 +519,6 @@
                                         <!-- /Icon Hapus Checklist -->
                                     </div>
                                     <!-- /Tampilan Checklist -->
-
-                                    <!-- Aksi Update Checklist -->
-                                    <div class="aksi-update-checklist gap-2">
-                                        <button type="submit" class="saves btn btn-outline-info hidden" id="saveButtonChecklistUpdate-{{ $checklists->id }}">Simpan</button>
-                                        <button type="button" class="cancels btn btn-outline-danger hidden" id="cancelButtonChecklistUpdate-{{ $checklists->id }}">Batal</button>
-                                    </div>
-                                    <!-- /Aksi Update Checklist -->
 
                                     @include('user.script3')
                                     @endforeach
@@ -549,7 +583,7 @@
                                         <p class="activity-keterangan">Activity </p>
                                         <div onclick="showActivity('{{ $isianKartu->id }}')" class="icon-lihat">
                                             <div class="info-status7">
-                                                <i class="fa-solid fa-eye fa-lg" id="showActivityIcon{{ $isianKartu->id }}"></i>
+                                                <i class="fa-solid fa-eye fa-lg icon-comment" id="showActivityIcon{{ $isianKartu->id }}"></i>
                                                 <span class="text-status7"><b>Lihat Komentar</b></span>
                                             </div>
                                         </div>
@@ -560,11 +594,13 @@
                                             @csrf
                                             <input type="hidden" name="user_id" value="{{ Auth::user()->id  }}">
                                             <input type="hidden" name="card_id" value="{{ $isianKartu->id }}">
-                                            <textarea onclick="saveComment('{{ $isianKartu->id }}')" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="77" id="contentarea{{ $isianKartu->id }}" name="content" placeholder="Tulis komentar..."></textarea>
+                                            <textarea onclick="saveComment('{{ $isianKartu->id }}'); mentionTags3('contentarea{{ $isianKartu->id }}')" class="form-control border border-1 border-dark rounded-xl" rows="1" cols="77" id="contentarea{{ $isianKartu->id }}" name="content" placeholder="Tulis komentar..."></textarea>
+                                            <div class="mention-tag-comment" id="mention-tag-comment{{ $isianKartu->id }}"></div>
                                             <button type="submit" class="btn btn-outline-info icon-comment hidden" id="simpanButton{{ $isianKartu->id }}">Kirim</button>
                                         </form>
+                                        @include('user.script7')
                                     </div>
-                                    <div class="activity-tag flex flex-col hiddens" id="showActivity{{ $isianKartu->id }}">
+                                    <div class="activity-tag hiddens" id="showActivity{{ $isianKartu->id }}">
                                         @php
                                             $columns = DB::table('columns')->where('id', $dataKolom->id)->get();
                                             $cards = DB::table('cards')->where('column_id', $dataKolom->id)->where('id', $isianKartu->id)->get();
@@ -576,49 +612,49 @@
                                                 @endphp
                                                 @foreach($isianHistory as $history)
                                                     @foreach ($isianKartu->titleChecklists as $titleChecklists)
-                                                        <div class="isian-tag w-403">
+                                                        <div class="isian-tag">
                                                             @if ($history->type === 'event')
-                                                                <div class="isian-history flex gap-1" style="height: 45px">
+                                                                <div class="isian-history">
                                                                     <img class="avatar-activity" src="{{ URL::to('/assets/images/' . $history->avatar) }}" loading="lazy">
-                                                                    <div class="title-activity flex gap-1">
-                                                                    @if (strpos($history->content, 'Membuat Kartu') !== false)
-                                                                        <!-- Berdasarkan kolom masing-masing -->
-                                                                            <p>{{ $history->name }}, telah menambahkan {{ $card->name }} ke kolom ini</p>
-                                                                        @elseif (strpos($history->content, 'Memperbaharui Kartu') !== false)
-                                                                            <p>{{ $history->name }}, telah memperbaharui {{ $card->name }} ke kolom ini</p>
-                                                                        @elseif (strpos($history->content, 'Memperbaharui Keterangan Kartu') !== false)
-                                                                            <p>{{ $history->name }}, telah memperbaharui keterangan kartu {{ $card->name }} ke kolom ini</p>
-                                                                        <!-- /Berdasarkan kolom masing-masing -->
+                                                                    <div class="title-activity">
+                                                                        @if (strpos($history->content, 'Membuat Kartu') !== false)
+                                                                            <!-- Berdasarkan kolom masing-masing -->
+                                                                                <p class="isian-activity">{{ $history->name }}, telah menambahkan {{ $card->name }} ke kolom ini</p>
+                                                                            @elseif (strpos($history->content, 'Memperbaharui Kartu') !== false)
+                                                                                <p class="isian-activity">{{ $history->name }}, telah memperbaharui {{ $card->name }} ke kolom ini</p>
+                                                                            @elseif (strpos($history->content, 'Memperbaharui Keterangan Kartu') !== false)
+                                                                                <p class="isian-activity">{{ $history->name }}, telah memperbaharui keterangan kartu {{ $card->name }} ke kolom ini</p>
+                                                                            <!-- /Berdasarkan kolom masing-masing -->
 
-                                                                        <!-- Berdasarkan kartu masing-masing -->
-                                                                        @elseif (strpos($history->content, 'Membuat Judul Checklist') !== false)
-                                                                            <p>{{ $history->name }}, telah menambahkan judul {{ $titleChecklists->name }} ke kartu ini</p>
-                                                                        @elseif (strpos($history->content, 'Memperbaharui Judul Checklist') !== false)
-                                                                            <p>{{ $history->name }}, telah memperbaharui judul {{ $titleChecklists->name }} ke kartu ini</p>
-                                                                        @elseif (strpos($history->content, 'Menghapus Judul Checklist') !== false)
-                                                                            <p>{{ $history->name }}, telah menghapus judul {{ $titleChecklists->name }} ke kartu ini</p>
-                                                                        <!-- /Berdasarkan kartu masing-masing -->
+                                                                            <!-- Berdasarkan kartu masing-masing -->
+                                                                            @elseif (strpos($history->content, 'Membuat Judul Checklist') !== false)
+                                                                                <p class="isian-activity">{{ $history->name }}, telah menambahkan judul {{ $titleChecklists->name }} ke kartu ini</p>
+                                                                            @elseif (strpos($history->content, 'Memperbaharui Judul Checklist') !== false)
+                                                                                <p class="isian-activity">{{ $history->name }}, telah memperbaharui judul {{ $titleChecklists->name }} ke kartu ini</p>
+                                                                            @elseif (strpos($history->content, 'Menghapus Judul Checklist') !== false)
+                                                                                <p class="isian-activity">{{ $history->name }}, telah menghapus judul {{ $titleChecklists->name }} ke kartu ini</p>
+                                                                            <!-- /Berdasarkan kartu masing-masing -->
 
-                                                                        <!-- Berdasarkan judul masing-masing -->
-                                                                        @elseif (strpos($history->content, 'Membuat Checklist') !== false)
-                                                                            <p>{{ $history->name }}, telah menambahkan checklist ke judul {{ $titleChecklists->name }}</p>
-                                                                        @elseif (strpos($history->content, 'Memperbaharui Checklist') !== false)
-                                                                            <p>{{ $history->name }}, telah memperbaharui checklist ke judul {{ $titleChecklists->name }}</p>
-                                                                        @elseif (strpos($history->content, 'Menghapus Checklist') !== false)
-                                                                            <p>{{ $history->name }}, telah menghapus checklist ke judul {{ $titleChecklists->name }}</p>
-                                                                        <!-- /Berdasarkan judul masing-masing -->
+                                                                            <!-- Berdasarkan judul masing-masing -->
+                                                                            @elseif (strpos($history->content, 'Membuat Checklist') !== false)
+                                                                                <p class="isian-activity">{{ $history->name }}, telah menambahkan checklist ke judul {{ $titleChecklists->name }}</p>
+                                                                            @elseif (strpos($history->content, 'Memperbaharui Checklist') !== false)
+                                                                                <p class="isian-activity">{{ $history->name }}, telah memperbaharui checklist ke judul {{ $titleChecklists->name }}</p>
+                                                                            @elseif (strpos($history->content, 'Menghapus Checklist') !== false)
+                                                                                <p class="isian-activity">{{ $history->name }}, telah menghapus checklist ke judul {{ $titleChecklists->name }}</p>
+                                                                            <!-- /Berdasarkan judul masing-masing -->
 
-                                                                        <!-- Berdasarkan cover masing-masing -->
-                                                                        @elseif (strpos($history->content, 'Memperbaharui Cover Kartu') !== false)
-                                                                            <p>{{ $history->name }}, telah memperbaharui cover ke kartu ini</p>
-                                                                        @elseif (strpos($history->content, 'Menghapus Cover Kartu') !== false)
-                                                                            <p>{{ $history->name }}, telah menghapus cover ke kartu ini</p>
-                                                                        <!-- /Berdasarkan cover masing-masing -->
-                                                                    @endif
+                                                                            <!-- Berdasarkan cover masing-masing -->
+                                                                            @elseif (strpos($history->content, 'Memperbaharui Cover Kartu') !== false)
+                                                                                <p class="isian-activity">{{ $history->name }}, telah memperbaharui cover ke kartu ini</p>
+                                                                            @elseif (strpos($history->content, 'Menghapus Cover Kartu') !== false)
+                                                                                <p class="isian-activity">{{ $history->name }}, telah menghapus cover ke kartu ini</p>
+                                                                            <!-- /Berdasarkan cover masing-masing -->
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                                 <div class="waktu-history">
-                                                                    <p><i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i> {{ \Carbon\Carbon::parse($history->created_at)->translatedFormat('j F \p\u\k\u\l h:i A') }}</p>
+                                                                    <p class="isian-activity"><i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i> {{ \Carbon\Carbon::parse($history->created_at)->translatedFormat('j F \p\u\k\u\l h:i A') }}</p>
                                                                 </div>
                                                             @endif
                                                             @if ($history->type === 'comment')
@@ -629,7 +665,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="waktu-history">
-                                                                    <p><i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i> {{ \Carbon\Carbon::parse($history->created_at)->translatedFormat('j F \p\u\k\u\l h:i A') }}</p>
+                                                                    <p class="isian-activity"><i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i> {{ \Carbon\Carbon::parse($history->created_at)->translatedFormat('j F \p\u\k\u\l h:i A') }}</p>
                                                                 </div>
                                                             @endif
                                                         </div>
@@ -665,7 +701,7 @@
                                     <input type="hidden" name="id" value="{{ $perbaharuiKartu->id  }}">
                                     <div class="form-group">
                                         <label>Nama Kartu</label><span class="text-danger">*</span>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $perbaharuiKartu->name  }}" required />
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $perbaharuiKartu->name  }}" placeholder="Masukkan nama kartu" required />
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -685,6 +721,28 @@
         <!-- /Perbaharui Kartu Modal -->
 
         <style>
+            .deleteCard:active {
+                color: #ffffff
+            }
+            .deleteCover:active {
+                color: #ffffff
+            }
+            .fa-pencil:hover{
+                color: #212529;
+            }
+            .fa-pencil:active{
+                color: #fff;
+            }
+            .fa-trash:active{
+                color: #fff;
+            }
+            .margin-bottom-10 {
+                margin-bottom: 10px;
+                margin-top: 5px;
+            }
+            .margin-bottom-0 {
+                margin-bottom: 0px;
+            }
             .icon-trash {
                 color: #626F86;
                 transition: color 0.3s;
@@ -698,8 +756,20 @@
                 color: #e62034;
             }
 
+            .icon-comment {
+                color: #626F86;
+                transition: color 0.3s;
+            }
+
+            .icon-comment:hover {
+                color: #157347;
+            }
+
+            .icon-comment:active {
+                color: #146c43;
+            }
+
             .fa-eye {
-                color: black;
                 cursor: pointer;
             }
             .fa-eye-slash {
@@ -825,7 +895,6 @@
             @foreach($result_tema as $sql_mode => $mode_tema)
                 @if ($mode_tema->tema_aplikasi == 'Gelap')
                     .fa-eye { color: white}
-                    .fa-trash { color: white}
                     p {color: {{ $mode_tema->warna_mode }} !important}
                     .custom-modal .tag-list {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
                     .deskripsi-keterangan {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
@@ -872,6 +941,7 @@
                     .card-cover2-lime {background-color: #4C6B1F;}
                     .card-cover2-pink {background-color: #943D73;}
                     .card-cover2-black {background-color: #596773;}
+                    /* .sidebar-menu li a:hover {color: #ffffff !important} */
                 @endif
             @endforeach
         </style>
@@ -886,7 +956,7 @@
         </script>
         
         <script>
-            document.getElementById('pageTitle').innerHTML = 'Kartu Tim - User | Trello - PT TATI';
+            document.getElementById('pageTitle').innerHTML = 'Kartu Tim - User | Trello - PT TATI ';
         </script>
     @endsection
 @endsection

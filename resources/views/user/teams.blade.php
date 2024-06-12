@@ -215,7 +215,7 @@
         </script>
         
         <script>
-            document.getElementById('pageTitle').innerHTML = 'Tim - User | Trello - PT TATI';
+            document.getElementById('pageTitle').innerHTML = 'Tim - User | Trello - PT TATI ';
         </script>
     @endsection
 @endsection
