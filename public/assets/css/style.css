@@ -14619,3 +14619,11 @@ ul.nav-tabs > li > a {
 .tampilan-info {
 	display: flex;
 }
+
+.kartu-container {
+	max-height: 525px;
+    padding: 0px 8px 0px 45px;
+	margin-top: 0.75rem;
+	margin-bottom: 1rem;
+	overflow: auto;
+}
