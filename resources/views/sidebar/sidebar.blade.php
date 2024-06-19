@@ -6,8 +6,12 @@
                 <li class="sidebar-left">
                     <a href="{{ route('home') }}">
                         <div class="image">
-                            <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="avatar-sidebar" loading="lazy">
-                            <span class="status online"></span>
+                            <img src="{{ URL::to('/assets/images/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="avatar-sidebar" loading="lazy" style="right: 5px;">
+                            @if (Auth::user()->isOnline())
+                                <span class="status online"></span>
+                            @else
+                                <span class="status offline"></span>
+                            @endif
                         </div>
                         <span class="text">{{ Session::get('name') }}</span>
                     </a>

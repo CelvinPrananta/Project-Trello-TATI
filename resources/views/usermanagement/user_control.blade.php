@@ -319,7 +319,7 @@
             border-radius: 50%;
             top: 10px;
             right: 18px;
-            background-color: #a7a7a7;
+            background-color: #f62d51;
             border: 1px solid #fff;
         }
     </style>
@@ -429,7 +429,7 @@
 
         <script src="{{ asset('assets/js/lihatkatasandi.js') }}"></script>
 
-        <script src="{{ asset('assets/js/indicatorkatasandi.js') }}"></script>
+        <script src="{{ asset('assets/js/indicatorkatasandiuser.js') }}"></script>
 
         <script src="{{ asset('assets/js/usercontrol.js') }}"></script>
         
