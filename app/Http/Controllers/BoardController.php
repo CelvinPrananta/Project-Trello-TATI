@@ -664,12 +664,15 @@ class BoardController extends Controller
             DB::table('card_histories')->insert($createComment);
 
             DB::commit();
-            Toastr::success('Anda berhasil memberikan komentar pada kartu!', 'Success');
-            return redirect()->back();
+            $response = [
+                'name' => Auth::user()->name,
+                'content' => $request->content,
+                'created_at' => Carbon::now()->translatedFormat('j F \p\u\k\u\l h:i A')
+            ];
+            return response()->json($response, 200);
         } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Anda gagal memberikan komentar pada kartu!', 'Error');
-            return redirect()->back();
+            return response()->json(['error' => 'Anda gagal memberikan komentar!'], 500);
         }
     }
     // /Menambahkan Komen Admin //
@@ -697,12 +700,15 @@ class BoardController extends Controller
             DB::table('card_histories')->insert($createComment);
 
             DB::commit();
-            Toastr::success('Anda berhasil memberikan komentar pada kartu!', 'Success');
-            return redirect()->back();
+            $response = [
+                'name' => Auth::user()->name,
+                'content' => $request->content,
+                'created_at' => Carbon::now()->translatedFormat('j F \p\u\k\u\l h:i A')
+            ];
+            return response()->json($response, 200);
         } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Anda gagal memberikan komentar pada kartu!', 'Error');
-            return redirect()->back();
+            return response()->json(['error' => 'Anda gagal memberikan komentar!'], 500);
         }
     }
     // /Menambahkan Komen User //
