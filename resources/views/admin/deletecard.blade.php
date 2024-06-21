@@ -15,7 +15,6 @@
                     $('#isianKartu' + id).modal('hide');
                     $('li[data-id="' + cardId + '"]').addClass('hidden');
                     toastr.success('Anda berhasil menghapus kartu!');
-                    console.log('a');
                 },
                 error: function(response) {
                     toastr.error('Anda gagal menghapus kartu!');
