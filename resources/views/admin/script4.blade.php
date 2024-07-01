@@ -94,9 +94,9 @@
         var linkElement = document.querySelector('#formCover-' + cardId);
         if (linkElement) {
             if (cover === 'NULL' || cover === '') {
-                linkElement.innerHTML = '<i class="fa-solid fa-clapperboard"></i> Tambah Cover';
+                linkElement.innerHTML = '<i class="fa-solid fa-clapperboard m-r-5"></i> Tambah Cover';
             } else {
-                linkElement.innerHTML = '<i class="fa-solid fa-clapperboard"></i> Perbaharui Cover';
+                linkElement.innerHTML = '<i class="fa-solid fa-clapperboard m-r-5"></i> Perbaharui Cover';
             }
         }
     }

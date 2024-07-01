@@ -202,11 +202,9 @@
                 <div class="latensi-koneksi" id="network-info">
                     <div class="icon-latensi">
                         <i class="fa-solid fa-wifi" id="wifi-icon"></i>
-                        <i class="fa-solid fa-download icon-download" id="download-icon"></i>
                     </div>
                     <div class="item-latensi">
-                        <p>Koneksi: <span id="rtt"></span> ms</p>
-                        <p>Download: <span id="downlink"></span> Mbps</p>
+                        <p class="text-latensi">Koneksi: <span id="rtt"></span> ms</p>
                     </div>
                 </div>
                 <script src="{{ asset('assets/js/checking-latensi-connection.js') }}"></script>
