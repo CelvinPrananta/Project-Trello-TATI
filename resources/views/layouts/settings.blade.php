@@ -62,6 +62,12 @@
             .bootstrap-datetimepicker-widget table td.hour:hover,
             .bootstrap-datetimepicker-widget table td.minute:hover,
             .bootstrap-datetimepicker-widget table td.second:hover{color: {{ $mode_tema->warna_sistem }} !important}
+            .bg-whites{background-color: {{ $mode_tema->warna_sistem }} !important;}
+            .mention-tag-item:hover{background-color : {{ $mode_tema->warna_sistem }} !important;}
+            .mention-tag-keterangan-item:hover{background-color : {{ $mode_tema->warna_sistem }} !important;}
+            .mention-tag-comment-item:hover{background-color : {{ $mode_tema->warna_sistem }} !important;}
+            .aksi-kolom{background-color: {{ $mode_tema->warna_sistem }} !important;}
+            .add-column{background-color: {{ $mode_tema->warna_sistem }} !important;}
 
             .card-title{color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
             .table{color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
@@ -194,6 +200,10 @@
             .arrow-kanan2{color: {{ $mode_tema->warna_sistem_tulisan }} !important}
             .arrow-kiri{color: {{ $mode_tema->warna_sistem_tulisan }} !important}
             .arrow-kiri2{color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+            .text-gray-400{color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+            .icon-view-team {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+            .icon-view-board {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
+            .text-latensi {color: {{ $mode_tema->warna_sistem_tulisan }} !important}
 
             .apexcharts-xaxistooltip, .apexcharts-yaxistooltip{background: {{ $mode_tema->warna_mode }} !important; color : {{ $mode_tema->warna_sistem_tulisan }} !important;}
             .form-control{background-color: {{ $mode_tema->warna_mode }} !important; color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
@@ -246,6 +256,12 @@
             .dropzone-box-42{background-color: {{ $mode_tema->warna_mode }} !important;}
             .dropzone-box-43{background-color: {{ $mode_tema->warna_mode }} !important;}
             .dropzone-box-44{background-color: {{ $mode_tema->warna_mode }} !important;}
+            .kartu-trello {background-color: {{ $mode_tema->warna_mode }} !important;}
+            .card-trello {background-color: {{ $mode_tema->warna_mode }} !important;}
+            .opsi-hapus-cover{background-color: {{ $mode_tema->warna_mode }} !important;}
+            .fa-circle-check{color: {{ $mode_tema->warna_mode }} !important;}
+            .bg-white{background-color: {{ $mode_tema->warna_mode }} !important;}
+            .bg-gray-100{background-color: {{ $mode_tema->warna_mode }} !important;}
             .boc-edit-form-instruments{background-color: {{ $mode_tema->warna_mode }} !important;}
             .boc-edit-form-fields{background-color: {{ $mode_tema->warna_mode }} !important;}
             .status-persetujuan-user{background-color: {{ $mode_tema->warna_mode }} !important; color: {{ $mode_tema->warna_sistem_tulisan }} !important}
@@ -259,6 +275,9 @@
             .action-button{background: {{ $mode_tema->warna_mode }}}
             .nav-tabs{background-color: {{ $mode_tema->warna_mode }} !important;}
             .profile-img-wrap{background : {{ $mode_tema->warna_mode }} !important;}
+            .mention-tag{background-color : {{ $mode_tema->warna_mode }} !important;}
+            .mention-tag-keterangan{background-color : {{ $mode_tema->warna_mode }} !important;}
+            .mention-tag-comment{background-color : {{ $mode_tema->warna_mode }} !important;}
             .header{background: {{ $mode_tema->warna_mode }} !important; box-shadow: {{ $mode_tema->bayangan_kotak_header }} !important;}
             .btn-white{background-color: {{ $mode_tema->warna_mode }} !important;}
             .btn-outline-secondary{background-color: {{ $mode_tema->warna_mode }} !important;}
@@ -273,6 +292,8 @@
             .form-focus .select2-container--default .select2-selection--single .select2-selection__rendered{background-color: {{ $mode_tema->warna_mode }} !important; color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
             .custom-select{background: {{ $mode_tema->warna_mode }} url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='{{ $mode_tema->warna_sistem_tulisan }}' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") right .75rem center/8px 10px no-repeat !important;}
             .table-striped tbody tr:nth-of-type(odd){background-color: {{ $mode_tema->warna_mode }} !important;}
+            .card-nama{background-color: {{ $mode_tema->warna_mode }} !important; color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
+            .aksi-card-icon{background-color: {{ $mode_tema->warna_mode }} !important; color: #B6C2CF !important;}
 
             .form-control::-webkit-input-placeholder{color: {{ $mode_tema->tabel_tulisan_tersembunyi }} !important;}
             .form-control::-moz-placeholder{color: {{ $mode_tema->tabel_tulisan_tersembunyi }} !important;}
@@ -290,6 +311,9 @@
             .dash-widget-icon{background-color: {{ $mode_tema->ikon_plugin }} !important;}
             .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title{background: {{ $mode_tema->warna_mode_2 }} !important;}
             .select2-container--default .select2-results__option--selected{background-color: {{ $mode_tema->warna_mode_2 }} !important;}
+            .aksi-kolom:active {background-color: #091e421c !important; color: #9fadbc !important;}
+            .opsi-hapus-cover:hover {background-color: #091e4275 !important; color: #9fadbc !important;}
+            .opsi-hapus-cover:active {background-color: #091e4240 !important; color: #9fadbc !important;}
 
             @foreach($result_tema as $sql_user => $aplikasi_tema)
                 @if ($aplikasi_tema->tema_aplikasi == 'Gelap')
@@ -305,6 +329,39 @@
                     .notification-message.noti-read .noti-title{color: #989c9e !important}
                     .boc-edit-form-header{background-color: {{ $mode_tema->warna_dropdown_menu }} !important; border-radius: 0px !important;}
                     .boc-dark .boc-input>label.focused,.boc-light .boc-input>label.focused{color:#039be5 !important}
+                    hr{border-top: 1px solid {{ $mode_tema->warna_sistem_tulisan }} !important}
+                    .text-black {color: white !important}
+                    .bg-slate-100{background-color: {{ $mode_tema->warna_sistem }} !important;}
+                    .fa-ellipsis{color: #B6C2CF !important;}
+                    .aksi-kolom:hover {background-color: #a6c5e229 !important; color: #9fadbc !important;}
+                    .aksi-kolom:active {background-color: #a6c5e241 !important; color: #9fadbc !important;}
+                    .kolom-nama {border-bottom: 3px solid {{ $mode_tema->warna_mode }} !important;}
+                    .aksi-card-icon:hover{background-color: #22272B !important;}
+                    .card-nama{border: 2px solid transparent;transition: border-color 0.3s ease;}
+                    .card-nama:hover{opacity: 1; border-color: #85B8FF;}
+                    .info-status4 .text-status4{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status5 .text-status5{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status6 .text-status6{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status7 .text-status7{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status8 .text-status8{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status9 .text-status9{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status10 .text-status10{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status11 .text-status11{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status12 .text-status12{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status13 .text-status13{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .icon-trash {color: #B6C2CF !important;}
+                    .icon-trash:hover {color: #dc3546e1 !important;}
+                    .icon-trash:active {color: #e62034 !important;}
+                    .icon-comment {color: #B6C2CF !important;}
+                    .icon-comment:hover {color: #157347 !important;}
+                    .icon-comment:active {color: #146c43 !important;}
+                    .isian-history{background: rgb(31 28 54) !important}
+                    .isian-activity{color: white !important}
+                    .mention-tag-container {border-bottom: 1px solid rgba(9, 45, 66, 0.13) !important; background: {{ $mode_tema->warna_sistem }} !important; box-shadow: 0 1px 1px rgba(9, 45, 66, 0.25), 0 0 0 1px rgba(9, 45, 66, 0.08) !important;}
+                    .mention-nama{color: #B6C2CF !important;}
+                    .mention-waktu{color: #8C9BAB !important;}
+                    .isian-mention-tag{background-color: {{ $mode_tema->warna_mode }} !important; color: #B6C2CF !important; box-shadow: 0px 1px 1px #5a5e6f, 0px 0px 1px #464a5b !important;}
+                    .isian-deskripsi{color: white; background-color: #292D3E; border-color: white !important}
 
                     @foreach ($belum_dibaca as $notifikasi_belum_dibaca)
                         #popup-notifikasi_{{ $notifikasi_belum_dibaca->id }} {background: {{ $mode_tema->warna_mode }} !important}
@@ -339,8 +396,9 @@
                 border-color: #e74a3b;
                 color: #fff;
                 border: none;
-                padding: 10px 20px;
-                border-radius: 15px;
+                padding: 3px 20px;
+                border-radius: 7px;
+                font-size: 20px;
             }
 
             #close-popup_{{ $notifikasi_belum_dibaca->id }}:hover {
@@ -351,13 +409,14 @@
             .close-notifikasi {
                 position: absolute;
                 bottom: 20px;
-                left: 40%;
+                left: 41%;
             }
             
             .logo-pttati2 img{
                 position: relative;
                 width: 100px;
-                left: 85%;
+                left: 81.5%;
+                top: 15px;
             }
 
             .noti-time3 {
@@ -390,8 +449,8 @@
                 border-color: #e74a3b;
                 color: #fff;
                 border: none;
-                padding: 0px 5px;
-                border-radius: 20px;
+                padding: 0px 7px 4px 8px;
+                border-radius: 10px;
             }
 
             #close-popup_{{ $notifikasi_dibaca->id }}:hover {
@@ -408,7 +467,8 @@
             .logo-pttati2 img{
                 position: relative;
                 width: 100px;
-                left: 85%;
+                left: 81.5%;
+                top: 15px;
             }
 
             .noti-time3 {
@@ -584,23 +644,82 @@
                                 @endphp
                                     <li class="notification-message noti-unread">
                                         <a href="#" id="open-popup_{{ $notifikasi_belum_dibaca->id }}">
-                                            <div class="media">
-                                                <span class="avatar">
-                                                    <img alt="" src="{{ URL::to('/assets/images/' . $notifikasiDataBelumDibaca->avatar) }}" loading="lazy">
-                                                </span>
-                                                <div class="media-body">
-                                                    <p class="noti-details">
-                                                        <span class="noti-title">
-                                                            <b>{{ $notifikasiDataBelumDibaca->message }} {{ $notifikasiDataBelumDibaca->name }}</b>
-                                                        </span><br>
-                                                            Ada pesan baru untuk anda   !!
-                                                    </p>
-                                                    <p class="noti-time">
-                                                        <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
-                                                        <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
-                                                    </p>
+                                            @if ($notifikasiDataBelumDibaca->message == 'Selamat Ulang Tahun')
+                                                <div class="media">
+                                                    <span class="avatar">
+                                                        <img alt="" src="{{ URL::to('/assets/images/' . $notifikasiDataBelumDibaca->avatar) }}" loading="lazy">
+                                                    </span>
+                                                    <div class="media-body">
+                                                        <p class="noti-details">
+                                                            <span class="noti-title">
+                                                                <b>{{ $notifikasiDataBelumDibaca->message }} {{ $notifikasiDataBelumDibaca->name }}</b>
+                                                            </span><br>
+                                                                Ada pesan baru untuk anda !!
+                                                        </p>
+                                                        <p class="noti-time">
+                                                            <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
+                                                            <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
+                                            @if ($notifikasiDataBelumDibaca->message == 'Mention Tag Description')
+                                                <div class="media">
+                                                    <span class="avatar">
+                                                        <img alt="" src="{{ URL::to('/assets/images/' . $notifikasiDataBelumDibaca->avatar) }}" loading="lazy">
+                                                    </span>
+                                                    <div class="media-body">
+                                                        <p class="noti-details">
+                                                            <span class="noti-title">
+                                                                <b>{{ $notifikasiDataBelumDibaca->message }} <br>{{ $notifikasiDataBelumDibaca->name }}</b>
+                                                                <p style="color: #4999de !important; margin-bottom: -1rem !important;"> Ada pesan baru untuk anda !!</p>
+                                                            </span>
+                                                        </p>
+                                                        <p class="noti-time">
+                                                            <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
+                                                            <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            @if ($notifikasiDataBelumDibaca->message == 'Mention Tag Checklist')
+                                                <div class="media">
+                                                    <span class="avatar">
+                                                        <img alt="" src="{{ URL::to('/assets/images/' . $notifikasiDataBelumDibaca->avatar) }}" loading="lazy">
+                                                    </span>
+                                                    <div class="media-body">
+                                                        <p class="noti-details">
+                                                            <span class="noti-title">
+                                                                <b>{{ $notifikasiDataBelumDibaca->message }} <br>{{ $notifikasiDataBelumDibaca->name }}</b>
+                                                                <p style="color: #4999de !important; margin-bottom: -1rem !important;"> Ada pesan baru untuk anda !!</p>
+                                                            </span>
+                                                        </p>
+                                                        <p class="noti-time">
+                                                            <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
+                                                            <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            @if ($notifikasiDataBelumDibaca->message == 'Mention Tag Comment')
+                                                <div class="media">
+                                                    <span class="avatar">
+                                                        <img alt="" src="{{ URL::to('/assets/images/' . $notifikasiDataBelumDibaca->avatar) }}" loading="lazy">
+                                                    </span>
+                                                    <div class="media-body">
+                                                        <p class="noti-details">
+                                                            <span class="noti-title">
+                                                                <b>{{ $notifikasiDataBelumDibaca->message }} <br>{{ $notifikasiDataBelumDibaca->name }}</b>
+                                                                <p style="color: #4999de !important; margin-bottom: -1rem !important;"> Ada pesan baru untuk anda !!</p>
+                                                            </span>
+                                                        </p>
+                                                        <p class="noti-time">
+                                                            <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
+                                                            <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </a>
                                     </li>
                                 @endforeach
@@ -613,23 +732,82 @@
                                 @endphp
                                     <li class="notification-message noti-read">
                                         <a href="#" id="open-popup_{{ $notifikasi_dibaca->id }}">
-                                            <div class="media">
-                                                <span class="avatar">
-                                                    <img alt="" src="{{ URL::to('/assets/images/' . $notifikasiDataDibaca->avatar) }}" loading="lazy">
-                                                </span>
-                                                <div class="media-body">
-                                                    <p class="noti-details">
-                                                        <span class="noti-title">
-                                                            <b>{{ $notifikasiDataDibaca->message }} {{ $notifikasiDataDibaca->name }}</b>
-                                                        </span><br>
-                                                            Ada pesan baru untuk anda   !!
-                                                    </p>
-                                                    <p class="noti-time">
-                                                        <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
-                                                        <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
-                                                    </p>
+                                            @if ($notifikasiDataDibaca->message == 'Selamat Ulang Tahun')
+                                                <div class="media">
+                                                    <span class="avatar">
+                                                        <img alt="" src="{{ URL::to('/assets/images/' . $notifikasiDataDibaca->avatar) }}" loading="lazy">
+                                                    </span>
+                                                    <div class="media-body">
+                                                        <p class="noti-details">
+                                                            <span class="noti-title">
+                                                                <b>{{ $notifikasiDataDibaca->message }} {{ $notifikasiDataDibaca->name }}</b>
+                                                            </span><br>
+                                                                Ada pesan baru untuk anda !!
+                                                        </p>
+                                                        <p class="noti-time">
+                                                            <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
+                                                            <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
+                                            @if ($notifikasiDataDibaca->message == 'Mention Tag Description')
+                                                <div class="media">
+                                                    <span class="avatar">
+                                                        <img alt="" src="{{ URL::to('/assets/images/' . $notifikasiDataDibaca->avatar) }}" loading="lazy">
+                                                    </span>
+                                                    <div class="media-body">
+                                                        <p class="noti-details">
+                                                            <span class="noti-title">
+                                                                <b>{{ $notifikasiDataDibaca->message }} <br>{{ $notifikasiDataDibaca->name }}</b>
+                                                                <p style="color: #989c9e !important; margin-bottom: -1rem !important;"> Ada pesan baru untuk anda !!</p>
+                                                            </span>
+                                                        </p>
+                                                        <p class="noti-time">
+                                                            <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
+                                                            <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            @if ($notifikasiDataDibaca->message == 'Mention Tag Checklist')
+                                                <div class="media">
+                                                    <span class="avatar">
+                                                        <img alt="" src="{{ URL::to('/assets/images/' . $notifikasiDataDibaca->avatar) }}" loading="lazy">
+                                                    </span>
+                                                    <div class="media-body">
+                                                        <p class="noti-details">
+                                                            <span class="noti-title">
+                                                                <b>{{ $notifikasiDataDibaca->message }} <br>{{ $notifikasiDataDibaca->name }}</b>
+                                                                <p style="color: #989c9e !important; margin-bottom: -1rem !important;"> Ada pesan baru untuk anda !!</p>
+                                                            </span>
+                                                        </p>
+                                                        <p class="noti-time">
+                                                            <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
+                                                            <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            @if ($notifikasiDataDibaca->message == 'Mention Tag Comment')
+                                                <div class="media">
+                                                    <span class="avatar">
+                                                        <img alt="" src="{{ URL::to('/assets/images/' . $notifikasiDataDibaca->avatar) }}" loading="lazy">
+                                                    </span>
+                                                    <div class="media-body">
+                                                        <p class="noti-details">
+                                                            <span class="noti-title">
+                                                                <b>{{ $notifikasiDataDibaca->message }} <br>{{ $notifikasiDataDibaca->name }}</b>
+                                                                <p style="color: #989c9e !important; margin-bottom: -1rem !important;"> Ada pesan baru untuk anda !!</p>
+                                                            </span>
+                                                        </p>
+                                                        <p class="noti-time">
+                                                            <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
+                                                            <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </a>
                                     </li>
                                 @endforeach
@@ -647,19 +825,75 @@
                     $created_at = \Carbon\Carbon::parse($notifikasi_belum_dibaca->created_at);
                     $read_at = \Carbon\Carbon::parse($notifikasi_belum_dibaca->read_at);
                 @endphp
-                <div id="popup-notifikasi_{{ $notifikasi_belum_dibaca->id }}">
+                <div id="popup-notifikasi_{{ $notifikasi_belum_dibaca->id }}" style="width: 575px;">
                     <li class="notification-message noti-unread">
                         <div class="media">
                             <div class="media-body">
                                 <p class="noti-details3"><br>
                                     <a><b>{{ $notifikasiDataBelumDibaca->name }}</b></a><br>
-                                    <a>Surabaya / <span id="tanggal-master"></span> | <span id="waktu-master"></span></a><br>
+                                    <a>Surabaya / <span id="tanggal-master_{{ $notifikasi_belum_dibaca->id }}"></span> | <span id="waktu-master_{{ $notifikasi_belum_dibaca->id }}"></span></a><br>
                                     <a style="color: #808080; font-weight: 500; font-size: 12px">ID Notifikasi: {{ substr($notifikasi_belum_dibaca->id, 0, 8) }}</a>
                                 </p><br>
                                 <p class="noti-details2">
-                                    <i>{{ $notifikasiDataBelumDibaca->message2 }} <b>{{ $notifikasiDataBelumDibaca->message3 }}</b> {{ $notifikasiDataBelumDibaca->message4 }}<br>
-                                    {{ $notifikasiDataBelumDibaca->message5 }}<b>{{ $notifikasiDataBelumDibaca->message6 }}</b><br>
-                                    Kepada <b>{{ $notifikasiDataBelumDibaca->name }}</b> {{ $notifikasiDataBelumDibaca->message7 }}</i>
+                                    @if ($notifikasiDataBelumDibaca->message == 'Selamat Ulang Tahun')
+                                        <i>{{ $notifikasiDataBelumDibaca->message2 }} <b>{{ $notifikasiDataBelumDibaca->message3 }}</b> @if (!empty($notifikasiDataBelumDibaca->message4)) {{ $notifikasiDataBelumDibaca->message4 }} @endif
+                                        @if (!empty($notifikasiDataBelumDibaca->message5)) {{ $notifikasiDataBelumDibaca->message5 }} @endif<b>@if (!empty($notifikasiDataBelumDibaca->message6)) {{ $notifikasiDataBelumDibaca->message6 }} @endif</b>
+                                        Kepada <b>{{ $notifikasiDataBelumDibaca->name }}</b> @if (!empty($notifikasiDataBelumDibaca->message7)) {{ $notifikasiDataBelumDibaca->message7 }} @endif </i>
+                                    @endif
+                                    @if ($notifikasiDataBelumDibaca->message == 'Mention Tag Description')
+                                        <div class="mention-tag-container">
+                                            <div class="header-mention-tag">
+                                                @php
+                                                    $userAvatar = '';
+                                                    if (!empty($notifikasiDataBelumDibaca->message6)) { $user = \App\Models\User::find($notifikasiDataBelumDibaca->message6); if ($user) { $userAvatar = URL::to('/assets/images/' . $user->avatar); } }
+                                                @endphp
+                                                <a href="{{ $userAvatar }}" data-fancybox="mention-foto">
+                                                    <img class="avatar-notif" src="{{ $userAvatar }}" loading="lazy">
+                                                </a>
+                                                <p class="mention-nama">{{ $notifikasiDataBelumDibaca->message4 }}</p>
+                                                <p class="mention-waktu">{{ \Carbon\Carbon::parse($notifikasiDataBelumDibaca->message5)->isoFormat('D MMMM [at] h:mm') }}</p>
+                                            </div>
+                                            <div class="isian-mention-tag">
+                                                {{ $notifikasiDataBelumDibaca->message3 }}
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($notifikasiDataBelumDibaca->message == 'Mention Tag Checklist')
+                                        <div class="mention-tag-container">
+                                            <div class="header-mention-tag">
+                                                @php
+                                                    $userAvatar = '';
+                                                    if (!empty($notifikasiDataBelumDibaca->message6)) { $user = \App\Models\User::find($notifikasiDataBelumDibaca->message6); if ($user) { $userAvatar = URL::to('/assets/images/' . $user->avatar); } }
+                                                @endphp
+                                                <a href="{{ $userAvatar }}" data-fancybox="mention-foto">
+                                                    <img class="avatar-notif" src="{{ $userAvatar }}" loading="lazy">
+                                                </a>
+                                                <p class="mention-nama">{{ $notifikasiDataBelumDibaca->message4 }}</p>
+                                                <p class="mention-waktu">{{ \Carbon\Carbon::parse($notifikasiDataBelumDibaca->message5)->isoFormat('D MMMM [at] h:mm') }}</p>
+                                            </div>
+                                            <div class="isian-mention-tag">
+                                                {{ $notifikasiDataBelumDibaca->message3 }}
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($notifikasiDataBelumDibaca->message == 'Mention Tag Comment')
+                                        <div class="mention-tag-container">
+                                            <div class="header-mention-tag">
+                                                @php
+                                                    $userAvatar = '';
+                                                    if (!empty($notifikasiDataBelumDibaca->message6)) { $user = \App\Models\User::find($notifikasiDataBelumDibaca->message6); if ($user) { $userAvatar = URL::to('/assets/images/' . $user->avatar); } }
+                                                @endphp
+                                                <a href="{{ $userAvatar }}" data-fancybox="mention-foto">
+                                                    <img class="avatar-notif" src="{{ $userAvatar }}" loading="lazy">
+                                                </a>
+                                                <p class="mention-nama">{{ $notifikasiDataBelumDibaca->message4 }}</p>
+                                                <p class="mention-waktu">{{ \Carbon\Carbon::parse($notifikasiDataBelumDibaca->message5)->isoFormat('D MMMM [at] h:mm') }}</p>
+                                            </div>
+                                            <div class="isian-mention-tag">
+                                                {{ $notifikasiDataBelumDibaca->message3 }}
+                                            </div>
+                                        </div>
+                                    @endif
                                 <br><br></p>
                                 <p class="logo-pttati2">
                                     @foreach($result_tema as $sql_user => $aplikasi_tema)
@@ -671,7 +905,6 @@
                                     @endforeach
                                 </p><br>
                                 <p class="noti-time3">
-                                    <b>PT. TATI</b><br>
                                     <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
                                     <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
                                 </p>
@@ -692,19 +925,75 @@
                     $created_at = \Carbon\Carbon::parse($notifikasi_dibaca->created_at);
                     $read_at = \Carbon\Carbon::parse($notifikasi_dibaca->read_at);
                 @endphp
-                <div id="popup-notifikasi_{{ $notifikasi_dibaca->id }}">
+                <div id="popup-notifikasi_{{ $notifikasi_dibaca->id }}" style="width: 575px;">
                     <li class="notification-message noti-unread">
                         <div class="media">
                             <div class="media-body">
                                 <p class="noti-details3"><br>
                                     <a><b>{{ $notifikasiDataDibaca->name }}</b></a><br>
-                                    <a>Surabaya / <span id="tanggal"></span> | <span id="waktu"></span></a><br>
+                                    <a>Surabaya / <span id="tanggal-master_{{ $notifikasi_dibaca->id }}"></span> | <span id="waktu-master_{{ $notifikasi_dibaca->id }}"></span></a><br>
                                     <a style="color: #808080; font-weight: 500; font-size: 12px">ID Notifikasi: {{ substr($notifikasi_dibaca->id, 0, 8) }}</a>
                                 </p><br>
                                 <p class="noti-details2">
-                                    <i>{{ $notifikasiDataDibaca->message2 }} <b>{{ $notifikasiDataDibaca->message3 }}</b> {{ $notifikasiDataDibaca->message4 }}<br>
-                                    {{ $notifikasiDataDibaca->message5 }}<b>{{ $notifikasiDataDibaca->message6 }}</b><br>
-                                    Kepada <b>{{ $notifikasiDataDibaca->name }}</b> {{ $notifikasiDataDibaca->message7 }}</i>
+                                    @if ($notifikasiDataDibaca->message == 'Selamat Ulang Tahun')
+                                        <i>{{ $notifikasiDataDibaca->message2 }} <b>{{ $notifikasiDataDibaca->message3 }}</b> @if (!empty($notifikasiDataDibaca->message4)) {{ $notifikasiDataDibaca->message4 }} @endif
+                                        @if (!empty($notifikasiDataDibaca->message5)) {{ $notifikasiDataDibaca->message5 }} @endif<b>@if (!empty($notifikasiDataDibaca->message6)) {{ $notifikasiDataDibaca->message6 }} @endif</b>
+                                        Kepada <b>{{ $notifikasiDataDibaca->name }}</b> @if (!empty($notifikasiDataDibaca->message7)) {{ $notifikasiDataDibaca->message7 }} @endif </i>
+                                    @endif
+                                    @if ($notifikasiDataDibaca->message == 'Mention Tag Description')
+                                        <div class="mention-tag-container">
+                                            <div class="header-mention-tag">
+                                                @php
+                                                    $userAvatar = '';
+                                                    if (!empty($notifikasiDataDibaca->message6)) { $user = \App\Models\User::find($notifikasiDataDibaca->message6); if ($user) { $userAvatar = URL::to('/assets/images/' . $user->avatar); } }
+                                                @endphp
+                                                <a href="{{ $userAvatar }}" data-fancybox="mention-foto">
+                                                    <img class="avatar-notif" src="{{ $userAvatar }}" loading="lazy">
+                                                </a>
+                                                <p class="mention-nama">{{ $notifikasiDataDibaca->message4 }}</p>
+                                                <p class="mention-waktu">{{ \Carbon\Carbon::parse($notifikasiDataDibaca->message5)->isoFormat('D MMMM [at] h:mm') }}</p>
+                                            </div>
+                                            <div class="isian-mention-tag">
+                                                {{ $notifikasiDataDibaca->message3 }}
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($notifikasiDataDibaca->message == 'Mention Tag Checklist')
+                                        <div class="mention-tag-container">
+                                            <div class="header-mention-tag">
+                                                @php
+                                                    $userAvatar = '';
+                                                    if (!empty($notifikasiDataDibaca->message6)) { $user = \App\Models\User::find($notifikasiDataDibaca->message6); if ($user) { $userAvatar = URL::to('/assets/images/' . $user->avatar); } }
+                                                @endphp
+                                                <a href="{{ $userAvatar }}" data-fancybox="mention-foto">
+                                                    <img class="avatar-notif" src="{{ $userAvatar }}" loading="lazy">
+                                                </a>
+                                                <p class="mention-nama">{{ $notifikasiDataDibaca->message4 }}</p>
+                                                <p class="mention-waktu">{{ \Carbon\Carbon::parse($notifikasiDataDibaca->message5)->isoFormat('D MMMM [at] h:mm') }}</p>
+                                            </div>
+                                            <div class="isian-mention-tag">
+                                                {{ $notifikasiDataDibaca->message3 }}
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($notifikasiDataDibaca->message == 'Mention Tag Comment')
+                                        <div class="mention-tag-container">
+                                            <div class="header-mention-tag">
+                                                @php
+                                                    $userAvatar = '';
+                                                    if (!empty($notifikasiDataDibaca->message6)) { $user = \App\Models\User::find($notifikasiDataDibaca->message6); if ($user) { $userAvatar = URL::to('/assets/images/' . $user->avatar); } }
+                                                @endphp
+                                                <a href="{{ $userAvatar }}" data-fancybox="mention-foto">
+                                                    <img class="avatar-notif" src="{{ $userAvatar }}" loading="lazy">
+                                                </a>
+                                                <p class="mention-nama">{{ $notifikasiDataDibaca->message4 }}</p>
+                                                <p class="mention-waktu">{{ \Carbon\Carbon::parse($notifikasiDataDibaca->message5)->isoFormat('D MMMM [at] h:mm') }}</p>
+                                            </div>
+                                            <div class="isian-mention-tag">
+                                                {{ $notifikasiDataDibaca->message3 }}
+                                            </div>
+                                        </div>
+                                    @endif
                                 <br><br></p>
                                 <p class="logo-pttati2">
                                     @foreach($result_tema as $sql_user => $aplikasi_tema)
@@ -716,7 +1005,6 @@
                                     @endforeach
                                 </p><br>
                                 <p class="noti-time3">
-                                    <b>PT. TATI</b><br>
                                     <i class="fa-solid fa-clock" style="color: #808080;" aria-hidden="true"></i>
                                     <span class="notification-time">{{ $created_at->diffForHumans() }}</span>
                                 </p>
