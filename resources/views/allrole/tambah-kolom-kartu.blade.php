@@ -33,9 +33,11 @@
                             <a href="#" class="dropdown-item" onclick="updateColumnModal(${data.id}, '${data.name}', '${data.updateUrl}');" id="edit-column-${data.id}">
                                 <i class="fa fa-pencil m-r-5"></i> Perbaharui
                             </a>
-                            <a href="#" class="dropdown-item" onclick="deleteColumnModal(${data.id}, '${data.name}', '${data.deleteUrl}');">
-                                <i class='fa fa-trash-o m-r-5'></i> Hapus
-                            </a>
+                            @if (Session::get('role_name') == 'Admin') {
+                                <a href="#" class="dropdown-item" onclick="deleteColumnModal(${data.id}, '${data.name}', '${data.deleteUrl}');">
+                                    <i class='fa fa-trash-o m-r-5'></i> Hapus
+                                </a>
+                            @endif
                         </div>
                     </div>
                     <h5 id="kolomNama${data.id}" class="kolom-nama mb-3 font-semibold text-lgs dark:text-white">${data.name}</h5>
