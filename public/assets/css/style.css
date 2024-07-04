@@ -14159,6 +14159,10 @@ ul.nav-tabs > li > a {
 .tampilan-kolom {
 	display: flex;
 }
+.title-container {
+	display: flex;
+	flex-direction: column;
+}
 .kolom-nama {
 	border-bottom: 3px solid #ffffff;
 	box-shadow: 0px 3px 1px -1px #091e4240;
@@ -14310,6 +14314,7 @@ ul.nav-tabs > li > a {
 	position: relative;
 	display: flex;
 	justify-content: space-between;
+	cursor: pointer;
 }
 .dynamicCheckbox {
 	margin-left: -20px;
@@ -14389,6 +14394,12 @@ ul.nav-tabs > li > a {
 }
 .menu-checklist {
 	margin-top: 10px;
+	cursor: pointer;
+}
+.checklist-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 .gap-5 {
 	gap: 1.25rem !important;
