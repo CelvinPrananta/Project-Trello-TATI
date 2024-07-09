@@ -469,7 +469,7 @@
                                     location.reload();
                                 }, 1000);
                             },
-                            error: function(response) {
+                            error: function(error) {
                                 toastr.error('Terjadi kesalahan saat menghapus anggota tim Anda!');
                             }
                         });

@@ -25,7 +25,7 @@
                     }) : $dataColumnCard->sortBy('id');
                     @endphp
                     @foreach ($sortedDataKolom as $dataKolom)
-                        <div class="kolom-card" id="kolom-card-{{ $dataKolom->id }}" data-id="{{ $dataKolom->id }}" onmouseenter="aksiKolomShow({{ $dataKolom->id }})" onmouseleave="aksiKolomHide({{ $dataKolom->id }})">
+                        <div class="kolom-card hover:scale-105 hover:relative" id="kolom-card-{{ $dataKolom->id }}" data-id="{{ $dataKolom->id }}" onmouseenter="aksiKolomShow({{ $dataKolom->id }})" onmouseleave="aksiKolomHide({{ $dataKolom->id }})">
 
                             {{-- <!-- Tampilan Aksi Edit & Hapus -->
                             <div class="dropdown dropdown-action aksi-kolom" id="aksi-kolom{{ $dataKolom->id }}">
@@ -33,11 +33,14 @@
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item" onclick="updateColumnModal({{ $dataKolom->id }}, '{{ $dataKolom->name }}', '{{ route('updateCol', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}');" id="edit-column-{{ $dataKolom->id }}">
+                                    <a href="#" class="dropdown-item" onclick="updateColumnModal({{ $dataKolom->id }}, '{{ $dataKolom->name }}', '{{ route('updateCol2', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}');" id="edit-column-{{ $dataKolom->id }}">
                                         <i class="fa fa-pencil m-r-5"></i> Perbaharui
                                     </a>
-                                    <a href="#" class="dropdown-item" onclick="deleteColumnModal({{ $dataKolom->id }}, '{{ $dataKolom->name }}', '{{ route('deleteCol', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}');">
+                                    <a href="#" class="dropdown-item" onclick="deleteColumnModal({{ $dataKolom->id }}, '{{ $dataKolom->name }}', '{{ route('deleteCol2', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}');">
                                         <i class='fa fa-trash-o m-r-5'></i> Hapus
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="fa-solid fa-recycle m-r-5"></i> Tempat Sampah
                                     </a>
                                 </div>
                             </div>
@@ -49,8 +52,11 @@
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item" onclick="updateColumnModal({{ $dataKolom->id }}, '{{ $dataKolom->name }}', '{{ route('updateCol', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}');" id="edit-column-{{ $dataKolom->id }}">
+                                    <a href="#" class="dropdown-item" onclick="updateColumnModal({{ $dataKolom->id }}, '{{ $dataKolom->name }}', '{{ route('updateCol2', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}');" id="edit-column-{{ $dataKolom->id }}">
                                         <i class="fa fa-pencil m-r-5"></i> Perbaharui
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="fa-solid fa-recycle m-r-5"></i> Tempat Sampah
                                     </a>
                                 </div>
                             </div>
@@ -72,18 +78,21 @@
                                     <li class="kartu-trello" data-id="{{ $dataKartu->id }}" onmouseenter="aksiKartuShow({{ $dataKartu->id }})" onmouseleave="aksiKartuHide({{ $dataKartu->id }})" style="position: relative;">
                                         
                                         <!-- Tampilan Aksi Edit -->
+                                        <div class="cover-card card-cover2-{{ $dataKartu->pattern }} {{ $dataKartu->pattern ? '' : 'hiddens' }}" id="cover-card-{{ $dataKartu->id }}"></div>
                                         {{-- @if($dataKartu->history->where('content', 'Membuat Kartu')->where('user_id', auth()->user()->id)->isNotEmpty()) --}}
-                                            <div class="cover-card card-cover2-{{ $dataKartu->pattern }} {{ $dataKartu->pattern ? '' : 'hiddens' }}" id="cover-card-{{ $dataKartu->id }}"></div>
                                             <div class="dropdown dropdown-action aksi-card" id="aksi-card{{ $dataKartu->id }}" style="position: absolute !important;">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa-solid fa-pencil fa-sm aksi-card-icon"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="#" class="dropdown-item" onclick="updateCardModal({{ $dataKartu->id }}, '{{ $dataKartu->name }}', '{{ route('perbaharuiKartu', ['card_id' => $dataKartu->id]) }}');" id="edit-card-{{ $dataKartu->id }}">
+                                                    <a href="#" class="dropdown-item" onclick="updateCardModal({{ $dataKartu->id }}, '{{ $dataKartu->name }}', '{{ route('perbaharuiKartu2', ['card_id' => $dataKartu->id]) }}');" id="edit-card-{{ $dataKartu->id }}">
                                                         <i class="fa-regular fa-pen-to-square m-r-5"></i> Perbaharui
                                                     </a>
-                                                    <a href="#" class="dropdown-item" onclick="deleteCardModal2('{{ $dataKartu->id }}', '{{ $dataKartu->name }}', '{{ $dataKolom->name }}', '{{ route('hapusKartu', ['card_id' => $dataKartu->id]) }}');">
+                                                    <a href="#" class="dropdown-item" onclick="deleteCardModal2('{{ $dataKartu->id }}', '{{ $dataKartu->name }}', '{{ $dataKolom->name }}', '{{ route('hapusKartu2', ['card_id' => $dataKartu->id]) }}');">
                                                         <i class='fa fa-trash-o m-r-5'></i> Hapus
+                                                    </a>
+                                                    <a href="#" class="dropdown-item">
+                                                        <i class="fa-regular fa-copy m-r-5"></i> Salin Kartu
                                                     </a>
                                                 </div>
                                             </div>
@@ -247,7 +256,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="addColForm" action="{{ route('addCol', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}" method="POST" onsubmit="addColumnScript(event)">
+                        <form id="addColForm" action="{{ route('addCol2', ['board_id' => $board->id, 'team_id' => $board->team_id]) }}" method="POST" onsubmit="addColumnScript(event)">
                             @csrf
                             <input type="hidden" class="form-control" name="board_id" value="{{ $board->id }}">
                             <input type="hidden" class="form-control" name="team_id" value="{{ $team->id }}">

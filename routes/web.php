@@ -43,8 +43,8 @@ Auth::routes();
 Route::controller(HomeController::class)->group(function () {
     Route::get('/home', 'index')->name('home');
     Route::patch('/update-tema/{id}', 'updateTemaAplikasi')->name('updateTemaAplikasi');
-    Route::get('/notifikasi/dibaca/{id}', 'bacaNotifikasi')->name('notifikasi.dibaca');
-    Route::post('/notifikasi/dibaca/semua', 'bacasemuaNotifikasi')->name('notifikasi.dibaca-semua');
+    Route::post('/notifikasi/dibaca/{id}', 'bacaNotifikasi')->name('bacaNotifikasi');
+    Route::post('/notifikasi/dibaca-semua', 'bacasemuaNotifikasi')->name('bacasemuaNotifikasi');
     Route::get('/ulangtahun', 'ulangtahun')->name('ulangtahun');
     Route::post('/mention-tag-description', 'mentionDescriptionNotification')->name('mention-tag-description');
     Route::post('/mention-tag-checklist', 'mentionChecklistNotification')->name('mention-tag-checklist');

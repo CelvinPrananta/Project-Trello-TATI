@@ -17,7 +17,7 @@
         .then(data => {
             if (data.id) {
                 let newColumn = document.createElement('div');
-                newColumn.classList.add('kolom-card');
+                newColumn.classList.add('kolom-card', 'hover:scale-105', 'hover:relative');
                 newColumn.id = `kolom-card-${data.id}`;
                 newColumn.setAttribute('onmouseenter', 'aksiKolomShow(' + data.id + ')');
                 newColumn.setAttribute('onmouseleave', 'aksiKolomHide(' + data.id + ')');
@@ -36,6 +36,9 @@
                             @if (Session::get('role_name') == 'Admin') {
                                 <a href="#" class="dropdown-item" onclick="deleteColumnModal(${data.id}, '${data.name}', '${data.deleteUrl}');">
                                     <i class='fa fa-trash-o m-r-5'></i> Hapus
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fa-solid fa-recycle m-r-5"></i> Tempat Sampah
                                 </a>
                             @endif
                         </div>
@@ -65,7 +68,7 @@
                 
                 if (cardContainer) {
                     cardContainer.appendChild(newColumn);
-                    toastr.success('Berhasil membuat kolom!');
+                    toastr.success('Anda berhasil membuat kolom!');
 
                     // Menutup modal
                     $('#addCol').modal('hide');
@@ -74,17 +77,17 @@
                     form.reset();
                     
                 } else {
-                    toastr.error('Gagal menemukan kontainer kolom!');
+                    toastr.error('Anda gagal menemukan kontainer kolom!');
                 }
 
             } else {
-                toastr.error('Gagal membuat kolom, silahkan coba lagi!');
+                toastr.error('Anda gagal membuat kolom');
             }
         })
 
         .catch(error => {
             console.error('Kesalahan:', error);
-            toastr.error('Gagal membuat kolom, silahkan coba lagi!');
+            toastr.error('Anda gagal membuat kolom');
         });
     }
     
@@ -129,6 +132,9 @@
                             <a href="#" class="dropdown-item" onclick="deleteCardModal2('${data.card.id}', '${data.card.name}', '${data.column.name}', '${data.card.deleteUrl}');">
                                 <i class='fa fa-trash-o m-r-5'></i> Delete
                             </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fa-regular fa-copy m-r-5"></i> Salin Kartu
+                            </a>
                         </div>
                     </div>
                     <!-- /Tampilan Aksi Edit -->
@@ -169,7 +175,7 @@
                     <!-- /Tampilan Kartu Pengguna -->
                 `;
                 cardContainer.appendChild(newCard);
-                toastr.success('Berhasil membuat kartu!');
+                toastr.success('Anda berhasil membuat kartu!');
 
                 // Memuat Ulang Form Kosongan
                 form.reset();
@@ -188,7 +194,7 @@
                 // End Fitur Buka dan Tutup Tambah Kartu
 
             } else {
-                toastr.error('Gagal menambahkan kartu!');
+                toastr.error('Anda gagal membuat kartu!');
             }
         })
         .catch(error => {
