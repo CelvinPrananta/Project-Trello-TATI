@@ -1,5 +1,5 @@
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    $(document).ready(function(){
         const columnContainer = document.getElementById('cardContainer');
         const sortable = new Sortable(columnContainer, {
             animation: 150,
@@ -23,7 +23,9 @@
             for (let i = 0; i < columnIds.length; i++) {
                 const column = columnIds[i];
                 const id = column.dataset.id;
-                positions[id] = i + 1;
+                if (id !== undefined) {
+                    positions[id] = i + 1;
+                }
             }
 
             fetch('{{ route("perbaharuiPosisiKolom") }}', {

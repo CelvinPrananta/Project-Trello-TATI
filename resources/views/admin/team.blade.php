@@ -508,7 +508,7 @@
         </script>
 
         <script>
-            document.addEventListener('DOMContentLoaded', (event) => {
+            $(document).ready(function() {
                 const addBtn = document.getElementById('add-btn');
                 const addBtn2 = document.getElementById('add-btn2');
                 const emailInput = document.getElementById('inv-email');
@@ -562,7 +562,7 @@
         </script>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
+            $(document).ready(function() {
                 var teamDescription = "{{ $team->description }}";
                 var textarea = document.getElementById("team_description");
                 textarea.value = teamDescription;

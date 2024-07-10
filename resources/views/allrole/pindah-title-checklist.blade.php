@@ -23,7 +23,9 @@
             for (let i = 0; i < titleIds.length; i++) {
                 const title = titleIds[i];
                 const id = title.dataset.id;
-                positions[id] = i + 1;
+                if (id !== undefined) {
+                    positions[id] = i + 1;
+                }
             }
 
             fetch('{{ route("perbaharuiPosisiJudul") }}', {
@@ -57,7 +59,9 @@
             for (let i = 0; i < checklists.length; i++) {
                 const checklist = checklists[i];
                 const id = checklist.dataset.id;
-                positions[id] = i + 1;
+                if (id !== undefined) {
+                    positions[id] = i + 1;
+                }
             }
 
             fetch('{{ route("perbaharuiPosisiCeklist") }}', {

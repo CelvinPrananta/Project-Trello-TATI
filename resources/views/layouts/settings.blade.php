@@ -1097,7 +1097,7 @@
                 });
             });
 
-            document.addEventListener('DOMContentLoaded', function() {
+            $(document).ready(function() {
                 document.getElementById('close-popup_{{ $notifikasi_belum_dibaca->id }}').addEventListener('click', function() {
                     document.querySelector('#popup-notifikasi_{{ $notifikasi_belum_dibaca->id }}').style.display = 'none';
                 });
@@ -1113,7 +1113,7 @@
                 });
             });
 
-            document.addEventListener('DOMContentLoaded', function() {
+            $(document).ready(function() {
                 document.getElementById('close-popup_{{ $notifikasi_dibaca->id }}').addEventListener('click', function() {
                     document.querySelector('#popup-notifikasi_{{ $notifikasi_dibaca->id }}').style.display = 'none';
                 });
