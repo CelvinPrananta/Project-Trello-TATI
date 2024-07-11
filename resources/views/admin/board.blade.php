@@ -50,7 +50,7 @@
                             <h5 id="kolomNama{{ $dataKolom->id }}" class="kolom-nama mb-3 font-semibold text-lgs dark:text-white">{{ $dataKolom->name }}</h5>
                             <!-- /Tampilan Nama Kolom -->
 
-                            <ul class="kartu-container" id="containerCard{{ $dataKolom->id }}">
+                            <ul class="kartu-container" id="containerCard{{ $dataKolom->id }}" data-id="{{ $dataKolom->id }}">
 
                                 <!-- Tampilan Kartu -->
                                 @php

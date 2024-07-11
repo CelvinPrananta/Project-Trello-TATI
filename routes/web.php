@@ -171,6 +171,7 @@ Route::controller(BoardController::class)->group(function () {
     Route::post('/perbaharui/posisi/kartu', 'perbaharuiPosisiKartu')->name('perbaharuiPosisiKartu');
     Route::post('/perbaharui/posisi/judul', 'perbaharuiPosisiJudul')->name('perbaharuiPosisiJudul');
     Route::post('/perbaharui/posisi/ceklist', 'perbaharuiPosisiCeklist')->name('perbaharuiPosisiCeklist');
+    Route::post('/perbaharui/posisi/kartu-ke-kolom', 'perbaharuiPosisiKartuKeKolom')->name('perbaharuiPosisiKartuKeKolom');
 
     // ----------------------------- User ----------------------------- //
     Route::get("user/tim/papan/{team_id}/{board_id}", "showBoard2")->middleware("auth", "auth.session", "boardAccess")->name("board2");
