@@ -14,6 +14,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ChecklistController;
+use App\Http\Controllers\CopyCardController;
 
 // ----------------------------- Menu Sidebar Aktif ----------------------------- //
 function set_active($route) {
@@ -207,4 +208,10 @@ Route::controller(ChecklistController::class)->group(function () {
     Route::post("user/tim/checklist/tambah", "addChecklist2")->name("addChecklist2");
     Route::post("user/tim/checklist/perbaharui", "updateChecklist2")->name("updateChecklist2");
     Route::get('/user/tim/checklist/perbaharui/{title_checklists_id}', 'getProgress2');
+});
+
+// ----------------------------- Copy Card ----------------------------- //
+Route::controller(CopyCardController::class)->group(function () {
+    Route::post('/copy-card/{column_id}/{id}', 'copyCard')->name('copyCard');
+    Route::get('/cards/{id}/total-active-checklists', 'getTotalActiveChecklists');
 });
