@@ -8,6 +8,9 @@
         const lineCount = keterangan.split('\n').length;
         const desiredRows = lineCount + 2;
         $('#keterangan' + id).attr('rows', Math.max(desiredRows, 4));
+
+        // Tandai untuk mencegah pengiriman berulang kali
+        let isSubmitting = false;
         
         // Input keterangan
         $('#keterangan'+id).on('click', function(){
@@ -51,6 +54,7 @@
          $('#addTitle-'+id).on('click', function(){
             $('#titleChecklist'+id).removeClass('hidden');
             $('#saveButtonTitle'+id).removeClass('hidden');
+            $('#makeTemplate'+id).removeClass('hidden');
             $('#cancelButtonTitle'+id).removeClass('hidden');
             $('#iconCheck-'+id).removeClass('hidden');
             $('#addTitle-'+id).addClass('hidden');
@@ -60,6 +64,7 @@
         $('#cancelButtonTitle'+id).on('click', function(){
             $('#titleChecklist'+id).addClass('hidden');
             $('#saveButtonTitle'+id).addClass('hidden');
+            $('#makeTemplate'+id).addClass('hidden');
             $('#cancelButtonTitle'+id).addClass('hidden');
             $('#iconCheck-'+id).addClass('hidden');
             $('#addTitle-'+id).removeClass('hidden');
@@ -68,7 +73,28 @@
         // Form title
         $('#myFormTitle'+id).on('submit', function(event){
             event.preventDefault();
+
+            // Mencegah pengiriman ganda
+            if (isSubmitting) return;
+
+            isSubmitting = true;
             var formData = $(this).serialize();
+
+            // Periksa masukan yang kosong
+            var isEmpty = false;
+            var titleField = $('#titleChecklist'+id);
+            if (titleField.val().trim() === '') {
+                isEmpty = true;
+            }
+
+            if (isEmpty) {
+                toastr.error('Bidang judul tidak boleh kosong!');
+
+                // Setel ulang tanda
+                isSubmitting = false;
+                return;
+            }
+            
             $.ajax({
                 type: 'POST',
                 url: "{{ route('addTitle') }}",
@@ -80,6 +106,7 @@
 
                     $('#titleChecklist'+id).addClass('hidden');
                     $('#saveButtonTitle'+id).addClass('hidden');
+                    $('#makeTemplate'+id).addClass('hidden');
                     $('#cancelButtonTitle'+id).addClass('hidden');
                     $('#iconCheck-'+id).addClass('hidden');
                     $('#addTitle-'+id).removeClass('hidden');
@@ -93,10 +120,10 @@
                                                 @csrf
                                                     <input type="hidden" id="title_id" name="title_id" value="${response.titlechecklist.id}">
                                                     <input type="hidden" id="card_id" name="card_id" value="${response.titlechecklist.cards_id}">
-                                                    <input type="text" class="isian-title border border-1 border-darks w-402 p-2 rounded-xl" style="font-size: 17px" id="titleChecklistUpdate${response.titlechecklist.id}" name="titleChecklistUpdate" placeholder="Enter a title" value="${response.titlechecklist.name}">
+                                                    <input type="text" class="isian-title border border-1 border-darks w-402 p-2 rounded-xl" style="font-size: 17px" id="titleChecklistUpdate${response.titlechecklist.id}" name="titleChecklistUpdate" placeholder="Masukkan Judul" value="${response.titlechecklist.name}">
                                                     <div class="aksi-update-title gap-2">
-                                                        <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonTitleUpdate${response.titlechecklist.id}">Save</button>
-                                                        <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButtonTitleUpdate${response.titlechecklist.id}">Cancel</button>
+                                                        <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonTitleUpdate${response.titlechecklist.id}">Simpan</button>
+                                                        <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButtonTitleUpdate${response.titlechecklist.id}">Batal</button>
                                                     </div>
                                             </form>
 
@@ -109,7 +136,7 @@
                                                         <button type="submit" style="border: none; background: none; padding: 0;">
                                                             <div class="info-status5">
                                                                 <i class="fa-solid fa-trash fa-lg icon-trash" @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white;" @endif @endforeach></i>
-                                                                <span class="text-status5"><b>Delete Title's</b></span>
+                                                                <span class="text-status5"><b>Hapus Judul</b></span>
                                                             </div>
                                                         </button>
                                                     </div>
@@ -137,20 +164,23 @@
                                                 <input type="hidden" id="card_id" name="card_id" value="${response.titlechecklist.cards_id}">
                                                 <div class="header-tambah-checklist flex gap-4">
                                                     <i class="fa-xl"></i>
-                                                    <input onclick="mentionTags('checklist${response.titlechecklist.id}')" type="text" class="tambah-baru-checklist border border-1 border-dark w-407s p-2 rounded-xl hidden" id="checklist${response.titlechecklist.id}" name="checklist" placeholder="Enter a checklist" required>
+                                                    <input onclick="mentionTags('checklist${response.titlechecklist.id}')" type="text" class="tambah-baru-checklist border border-1 border-dark w-407s p-2 rounded-xl hidden" id="checklist${response.titlechecklist.id}" name="checklist" placeholder="Masukkan nama checklist" required>
                                                     <div class="mention-tag" id="mention-tag-checklist${response.titlechecklist.id}"></div>
                                                 </div>
                                                 <div class="aksi-update-checklist gap-2">
-                                                    <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonChecklist${response.titlechecklist.id}">Save</button>
-                                                    <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButtonChecklist${response.titlechecklist.id}">Cancel</button>
+                                                    <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="saveButtonChecklist${response.titlechecklist.id}">Simpan</button>
+                                                    <button type="button" class="btn btn-outline-danger icon-keterangan hidden" id="cancelButtonChecklist${response.titlechecklist.id}">Batal</button>
                                                 </div>
                                         </form>
 
-                                        <button type="button" class="btn btn-outline-info" id="AddChecklist${response.titlechecklist.id}">Add an item</button>
+                                        <button type="button" class="btn btn-outline-info" id="AddChecklist${response.titlechecklist.id}">Tambah Item</button>
                                         <!-- Tambah baru checklist -->
 
                                     </div>`;
                     $('#titleContainer').append(newForm);
+
+                    // Setel ulang tanda
+                    isSubmitting = false;
 
                     // Form Pindah Title & Checklist
                     const titleContainer = document.getElementById('titleContainer');
@@ -274,6 +304,11 @@
                     // Form Perbaharui Judul
                     $('#myFormTitleUpdate'+title_id).on('submit', function(event) {
                         event.preventDefault();
+
+                        // Mencegah pengiriman ganda
+                        if (isSubmitting) return;
+
+                        isSubmitting = true;
                         var formData = $(this).serialize();
                         $.ajax({
                             type: 'POST',
@@ -284,9 +319,15 @@
                                 $('#cancelButtonTitleUpdate'+title_id).addClass('hidden');
                                 toastr.success('Anda berhasil memperbaharui judul!');
                                 localStorage.clear();
+
+                                // Setel ulang tanda
+                                isSubmitting = false;
                             },
                             error: function(error){
                                 toastr.error('Anda gagal memperbaharui judul!');
+
+                                // Setel ulang tanda
+                                isSubmitting = false;
                             }
                         });
                     });
@@ -305,9 +346,21 @@
                                 data: formData,
                                 success: function(response) {
                                     localStorage.setItem('modal_id', response.card_id);
-                                    // location.reload();
                                     // Menghilangkan Title Checklist //
-                                    $('#' + formId).closest('.menu-checklist').hide();
+                                    $('#' + formId).closest('.menu-checklist').remove();
+
+                                    // Perbarui visibilitas tautan Pulihkan Judul & Checklist
+                                    var cardId = response.cardId;
+                                    var softDeletedTitle = response.softDeletedTitle;
+                                    var softDeletedChecklist = response.softDeletedChecklist;
+                                    var recoverTitleChecklist = $('#recover-title-checklist-' + cardId);
+
+                                    if (softDeletedTitle > 0 || softDeletedChecklist > 0) {
+                                        recoverTitleChecklist.show();
+                                    } else {
+                                        recoverTitleChecklist.hide();
+                                    }
+                                    
                                     toastr.success('Anda berhasil menghapus judul!');
 
                                     // Show modal after create title
@@ -344,17 +397,25 @@
                     // Form tambah checklist
                     $('#myFormChecklist'+title_id).on('submit', function(event) {
                         event.preventDefault();
+
+                        // Mencegah pengiriman ganda
+                        if (isSubmitting) return;
+
+                        isSubmitting = true;
                         var formData = $(this).serialize();
 
                         // Periksa masukan yang kosong
                         var isEmpty = false;
-                        $(this).find('input, textarea').each(function() {
+                        $('#myFormChecklist' + title_id).find('input').each(function() {
                             if ($(this).val().trim() === '') {
                                 isEmpty = true;
                             }
                         });
                         if (isEmpty) {
-                            toastr.error('Anda gagal membuat checklist!');
+                            toastr.error('Bidang checklist tidak boleh kosong!');
+
+                            // Setel ulang tanda
+                            isSubmitting = false;
                             return;
                         }
                         
@@ -377,12 +438,12 @@
                                                         <label class="dynamicCheckboxLabel border border-1 border-darks w-402 p-2 rounded-xl ${response.checklist.is_active ? 'strike-through' : ''}" id="labelCheckbox-${response.checklist.id}" for="labelCheckbox-${response.checklist.id}">${response.checklist.name}</label>
                                                         <input type="hidden" id="checklist_id" name="checklist_id" value="${response.checklist.id}">
                                                         <input type="hidden" id="card_id" name="card_id" value="${response.titlechecklist.cards_id}">
-                                                        <input onclick="mentionTags4('checkbox-${response.checklist.id}')" type="text" class="dynamicCheckboxValue border border-1 border-darks w-402 p-2 rounded-xl hidden" id="checkbox-${response.checklist.id}" name="checkbox-${response.checklist.id}" value="${response.checklist.name}" placeholder="Enter a checklist">
+                                                        <input onclick="mentionTags4('checkbox-${response.checklist.id}')" type="text" class="dynamicCheckboxValue border border-1 border-darks w-402 p-2 rounded-xl hidden" id="checkbox-${response.checklist.id}" name="checkbox-${response.checklist.id}" value="${response.checklist.name}" placeholder="Masukkan Checklist">
                                                         <div class="mention-tag" id="mention-tag-checkbox${response.checklist.id}"></div>
 
-                                                        <div class="aksi-update-checklist gap-2 margin-bottom-0">
-                                                            <button type="button" class="saves btn btn-outline-info hidden" id="saveButtonChecklistUpdate-${response.checklist.id}">Save</button>
-                                                            <button type="button" class="cancels btn btn-outline-danger hidden" id="cancelButtonChecklistUpdate-${response.checklist.id}">Cancel</button>
+                                                        <div onclick="checklistUpdate(${response.checklist.id})" class="aksi-update-checklist2 gap-2 margin-bottom-0" id="checklist-${response.checklist.id}">
+                                                            <button type="button" class="saves btn btn-outline-info hidden" id="saveButtonChecklistUpdate-${response.checklist.id}">Simpan</button>
+                                                            <button type="button" class="cancels btn btn-outline-danger hidden" id="cancelButtonChecklistUpdate-${response.checklist.id}">Batal</button>
                                                         </div>
                                                     </form>
                                                     <form id="myFormChecklistDelete${response.checklist.id}" method="POST">
@@ -394,16 +455,22 @@
                                                             <button type="button" class="deletes" id="deleteButtonChecklist-${response.checklist.id}" style="border: none; background: none; padding: 0;">
                                                                 <div class="info-status6">
                                                                     <i class="fa-solid fa-trash fa-lg icon-trash" @foreach($result_tema as $sql_mode => $mode_tema) @if ($mode_tema->tema_aplikasi == 'Gelap') style="color: white;" @endif @endforeach></i>
-                                                                    <span class="text-status6"><b>Delete Checklist</b></span>
+                                                                    <span class="text-status6"><b>Hapus Checklist</b></span>
                                                                 </div>
                                                             </button>
                                                         </div>
                                                     </form>
                                                 </div>`;
                                 $('#checklist-container-'+title_id).append(newForm);
+
+                                // Setel ulang tanda
+                                isSubmitting = false;
                             },
                             error: function(error){
                                 toastr.error('Anda gagal membuat checklist!');
+
+                                // Setel ulang tanda
+                                isSubmitting = false;
                             }
                         });
                     });
@@ -456,18 +523,26 @@
                     $(document).off('click', '.saves');
                     $(document).on('click', '.saves', function(event) {
                         var id = $(this).attr('id').split('-');
-                        event.preventDefault(); 
+                        event.preventDefault();
+
+                        // Mencegah pengiriman ganda
+                        if (isSubmitting) return;
+
+                        isSubmitting = true;
                         var formData = $('#myFormChecklistUpdate' + id[1]).serialize();
 
                         // Periksa masukan yang kosong
                         var isEmpty = false;
-                        $('#myFormChecklistUpdate' + id).find('input, textarea').each(function() {
+                        $('#myFormChecklistUpdate' + id).find('input').each(function() {
                             if ($(this).val().trim() === '') {
                                 isEmpty = true;
                             }
                         });
                         if (isEmpty) {
-                            toastr.error('Anda gagal memperbaharui checklist!');
+                            toastr.error('Bidang checklist tidak boleh kosong!');
+
+                            // Setel ulang tanda
+                            isSubmitting = false;
                             return;
                         }
                         
@@ -483,15 +558,25 @@
                                 $('#cancelButtonChecklistUpdate-'+response.checklist.id).addClass('hidden');
                                 toastr.success('Anda berhasil memperbaharui checklist!');
                                 localStorage.clear();
+
+                                // Setel ulang tanda
+                                isSubmitting = false;
                             },
                             error: function(error){
                                 toastr.error('Anda gagal memperbaharui checklist!');
+
+                                // Setel ulang tanda
+                                isSubmitting = false;
                             }
                         });
                     });
 
                     // Form Perbaharui Checklist
                     function formChecklist(id) {
+                        // Mencegah pengiriman ganda
+                        if (isSubmitting) return;
+
+                        isSubmitting = true;
                         var formData = $('#myFormChecklistUpdate' + id).serialize();
                         $.ajax({
                             type: 'POST',
@@ -506,9 +591,15 @@
                                 toastr.success('Anda berhasil memperbaharui checklist!');
                                 progressBar(response.titlechecklist.id, response.titlechecklist.percentage);
                                 localStorage.clear();
+
+                                // Setel ulang tanda
+                                isSubmitting = false;
                             },
                             error: function(error){
                                 toastr.error('Anda gagal memperbaharui checklist!');
+
+                                // Setel ulang tanda
+                                isSubmitting = false;
                             }
                         });
                     }
@@ -526,6 +617,19 @@
                             success: function(response){
                                 // Hapus Section Checklist
                                 $('#section-checklist-' + id[1]).remove();
+
+                                // Perbarui visibilitas tautan Pulihkan Judul & Checklist
+                                var cardId = response.cardId;
+                                var softDeletedTitle = response.softDeletedTitle;
+                                var softDeletedChecklist = response.softDeletedChecklist;
+                                var recoverTitleChecklist = $('#recover-title-checklist-' + cardId);
+
+                                if (softDeletedTitle > 0 || softDeletedChecklist > 0) {
+                                    recoverTitleChecklist.show();
+                                } else {
+                                    recoverTitleChecklist.hide();
+                                }
+                                
                                 progressBar(response.titlechecklist.id, response.titlechecklist.percentage);
                                 toastr.success('Anda berhasil menghapus checklist!');
                             },
@@ -536,31 +640,42 @@
                     });
 
                     // Tambahkan key Enter untuk validasi input dan menyimpan checklist
-                    $(document).on('keypress', function(e) {
-                        if(e.which == 13) {
-                            var activeElement = $(document.activeElement);
-                            if (activeElement.is('input') || activeElement.is('textarea')) {
-                                var form = activeElement.closest('form');
-                                var isEmpty = false;
+                    $(document).ready(function() {
+                        $(document).on('keypress', function(e) {
+                            if (e.which == 13) {
+                                var activeElement = $(document.activeElement);
+                                if (activeElement.is('input') || activeElement.is('textarea')) {
+                                    var form = activeElement.closest('form');
 
-                                form.find('input, textarea').each(function() {
-                                    if ($(this).val().trim() === '') {
-                                        isEmpty = true;
+                                    // Cegah pengiriman form secara default
+                                    e.preventDefault();
+
+                                    if (form.attr('id').startsWith('myFormChecklistUpdate')) {
+                                        form.find('.saves').click();
+                                    } else {
+                                        form.submit();
                                     }
-                                });
-
-                                if (isEmpty) {
-                                    toastr.error('Anda gagal memperbaharui checklist!');
-                                    return false;
-                                }
-
-                                // Picu klik tombol simpan jika dalam bentuk pembaruan
-                                if (form.attr('id').startsWith('myFormChecklistUpdate')) {
-                                    form.find('.saves').click();
-                                    return false;
                                 }
                             }
-                        }
+                        });
+
+                        // Tandai untuk mencegah pengiriman berulang kali
+                        let isSubmitting = false;
+
+                        $('form').on('submit', function(event) {
+                            const form = $(this);
+                            if (form.attr('id').startsWith('myFormChecklistUpdate')) {
+                                form.find('.saves').click();
+                                toastr.success('Anda berhasil memperbaharui checklist!');
+                                event.preventDefault();
+                            }
+                        });
+
+                        $('.saves').on('click', function() {
+
+                            // Setel ulang tanda
+                            isSubmitting = false;
+                        });
                     });
 
                     // Proses dari Progress Bar
@@ -950,4 +1065,31 @@
             
         }
     });
+</script>
+
+<script>
+    function checklistUpdate(id) {
+        $(document).ready(function() {
+            const dynamicCheckboxValue = document.getElementById(`checkbox-${id}`);
+            const aksiUpdateChecklist = document.getElementById(`checklist-${id}`);
+            const saveButton = document.getElementById(`saveButtonChecklistUpdate-${id}`);
+            const cancelButton = document.getElementById(`cancelButtonChecklistUpdate-${id}`);
+            
+
+            dynamicCheckboxValue.addEventListener('click', function () {
+                aksiUpdateChecklist.style.marginBottom = '10px';
+                aksiUpdateChecklist.style.marginTop = '5px';
+            });
+
+            saveButton.addEventListener('click', function () {
+                aksiUpdateChecklist.style.marginBottom = '0';
+                aksiUpdateChecklist.style.marginTop = '0';
+            });
+
+            cancelButton.addEventListener('click', function () {
+                aksiUpdateChecklist.style.marginBottom = '0';
+                aksiUpdateChecklist.style.marginTop = '0';
+            });
+        });
+    }
 </script>

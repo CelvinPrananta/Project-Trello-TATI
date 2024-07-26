@@ -1,6 +1,15 @@
 <script>
     function addColumnScript(event) {
+
+        // Tandai untuk mencegah pengiriman berulang kali
+        let isSubmitting = false;
+
         event.preventDefault();
+
+        // Mencegah pengiriman ganda
+        if (isSubmitting) return;
+        isSubmitting = true;
+
         let form = document.getElementById('addColForm');
         let formData = new FormData(form);
         let url = form.getAttribute('action');
@@ -33,12 +42,12 @@
                             <a href="#" class="dropdown-item" onclick="updateColumnModal(${data.id}, '${data.name}', '${data.updateUrl}');" id="edit-column-${data.id}">
                                 <i class="fa fa-pencil m-r-5"></i> Perbaharui
                             </a>
+                            <a href="#" class="dropdown-item recover-kartu-link" id="recover-kartu-link-${data.id}" data-toggle="modal" data-target="#pulihkanKartuModal" data-column-id="${data.id}" style="${data.softDeletedCards > 0 ? '' : 'display: none;'}">
+                                <i class="fa-solid fa-recycle m-r-5"></i> Tempat Sampah Kartu
+                            </a>
                             @if (Session::get('role_name') == 'Admin') {
                                 <a href="#" class="dropdown-item" onclick="deleteColumnModal(${data.id}, '${data.name}', '${data.deleteUrl}');">
                                     <i class='fa fa-trash-o m-r-5'></i> Hapus
-                                </a>
-                                <a href="#" class="dropdown-item">
-                                    <i class="fa-solid fa-recycle m-r-5"></i> Tempat Sampah
                                 </a>
                             @endif
                         </div>
@@ -83,16 +92,31 @@
             } else {
                 toastr.error('Anda gagal membuat kolom');
             }
+
+            // Setel ulang tanda
+            isSubmitting = false;
         })
 
         .catch(error => {
             console.error('Kesalahan:', error);
             toastr.error('Anda gagal membuat kolom');
+
+            // Setel ulang tanda
+            isSubmitting = false;
         });
     }
     
     function addCardScript(event, columnId) {
+
+        // Tandai untuk mencegah pengiriman berulang kali
+        let isSubmitting = false;
+
         event.preventDefault();
+
+        // Mencegah pengiriman ganda
+        if (isSubmitting) return;
+        isSubmitting = true;
+
         let form = document.getElementById('addCardForm' + columnId);
         let formData = new FormData(form);
         let url = form.getAttribute('action');
@@ -108,7 +132,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                let cardContainer = document.getElementById('containerCard' + columnId);
+                let cardContainer = document.getElementById('containerCard' + data.column.id);
                 let newCard = document.createElement('li');
                 newCard.classList.add('kartu-trello');
                 newCard.setAttribute('data-id', data.card.id);
@@ -127,12 +151,12 @@
 
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="#" class="dropdown-item" onclick="updateCardModal(${data.card.id}, '${data.card.name}', '${data.card.updateUrl}');" id="edit-card-${data.card.id}">
-                                <i class="fa-regular fa-pen-to-square m-r-5"></i> Edit
+                                <i class="fa-regular fa-pen-to-square m-r-5"></i> Perbaharui
                             </a>
                             <a href="#" class="dropdown-item" onclick="deleteCardModal2('${data.card.id}', '${data.card.name}', '${data.column.name}', '${data.card.deleteUrl}');">
-                                <i class='fa fa-trash-o m-r-5'></i> Delete
+                                <i class='fa fa-trash-o m-r-5'></i> Hapus
                             </a>
-                            <a href="#" class="dropdown-item" onclick="copyCardModal('${data.card.id}', '${data.card.name}', '${data.column.id}', '${data.card.copyCardUrl}');" id="copy-card-${data.card.id}">
+                            <a href="#" class="dropdown-item" onclick="copyCardModal('${data.card.id}', '${data.card.name}', '${data.card.copyCardUrl}');" id="copy-card-${data.card.id}">
                                 <i class="fa-regular fa-copy m-r-5"></i> Salin Kartu
                             </a>
                         </div>
@@ -155,7 +179,7 @@
                                                 @endif
                                             @endforeach">
                                         </i>
-                                        <span class="text-status8"><b>This card has a description.</b></span>
+                                        <span class="text-status8"><b>Kartu ini memiliki deskripsi.</b></span>
                                     </div>` : `
                                     <div class="info-status8 hidden" id="descriptionStatus${data.card.id}">
                                         <i class="fa-solid fa-align-left icon-deskripsi-light
@@ -165,7 +189,7 @@
                                                 @endif
                                             @endforeach">
                                         </i>
-                                        <span class="text-status8"><b>This card has a description.</b></span>
+                                        <span class="text-status8"><b>Kartu ini memiliki deskripsi.</b></span>
                                     </div>`}
                                 <!-- /Muncul apabila terdapat deskripsi pada kartu -->
 
@@ -306,19 +330,25 @@
                 let style = cardTrello.getAttribute("class");
                 if (style.includes('flex')) {
                     cardTrello.classList.remove("flex");
-                    btnadd.innerHTML = "<i class='fa-solid fa-plus'></i> Add a card...";
+                    btnadd.innerHTML = "<i class='fa-solid fa-plus'></i> Tambah Kartu...";
                 } else {
                     cardTrello.classList.add("flex");
-                    btnadd.innerHTML = "Cancel";
+                    btnadd.innerHTML = "Batal";
                 }
                 // End Fitur Buka dan Tutup Tambah Kartu
 
             } else {
                 toastr.error('Anda gagal membuat kartu!');
             }
+
+            // Setel ulang tanda
+            isSubmitting = false;
         })
         .catch(error => {
             console.error('Kesalahan:', error);
+
+            // Setel ulang tanda
+            isSubmitting = false;
         });
     }
 </script>

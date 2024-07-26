@@ -51,6 +51,15 @@
                         <a href="#" class="dropdown-item" onclick="deleteCardModal('{{ $isianKartu->id }}', '{{ $isianKartu->name }}', '{{ $dataKolom->name }}', '{{ route('hapusKartu2', ['card_id' => $isianKartu->id]) }}');">
                             <i class='fa fa-trash-o m-r-5'></i> Hapus Kartu
                         </a>
+                        @php
+                            $softDeletedTitle = $isianKartu->titleChecklists()->onlyTrashed()->count();
+                            $softDeletedChecklist = \App\Models\Checklists::onlyTrashed()->whereHas('titleChecklist', function ($query) use ($isianKartu) {$query->where('cards_id', $isianKartu->id);})->count();
+                            $displayStyle = ($softDeletedTitle > 0 || $softDeletedChecklist > 0) ? '' : 'display: none;';
+                        @endphp
+                        <a href="#" onclick="recoverTitleChecklistModal('{{ $isianKartu->id }}')" class="dropdown-item recover-title-checklist" id="recover-title-checklist-{{ $isianKartu->id }}" data-card-id="{{ $isianKartu->id }}" style="{{ $displayStyle }}">
+                            <i class="fa-solid fa-recycle m-r-5"></i> Tempat Sampah Judul / Checklist
+                        </a>
+                        @include('allrole.memuat-modal-pulihkan-title-checklist')
                     </div>
                 </div>
                 <span class="text-status4" style="line-height: 20px"><b>Hapus / Cover</b></span>
@@ -130,6 +139,31 @@
                 </div>
             </div>
         </form>
+
+        <!-- Membuat Template Judul Checklist -->
+        <div class="template-title">
+            <form id="makeTemplateForm{{ $isianKartu->id }}" method="POST">
+                @csrf
+                <input type="hidden" id="cards_id" name="cards_id" value="{{ $isianKartu->id }}">
+                <input type="hidden" name="name[]" value="TARGET MINGGUAN">
+                <input type="hidden" name="name[]" value="SENIN">
+                <input type="hidden" name="name[]" value="SELASA">
+                <input type="hidden" name="name[]" value="RABU">
+                <input type="hidden" name="name[]" value="KAMIS">
+                <input type="hidden" name="name[]" value="JUM'AT">
+                <button type="submit" class="btn btn-outline-info icon-keterangan hidden" id="makeTemplate{{ $isianKartu->id }}">
+                    <div class="info-status20">
+                        <i class="fa-solid fa-book"></i> Membuat Template
+                        <span class="text-status20">
+                            <b>DATA TEMPLATE :<br>1. TARMING <br>2. SENIN <br>3. SELASA <br>4. RABU <br>5. KAMIS <br>6. JUM'AT</b>
+                        </span>
+                    </div>
+                </button>
+            </form>
+        </div>
+        @include('allrole.template-title')
+        <!-- /Membuat Template Judul Checklist -->
+        
         <div class="tambah-checklist">
             <button type="button" class="btn btn-outline-info icon-item" id="addTitle-{{ $isianKartu->id }}"><i class="fa-regular fa-square-check fa-lg"></i> Tambah Checklist</button>
         </div>
@@ -222,7 +256,7 @@
                                 @include('user.script8')
 
                                 <!-- Aksi Update Checklist -->
-                                <div class="aksi-update-checklist gap-2 margin-bottom-0" id="checklist-{{ $checklists->id }}">
+                                <div onclick="checklistUpdate({{ $checklists->id }})" class="aksi-update-checklist2 gap-2 margin-bottom-0" id="checklist-{{ $checklists->id }}">
                                     <button type="submit" class="saves btn btn-outline-info hidden" id="saveButtonChecklistUpdate-{{ $checklists->id }}">Simpan</button>
                                     <button type="button" class="cancels btn btn-outline-danger hidden" id="cancelButtonChecklistUpdate-{{ $checklists->id }}">Batal</button>
                                 </div>
@@ -368,6 +402,10 @@
                                                     <p class="isian-activity">{{ $history->name }}, telah menambahkan {{ $card->name }} ke kolom ini</p>
                                                 @elseif (strpos($history->content, 'Memperbaharui Kartu') !== false)
                                                     <p class="isian-activity">{{ $history->name }}, telah memperbaharui {{ $card->name }} ke kolom ini</p>
+                                                @elseif (strpos($history->content, 'Menghapus Kartu') !== false)
+                                                    <p class="isian-activity">{{ $history->name }}, telah menghapus {{ $card->name }} ke kolom ini</p>
+                                                @elseif (strpos($history->content, 'Memulihkan Kartu') !== false)
+                                                    <p class="isian-activity">{{ $history->name }}, telah memulihkan {{ $card->name }} ke kolom ini</p>
                                                 @elseif (strpos($history->content, 'Memperbaharui Keterangan Kartu') !== false)
                                                     <p class="isian-activity">{{ $history->name }}, telah memperbaharui keterangan kartu {{ $card->name }} ke kolom ini</p>
                                                 <!-- /Berdasarkan kolom masing-masing -->
@@ -379,6 +417,10 @@
                                                     <p class="isian-activity">{{ $history->name }}, telah memperbaharui judul {{ $titleChecklists->name }} ke kartu ini</p>
                                                 @elseif (strpos($history->content, 'Menghapus Judul Checklist') !== false)
                                                     <p class="isian-activity">{{ $history->name }}, telah menghapus judul {{ $titleChecklists->name }} ke kartu ini</p>
+                                                @elseif (strpos($history->content, 'Memulihkan Judul Checklist') !== false)
+                                                    <p class="isian-activity">{{ $history->name }}, telah memulihkan judul {{ $titleChecklists->name }} ke kartu ini</p>
+                                                @elseif (strpos($history->content, 'Menghapus Judul Checklist Permanen') !== false)
+                                                    <p class="isian-activity">{{ $history->name }}, telah menghapus permanen judul {{ $titleChecklists->name }} ke kartu ini</p>
                                                 <!-- /Berdasarkan kartu masing-masing -->
 
                                                 <!-- Berdasarkan judul masing-masing -->
@@ -388,6 +430,10 @@
                                                     <p class="isian-activity">{{ $history->name }}, telah memperbaharui checklist ke judul {{ $titleChecklists->name }}</p>
                                                 @elseif (strpos($history->content, 'Menghapus Checklist') !== false)
                                                     <p class="isian-activity">{{ $history->name }}, telah menghapus checklist ke judul {{ $titleChecklists->name }}</p>
+                                                @elseif (strpos($history->content, 'Memulihkan Checklist') !== false)
+                                                    <p class="isian-activity">{{ $history->name }}, telah memulihkan checklist ke judul {{ $titleChecklists->name }}</p>
+                                                @elseif (strpos($history->content, 'Menghapus Checklist Permanen') !== false)
+                                                    <p class="isian-activity">{{ $history->name }}, telah menghapus permanen checklist ke judul {{ $titleChecklists->name }}</p>
                                                 <!-- /Berdasarkan judul masing-masing -->
 
                                                 <!-- Berdasarkan cover masing-masing -->
