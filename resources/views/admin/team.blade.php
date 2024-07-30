@@ -464,7 +464,7 @@
                             data: { emails: selectedMembers, _token:"{{ csrf_token() }}" },
                             success: function(response) {
                                 $('#manageMember').modal('hide');
-                                toastr.success('Berhasil menghapus anggota tim Anda!');
+                                toastr.success('Anda berhasil menghapus anggota tim Anda!');
                                 setTimeout(function() {
                                     location.reload();
                                 }, 1000);
