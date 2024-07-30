@@ -345,10 +345,19 @@
                     .info-status7 .text-status7{background-color: #9fadbc !important; color: #1D2125 !important;}
                     .info-status8 .text-status8{background-color: #9fadbc !important; color: #1D2125 !important;}
                     .info-status9 .text-status9{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status9 .text-status9a{background-color: #9fadbc !important; color: #1D2125 !important;}
                     .info-status10 .text-status10{background-color: #9fadbc !important; color: #1D2125 !important;}
                     .info-status11 .text-status11{background-color: #9fadbc !important; color: #1D2125 !important;}
                     .info-status12 .text-status12{background-color: #9fadbc !important; color: #1D2125 !important;}
                     .info-status13 .text-status13{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status14 .text-status14{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status15 .text-status15{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status16 .text-status16{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status17 .text-status17{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status18 .text-status18{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status19 .text-status19{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status20 .text-status20{background-color: #9fadbc !important; color: #1D2125 !important;}
+                    .info-status21 .text-status21{background-color: #9fadbc !important; color: #1D2125 !important;}
                     .icon-trash {color: #B6C2CF !important;}
                     .icon-trash:hover {color: #dc3546e1 !important;}
                     .icon-trash:active {color: #e62034 !important;}
@@ -362,6 +371,28 @@
                     .mention-waktu{color: #8C9BAB !important;}
                     .isian-mention-tag{background-color: {{ $mode_tema->warna_mode }} !important; color: #B6C2CF !important; box-shadow: 0px 1px 1px #5a5e6f, 0px 0px 1px #464a5b !important;}
                     .isian-deskripsi{color: white; background-color: #292D3E; border-color: white !important}
+
+                    {{-- Untuk Pulihkan Kartu --}}
+                    .isian-pulihkan-kartu{background-color: #464a5b; color: {{ $mode_tema->warna_sistem_tulisan }};}
+                    .waktu-pulihkan-kartu {color: {{ $mode_tema->warna_sistem_tulisan }};}
+                    .opsi-pulihkan{background-color: #737788; border: 1px solid #737788;}
+                    .opsi-pulihkan:hover{background-color: #3a3c47; border-color:#3a3c47;}
+                    .opsi-pulihkan2{background-color: #737788; border: 1px solid #737788;}
+                    .opsi-pulihkan2:hover{background-color: #3a3c47; border-color:#3a3c47;}
+                    .isian-pulihkan-title{background-color: #464a5b; color: {{ $mode_tema->warna_sistem_tulisan }};}
+                    .waktu-pulihkan-title {color: {{ $mode_tema->warna_sistem_tulisan }};}
+                    .opsi-pulihkan-title{background-color: #737788; border: 1px solid #737788;}
+                    .opsi-pulihkan-title:hover{background-color: #3a3c47; border-color:#3a3c47;}
+                    .opsi-pulihkan-title2{background-color: #737788; border: 1px solid #737788;}
+                    .opsi-pulihkan-title2:hover{background-color: #3a3c47; border-color:#3a3c47;}
+                    .isian-pulihkan-checklist{background-color: #464a5b; color: {{ $mode_tema->warna_sistem_tulisan }};}
+                    .waktu-pulihkan-checklist {color: {{ $mode_tema->warna_sistem_tulisan }};}
+                    .opsi-pulihkan-checklist{background-color: #737788; border: 1px solid #737788;}
+                    .opsi-pulihkan-checklist:hover{background-color: #3a3c47; border-color:#3a3c47;}
+                    .opsi-pulihkan-checklist2{background-color: #737788; border: 1px solid #737788;}
+                    .opsi-pulihkan-checklist2:hover{background-color: #3a3c47; border-color:#3a3c47;}
+                    .text-pulihkan{color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
+                    .text-from-judul{color: {{ $mode_tema->warna_sistem_tulisan }} !important;}
 
                     @foreach ($belum_dibaca as $notifikasi_belum_dibaca)
                         #popup-notifikasi_{{ $notifikasi_belum_dibaca->id }} {background: {{ $mode_tema->warna_mode }} !important}
@@ -557,7 +588,7 @@
                     <span></span>
                 </span>
             </a>
-            
+
             <!-- /Header Title -->
             <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
 
@@ -620,28 +651,37 @@
                     <div class="dropdown-menu notifications">
                         <div class="topnav-dropdown-header">
                             <span class="notification-title">Notifikasi</span>
-                            <form method="POST" action="{{ route('notifikasi.dibaca-semua') }}">
-                                @csrf
-                                <button type="submit" class="clear-noti">Tandai Semua Dibaca</button>
-                            </form>
+                            @if (count($unreadNotifications) > 0 )
+                                <form id="mark-all" method="POST" action="{{ route('bacasemuaNotifikasi') }}">
+                                    @csrf
+                                    <button type="submit" class="clear-noti">Tandai Semua Dibaca</button>
+                                </form>
+                            @endif
                         </div>
                         <div class="noti-content">
                             <ul class="notification-list" style="display: block">
-                                @if(auth()->user()->unreadNotifications->isEmpty() && auth()->user()->readNotifications->isEmpty())
-                                    <li class="notification-message noti-unread">
+                                @if(auth()->user()->unreadNotifications()->count() > 0)
+                                    <li class="notification-message noti-unread hidden" id="noNewNotifications">
                                         <p class="noti-details" style="margin-top: 30px; text-align: center;">
-                                            <i class="fa-solid fa-bell-slash fa-fade fa-2xl"></i>
+                                            <img src="{{ URL::to('/assets/images/notification-icon.svg') }}" style="position: relative;" loading="lazy">
                                         </p>
-                                        <p class="noti-details" style="margin-top: 10px; text-align: center;">Tidak ada notifikasi baru</p>
+                                        <p class="noti-details" style="font-size: 20px; margin-top: 10px; text-align: center;">Tidak ada notifikasi baru</p>
+                                    </li>
+                                @else
+                                    <li class="notification-message noti-unread" id="noNewNotifications">
+                                        <p class="noti-details" style="margin-top: 30px; text-align: center;">
+                                            <img src="{{ URL::to('/assets/images/notification-icon.svg') }}" style="position: relative;" loading="lazy">
+                                        </p>
+                                        <p class="noti-details" style="font-size: 20px; margin-top: 10px; text-align: center;">Tidak ada notifikasi baru</p>
                                     </li>
                                 @endif
 
                                 @foreach ($belum_dibaca->where('notifiable_id', auth()->id()) as $notifikasi_belum_dibaca)
-                                @php
-                                    $notifikasiDataBelumDibaca = json_decode($notifikasi_belum_dibaca->data);
-                                    $created_at = \Carbon\Carbon::parse($notifikasi_belum_dibaca->created_at);
-                                    $read_at = \Carbon\Carbon::parse($notifikasi_belum_dibaca->read_at);
-                                @endphp
+                                    @php
+                                        $notifikasiDataBelumDibaca = json_decode($notifikasi_belum_dibaca->data);
+                                        $created_at = \Carbon\Carbon::parse($notifikasi_belum_dibaca->created_at);
+                                        $read_at = \Carbon\Carbon::parse($notifikasi_belum_dibaca->read_at);
+                                    @endphp
                                     <li class="notification-message noti-unread">
                                         <a href="#" id="open-popup_{{ $notifikasi_belum_dibaca->id }}">
                                             @if ($notifikasiDataBelumDibaca->message == 'Selamat Ulang Tahun')
@@ -724,12 +764,12 @@
                                     </li>
                                 @endforeach
 
-                                @foreach ($dibaca->where('notifiable_id', auth()->id()) as $notifikasi_dibaca)
-                                @php
-                                    $notifikasiDataDibaca = json_decode($notifikasi_dibaca->data);
-                                    $created_at = \Carbon\Carbon::parse($notifikasi_dibaca->created_at);
-                                    $read_at = \Carbon\Carbon::parse($notifikasi_dibaca->read_at);
-                                @endphp
+                                {{-- @foreach ($dibaca->where('notifiable_id', auth()->id()) as $notifikasi_dibaca)
+                                    @php
+                                        $notifikasiDataDibaca = json_decode($notifikasi_dibaca->data);
+                                        $created_at = \Carbon\Carbon::parse($notifikasi_dibaca->created_at);
+                                        $read_at = \Carbon\Carbon::parse($notifikasi_dibaca->read_at);
+                                    @endphp
                                     <li class="notification-message noti-read">
                                         <a href="#" id="open-popup_{{ $notifikasi_dibaca->id }}">
                                             @if ($notifikasiDataDibaca->message == 'Selamat Ulang Tahun')
@@ -810,10 +850,14 @@
                                             @endif
                                         </a>
                                     </li>
-                                @endforeach
+                                @endforeach --}}
                             </ul>
                         </div>
-                        <div class="topnav-dropdown-footer"><a href="{{ route('tampilan-semua-notifikasi') }}">Lihat Semua Notifikasi</a></div>
+                        @if (count($unreadNotifications) > 0 )
+                            <div class="topnav-dropdown-footer"><a href="{{ route('tampilan-semua-notifikasi') }}">Semua Notifikasi</a></div>
+                        @elseif (count($readNotifications) > 0 )
+                            <div class="topnav-dropdown-footer"><a href="{{ route('tampilan-semua-notifikasi') }}">Semua Notifikasi</a></div>
+                        @endif
                     </div>
                 </li>
 				<!-- /Notifications -->
@@ -912,10 +956,13 @@
                         </div>
                     </li>
                     <div class="close-notifikasi">
-                        <a href="{{ route('notifikasi.dibaca', $notifikasi_belum_dibaca->id) }}"><button id="close-popup_{{ $notifikasi_belum_dibaca->id }}">Tutup</button></a>
+                        <a href="#" class="close-notification" data-id="{{ $notifikasi_belum_dibaca->id }}">
+                            <button id="close-popup_{{ $notifikasi_belum_dibaca->id }}">Tutup</button>
+                        </a>
                     </div>
                 </div>
                 @endforeach
+                @include('allrole.membaca-notifikasi')
                 <!-- /Notifikasi Belum Dibaca Modal -->
 
                 <!-- Notifikasi Dibaca Modal -->
@@ -1054,7 +1101,8 @@
                     @endif
                     @if (Auth::user()->role_name == 'User')
                         <a class="dropdown-item" href="{{ route('user-profile') }}">Profil Saya</a>
-                    @endif                        
+                    @endif
+                    <a class="dropdown-item" href="{{ route('tampilan-semua-notifikasi') }}">Notifikasi</a>
                     @if (Auth::user()->role_name == 'Admin')
                         <a class="dropdown-item" href="{{ route('pengaturan-perusahaan') }}">Pengaturan</a>
                     @endif
