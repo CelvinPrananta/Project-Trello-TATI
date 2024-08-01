@@ -65,39 +65,39 @@
                     @if (Route::is('viewTeam') || Route::is('searchBoard'))
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0">
                             <a href="#" data-toggle="modal" data-target="#updateTeam">
-                                <i class="fa-solid fa-pencil" style="font-size: 20px"></i>
+                                <i class="fa-solid fa-pencil m-r-5" style="font-size: 20px"></i>
                                 <span>Perbaharui Tim</span>
                             </a>
                         </li>
                         @if ($statusTeams->contains('Member'))
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0; top: 5px">
                             <a href="#" data-toggle="modal" data-target="#manageMember">
-                                <i class="fa-solid fa-user-gear" style="font-size: 20px"></i>
+                                <i class="fa-solid fa-user-gear m-r-5" style="font-size: 20px"></i>
                                 <span>Anggota Tim</span>
                             </a>
                         </li>
                         @endif
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0; top: 10px">
                             <a href="#" data-toggle="modal" data-target="#inviteMember">
-                                <i class="fa-solid fa-user-plus" style="font-size: 20px"></i>
+                                <i class="fa-solid fa-user-plus m-r-5" style="font-size: 20px"></i>
                                 <span>Undang Anggota</span>
                             </a>
                         </li>
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0; top: 15px">
                             <a href="#" data-toggle="modal" data-target="#createBoard">
-                                <i class="fa-solid fa-table-columns" style="font-size: 20px"></i>
+                                <i class="fa-solid fa-table-columns m-r-5" style="font-size: 20px"></i>
                                 <span>Buat Papan</span>
                             </a>
                         </li>
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0; top: 20px">
                             <a href="#" data-toggle="modal" data-target="#deleteTeam">
-                                <i class="fa-solid fa-trash" style="font-size: 20px"></i>
+                                <i class="fa fa-trash-o m-r-5" style="font-size: 20px"></i>
                                 <span>Hapus Papan</span>
                             </a>
                         </li>
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0; top: 25px; margin-bottom: 25px;">
                             <a href="{{ route('showTeams') }}">
-                                <i class="fa-solid fa-right-from-bracket fa-rotate-180" style="font-size: 20px"></i>
+                                <i class="fa-solid fa-right-from-bracket fa-rotate-180 m-r-5" style="font-size: 20px"></i>
                                 <span>Kembali ke Tim</span>
                             </a>
                         </li>
@@ -111,19 +111,19 @@
                         </a>
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0; top: 10px">
                             <a href="#" data-toggle="modal" data-target="#updateBoard">
-                                <i class="fa-solid fa-pencil" style="font-size: 20px"></i>
+                                <i class="fa-solid fa-pencil m-r-5" style="font-size: 20px"></i>
                                 <span>Perbaharui Papan</span>
                             </a>
                         </li>
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0; top: 20px">
                             <a href="#" data-toggle="modal" data-target="#deleteBoard">
-                                <i class="fa-solid fa-trash" style="font-size: 20px"></i>
+                                <i class="fa fa-trash-o m-r-5" style="font-size: 20px"></i>
                                 <span>Hapus Papan</span>
                             </a>
                         </li>
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0; top: 30px; margin-bottom: 30px;">
                             <a href="{{ route('viewTeam', ['team_id' => $team->id]) }}">
-                                <i class="fa-solid fa-right-from-bracket fa-rotate-180" style="font-size: 20px"></i>
+                                <i class="fa-solid fa-right-from-bracket fa-rotate-180 m-r-5" style="font-size: 20px"></i>
                                 <span>Kembali ke Papan</span>
                             </a>
                         </li>
@@ -159,13 +159,13 @@
                     @if (Route::is('viewTeam2') || Route::is('searchBoard2'))
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0; margin-bottom: 10px">
                             <a href="#" data-toggle="modal" data-target="#leaveTeam">
-                                <i class="fa-solid fa-right-from-bracket fa-rotate-180" style="font-size: 20px"></i>
+                                <i class="fa-solid fa-right-from-bracket fa-rotate-180 m-r-5" style="font-size: 20px"></i>
                                 <span>Keluar dari Tim</span>
                             </a>
                         </li>
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0">
                             <a href="{{ route('showTeams2') }}">
-                                <i class="fa-solid fa-right-from-bracket fa-rotate-180" style="font-size: 20px"></i>
+                                <i class="fa-solid fa-right-from-bracket fa-rotate-180 m-r-5" style="font-size: 20px"></i>
                                 <span>Kembali ke Tim</span>
                             </a>
                         </li>
@@ -179,7 +179,7 @@
                         </a>
                         <li class="btn btn-outline-warning" style="left: 10%; border-radius: 10px; padding: 0">
                             <a href="{{ route('viewTeam2', ['team_id' => $team->id]) }}">
-                                <i class="fa-solid fa-right-from-bracket fa-rotate-180" style="font-size: 20px"></i>
+                                <i class="fa-solid fa-right-from-bracket fa-rotate-180 m-r-5" style="font-size: 20px"></i>
                                 <span>Kembali ke Papan</span>
                             </a>
                         </li>

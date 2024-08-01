@@ -42,6 +42,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         return view('auth.login');
+        // return view('auth.landing');
     }
     // /Tampilan Masuk Aplikasi //
 

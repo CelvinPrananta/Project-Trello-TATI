@@ -27,7 +27,12 @@ function set_active($route) {
 // ----------------------------- Autentikfikasi Login ----------------------------- //
 Route::get('/', function () {
     return view('auth.login');
+    // return view('auth.landing');
 });
+
+// Route::get('/login', function () {
+//     return view('auth.login');
+// });
 
 // ----------------------------- Autentikfikasi MultiLevel ----------------------------- //
 Route::group(['middleware' => 'auth'], function () {
@@ -173,6 +178,9 @@ Route::controller(BoardController::class)->group(function () {
     Route::post('/perbaharui/posisi/judul', 'perbaharuiPosisiJudul')->name('perbaharuiPosisiJudul');
     Route::post('/perbaharui/posisi/ceklist', 'perbaharuiPosisiCeklist')->name('perbaharuiPosisiCeklist');
     Route::post('/perbaharui/posisi/kartu-ke-kolom', 'perbaharuiPosisiKartuKeKolom')->name('perbaharuiPosisiKartuKeKolom');
+    // Route::post('/kolom/pulihkan', 'pulihkanKolom')->name('pulihkanKolom');
+    // Route::post('/hapus-kolom-permanen', 'hapusKolomPermanen')->name('hapusKolomPermanen');
+    // Route::get('/pulihkan-kolom', 'dataPulihkanKolom')->name('dataPulihkanKolom');
     Route::post('/kartu/pulihkan', 'pulihkanKartu')->name('pulihkanKartu');
     Route::post('/hapus-kartu-permanen', 'hapusKartuPermanen')->name('hapusKartuPermanen');
     Route::get('/pulihkan-kartu', 'dataPulihkanKartu')->name('dataPulihkanKartu');
