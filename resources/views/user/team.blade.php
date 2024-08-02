@@ -198,5 +198,7 @@
         <script>
             document.getElementById('pageTitle').innerHTML = 'Papan Tim - User | Trello - PT TATI ';
         </script>
+
+        {{--  <script src="{{ asset('assets/js/inspect-element.js') }}"></script> --}}
     @endsection
 @endsection
